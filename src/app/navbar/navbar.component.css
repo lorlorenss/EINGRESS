@@ -15,7 +15,7 @@
 }
 
 .side-bar:hover{
-    width: 146px;
+    width: 216px;
    
 }
 
@@ -39,6 +39,7 @@
 
 .project-name{
     text-align: center;
+    font-size: 1.50rem;
 }
 
 /* Show the inner text of the project when hovering over the side bar */
