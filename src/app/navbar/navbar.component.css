@@ -21,7 +21,7 @@
 
 .upper{
     height: 50vh;
- 
+
 }
 .lower{
     height: 50vh;
@@ -31,15 +31,14 @@
 }
 
 .logo{
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
     padding: 8px;
     margin-right: 3px;
 }
 
 .project-name{
     text-align: center;
-    font-size: 1.50rem;
 }
 
 /* Show the inner text of the project when hovering over the side bar */
@@ -64,7 +63,9 @@ span{
     opacity: 0; /* Initially hidden */
     transition: opacity 0.2s ease; /* Smooth transition for opacity and color */
     color: white;
+    margin-left: 16px;
 }
+
 
 .side-bar:hover span{
     color: white; /* Change color on hover */
@@ -79,12 +80,12 @@ span{
 .dashboard{
     display: flex;
     align-items: center;
-   margin-top: 28px;
+   margin-top: 50px;
     height: 50px;
    font-family: "Poppins", sans-serif;
    font-weight: 700;
    font-style: normal;
-   font-size: 0.75rem;
+   font-size: 1rem;
 }
 .dashboard:hover{
     background-color: var(--hover);
@@ -111,7 +112,7 @@ span{
    font-family: "Poppins", sans-serif;
    font-weight: 700;
    font-style: normal;
-   font-size: 0.75rem;
+   font-size: 1rem;
    color: white;
 }
 .reports:hover{
@@ -133,7 +134,7 @@ span{
    font-family: "Poppins", sans-serif;
    font-weight: 700;
    font-style: normal;
-   font-size: 0.75rem;
+   font-size: 1rem;
    color: white;
 }
 .users:hover{
@@ -155,7 +156,7 @@ span{
    font-family: "Poppins", sans-serif;
    font-weight: 700;
    font-style: normal;
-   font-size: 0.75rem;
+   font-size: 1rem;
    color: white;
 }
 .logout:hover{
@@ -180,7 +181,7 @@ span{
    font-family: "Poppins", sans-serif;
    font-weight: lighter;
    font-style: normal;
-   font-size: 0.75rem;
+   font-size: 1rem;
    color: white;
    margin-bottom: 20px;
 }
