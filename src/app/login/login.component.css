@@ -1,0 +1,108 @@
+.container{
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary);
+    height: 100vh;  
+    width: 100%; 
+}
+
+.login-eingress-bckgrnd img{
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    
+}
+
+.login-container{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    background-color: #0E1520;
+    width: 360px;
+    height: 500px;
+    padding: 30px;
+}
+
+.jairo-eingress{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    font-size: 12px;
+}
+
+.jairo-eingress img{
+    height: 28px;
+    width: 28px;
+}
+
+.banner{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner h2{
+    color: var(--secondary);
+}
+
+.banner p{
+    font-size: 8px;
+}
+
+.login-form{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    gap: 30px;
+    z-index: 2;
+}
+
+.login-input input[type=email]{
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #1F3049;
+    height: 50px;
+    width: 100%;
+}
+
+.login-input input[type=password]{
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #1F3049;
+    height: 50px;
+    width: 100%;
+}
+
+.remember-me{
+    display: flex;
+    font-size: 8px;
+    gap: 5px;
+}
+
+.forgot-pass{
+    display: flex;
+    position: relative;
+    left: 45%;
+}
+
+.login-input{
+    display: flex;
+    flex-flow: column;
+    gap: 10px;   
+}
+
+.login-form button{
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #1F3049;
+    height: 50px;
+    width: 100%;
+    z-index: 2;
+}

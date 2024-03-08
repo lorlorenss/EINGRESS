@@ -1,0 +1,188 @@
+.side-bar{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    background-color:var(--primary);
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 100vh;
+    transition: width 0.2s ease; /* Add smooth transition effect */
+    
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, .3); /* Set box shadow to the right */
+}
+
+.side-bar:hover{
+    width: 146px;
+   
+}
+
+.upper{
+    height: 50vh;
+ 
+}
+.lower{
+    height: 50vh;
+   
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.logo{
+    width: 35px;
+    height: 35px;
+    padding: 8px;
+    margin-right: 3px;
+}
+
+.project-name{
+    text-align: center;
+}
+
+/* Show the inner text of the project when hovering over the side bar */
+.side-bar:hover .project-name{
+    text-align: center;
+    transition: ease-in-out;
+}
+
+.project{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 90px;
+    margin-top: 15px;
+   font-family: "Poppins", sans-serif;
+   font-weight: 700;
+   font-style: normal;
+    color: white;
+}
+
+span{
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease; /* Smooth transition for opacity and color */
+}
+
+.side-bar:hover span{
+    color: white; /* Change color on hover */
+    opacity: 1; /* Show the text on hover */
+}
+.dasboard-icon{
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    margin-right: 3px;
+}
+.dashboard{
+    display: flex;
+    align-items: center;
+   margin-top: 28px;
+
+   font-family: "Poppins", sans-serif;
+   font-weight: 700;
+   font-style: normal;
+   font-size: 0.75rem;
+   color: white;
+}
+.dashboard:hover{
+    background-color: var(--hover);
+    cursor: pointer;
+    border-radius:10px;
+}
+
+
+.reports-icon{
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    margin-right: 3px;
+}
+.reports{
+    display: flex;
+    align-items: center;
+   margin-top: 12px;
+
+   font-family: "Poppins", sans-serif;
+   font-weight: 700;
+   font-style: normal;
+   font-size: 0.75rem;
+   color: white;
+}
+.reports:hover{
+    background-color: var(--hover);
+    cursor: pointer;
+    border-radius:10px;
+}
+
+.users-icon{
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    margin-right: 3px;
+}
+.users{
+    display: flex;
+    align-items: center;
+   margin-top: 12px;
+   font-family: "Poppins", sans-serif;
+   font-weight: 700;
+   font-style: normal;
+   font-size: 0.75rem;
+   color: white;
+}
+.users:hover{
+    background-color: var(--hover);
+    cursor: pointer;
+    border-radius:10px;
+}
+
+.logout-icon{
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    margin-right: 3px;
+}
+.logout{
+    display: flex;
+    align-items: center;
+
+   font-family: "Poppins", sans-serif;
+   font-weight: 700;
+   font-style: normal;
+   font-size: 0.75rem;
+   color: white;
+}
+.logout:hover{
+    background-color: var(--hover);
+    cursor: pointer;
+    border-radius:10px;
+}
+
+
+.collapse-icon{
+    width: 25px;
+    height: 25px;
+    padding: 8px;
+    margin-right: 5px;
+    margin-left: 3px;
+}
+
+.lock-side{
+    margin-top:10px;
+    display: flex;
+    align-items: center;
+   font-family: "Poppins", sans-serif;
+   font-weight: lighter;
+   font-style: normal;
+   font-size: 0.75rem;
+   color: white;
+   margin-bottom: 20px;
+}
+.lock-side:hover{
+    background-color: var(--hover);
+    cursor: pointer;
+
+}
+
+.side-bar:hover .collapse-icon{
+    content: url('/assets/images/collapse-right.png');  
+}
