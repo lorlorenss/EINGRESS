@@ -94,7 +94,7 @@
 .security-content {
   margin-top: 40px;
   width: 100%;
-  height: calc(100% - 80px); /* Set the height to fill the remaining viewport height */
+  height: calc(100% - 50px); /* Set the height to fill the remaining viewport height */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto auto;
