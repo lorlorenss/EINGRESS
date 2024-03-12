@@ -48,6 +48,7 @@
 }
 
 
+
 @media screen and (max-width: 1300px) {
   .contents {
     width: 100%;
@@ -93,9 +94,9 @@
 .security-content {
   margin-top: 40px;
   width: 100%;
-  height: calc(100% - 40px); /* Set the height to fill the remaining viewport height */
+  height: calc(100% - 80px); /* Set the height to fill the remaining viewport height */
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto auto;
   gap: 20px;
 }
@@ -157,5 +158,63 @@
 .activity{
   grid-column: 1 / 4;
   grid-row: 2 / 9;
-  
+  height: auto;
+}
+
+.activity-content {
+  width: 100%;
+
+  padding: 20px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 20px 1fr; /* First column 20px, second column fills the remaining width */
+  grid-template-rows: repeat(9, 1fr) 10px 1fr; /* 9 rows with equal height, 9th row with 10px height, 10th row returns to 1fr */
+  gap: 10px; /* Gap between grid items */
+}
+
+.people-count{
+  grid-column: 1 / 2;
+  grid-row: 1 / 9;
+
+
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: repeat(8, 1fr);
+}
+
+.histogram{
+  grid-column: 2 / 3;
+  grid-row: 1 / 9;
+  background-color: var(--background);
+  border-radius: 10px;
+}
+
+.dates{
+  grid-column: 2 / 3;
+  grid-row: 9 / 10;
+
+  display: grid;
+  grid-template-columns: repeat(32, 1fr);
+  grid-template-rows: 1;
+
+  font-size: .5rem;
+}
+
+
+.month{
+  grid-column: 2 / 3;
+  grid-row: 10 / 11;
+
+  text-align: center;
+  text-justify:auto ;
+}
+
+.people{
+  font-family: Poppins;
+font-size: .5rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-align: center;
+
 }
