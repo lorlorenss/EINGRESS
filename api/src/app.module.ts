@@ -4,8 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import { config } from './orm.config';
-// import { UserModule } from './user/user.module';
-// import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/auth.module';
+import { AdminLoginModule } from './admin-login/admin-login.module';
 
 @Module({
   // imports: [TypeOrmModule.forRoot(config)],
@@ -24,8 +24,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    // UserModule,
-    // AuthModule,
+    AdminLoginModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
