@@ -21,7 +21,7 @@ export class UserService {
     return this.http.post<User[]>(this.apiUrl, user);
   }
 
-  loginUser(credentials: {email: string, password: string}): Observable<any> { //An observable begins publishing values only when someone subscribes to it
+  loginUser(credentials: {username: string, password: string}): Observable<any> { //An observable begins publishing values only when someone subscribes to it
     const loginUrl = `${this.apiUrl}/login`;
 
     return this.http.post<any>(loginUrl, credentials).pipe( //RxJs method pipe allows you to chain RxJS operators to process the observable stream
