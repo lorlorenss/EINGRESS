@@ -26,16 +26,19 @@ export class LoginComponent {
   }
 
   submitCredentials() {
-    debugger;
-    if(this.form.invalid){
-      return;
-    }
 
     console.log(this.form.value);
 
     this.userService.loginUser(this.form.value).subscribe( //Use Subscribe method to the Observable object
-      () => {
-        this.router.navigate(['/main']);
+      (res: any) => {
+        if(res.result){
+          alert('Login Success')
+          this.router.navigate(['/main']);
+        }
+        else{
+          alert(res.message)
+        }
+        
       }
     );
   }

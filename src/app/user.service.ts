@@ -9,7 +9,7 @@ import { User } from './user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://api.freeapi.app/api/v1/users/login';
+  private apiUrl = 'http://localhost:8000/api/users';
 
   constructor(private http: HttpClient) { }
 
@@ -26,8 +26,8 @@ export class UserService {
 
     return this.http.post<any>(loginUrl, credentials).pipe( //RxJs method pipe allows you to chain RxJS operators to process the observable stream
       tap((response: any) => { //RxJs method tap doesnt modify the emitted value but allows you to perform actions based on those values 
-        if (response && response.data.accessToken){
-          localStorage.setItem('token', response.data.accessToken);
+        if (response && response.token){
+          localStorage.setItem('token', response.token);
         }
       })
     );
