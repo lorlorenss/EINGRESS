@@ -64,6 +64,7 @@
         grid-row: 3 / 4;
         background-color: white;
         border-radius: 20px;
+        box-shadow: 10px 10px 20px #bfbfbf, -10px -10px 20px #ffffff;
     }
 
     .login-sessions {
