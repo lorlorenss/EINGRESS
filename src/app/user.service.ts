@@ -9,7 +9,7 @@ import { User } from './user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8000/api/users';
+  private apiUrl = 'https://api.freeapi.app/api/v1/users/login';
 
   constructor(private http: HttpClient) { }
 
@@ -21,13 +21,13 @@ export class UserService {
     return this.http.post<User[]>(this.apiUrl, user);
   }
 
-  loginUser(credentials: {email: string, password: string}): Observable<any> { //An observable begins publishing values only when someone subscribes to it
+  loginUser(credentials: {username: string, password: string}): Observable<any> { //An observable begins publishing values only when someone subscribes to it
     const loginUrl = `${this.apiUrl}/login`;
 
     return this.http.post<any>(loginUrl, credentials).pipe( //RxJs method pipe allows you to chain RxJS operators to process the observable stream
       tap((response: any) => { //RxJs method tap doesnt modify the emitted value but allows you to perform actions based on those values 
-        if (response && response.token){
-          localStorage.setItem('token', response.token);
+        if (response && response.data.accessToken){
+          localStorage.setItem('token', response.data.accessToken);
         }
       })
     );
