@@ -163,8 +163,7 @@
 
 .activity-content {
   width: 100%;
-
-  padding: 20px;
+padding-top: 20px;
   height: 100%;
   display: grid;
   grid-template-columns: 20px 1fr; /* First column 20px, second column fills the remaining width */
