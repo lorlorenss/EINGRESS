@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -15,22 +16,28 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private http: HttpClient
   ){
     this.form = this.formBuilder.group({
-      email: ['',Validators.required],
-      password: ['',Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
   });
   }
 
   submitCredentials() {
-    if(this.form.invalid){
-      return;
-    }
-
-    this.userService.loginUser(this.form.value).subscribe( //Use Subscribe method to the Observable object
-      () => {
-        this.router.navigate(['/main']);
+    debugger;
+    this.userService.loginUser(this.form.getRawValue()).subscribe( //Use Subscribe method to the Observable object
+      (response: any) => {
+        if(response.success){
+          alert('Login Success');
+          localStorage.setItem('token', response.data.accessToken);
+          this.router.navigateByUrl('/main');
+        }
+        else{
+          alert(response.message)
+        }
+        
       }
     );
   }

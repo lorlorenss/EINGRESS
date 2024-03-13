@@ -12,6 +12,7 @@ import { ReportsComponent } from './main/reports/reports.component';
 import { UsersComponent } from './main/users/users.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
 import { SecuritySummaryComponent } from './main/dashboard/security-summary/security-summary.component';
@@ -22,6 +23,12 @@ import { DeleteBtnComponent } from './main/users/delete-btn/delete-btn.component
 import { CheckboxComponent } from './main/users/checkbox/checkbox.component';
 import { TableComponent } from './main/users/table/table.component';
 import { UserSelectionComponent } from './main/users/table/user-selection/user-selection.component';
+=======
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { UserService } from './services/user.service';
+import { SharedRoutingModule } from './shared-routing/shared-routing.module';
+import { CustomInterceptor } from './services/custom.interceptor';
+
 
 
 @NgModule({
@@ -34,7 +41,7 @@ import { UserSelectionComponent } from './main/users/table/user-selection/user-s
     DashboardComponent,
     ReportsComponent,
     UsersComponent,
-    SecuritySummaryComponent,
+     SecuritySummaryComponent,
     SearchfieldComponent,
     ImportBtnComponent,
     AddUserBtnComponent,
@@ -49,10 +56,16 @@ import { UserSelectionComponent } from './main/users/table/user-selection/user-s
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedRoutingModule
   ],
   providers: [
-    UserService
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
