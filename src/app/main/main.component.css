@@ -41,10 +41,9 @@
 }
 
 .navbar:hover ~ .pages  {
-    justify-content: center;
-    left: 116px;
+    width: calc(100% - 216px);
+    left: 216px;
 }
-
 
 
 .inner-page{

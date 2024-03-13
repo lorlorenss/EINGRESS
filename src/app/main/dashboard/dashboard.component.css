@@ -4,7 +4,7 @@
   height: 100%;
   /* Set the height to 100% of viewport height */
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, auto);
   /* 4 columns of equal width */
   grid-template-rows: repeat(4, auto);
   /* 4 rows with height based on content */
@@ -136,17 +136,17 @@
   grid-column: 3 / 4;
   grid-row: 1 / 2;
 
-  padding-top: 20px;
+ 
   font-family: Poppins;
-  font-size: 1rem;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   text-align: center;
   background-color: var(--background);
   border-radius: 10px;
-
   color: var(--error);
+  padding: 20px 0 0 0;
 }
 
 .count{
@@ -163,8 +163,7 @@
 
 .activity-content {
   width: 100%;
-
-  padding: 20px;
+padding-top: 20px;
   height: 100%;
   display: grid;
   grid-template-columns: 20px 1fr; /* First column 20px, second column fills the remaining width */
