@@ -13,7 +13,8 @@ import { UsersComponent } from './main/users/users.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
+import { SharedRoutingModule } from './shared-routing/shared-routing.module';
 
 
 @NgModule({
@@ -26,14 +27,14 @@ import { UserService } from './user.service';
     DashboardComponent,
     ReportsComponent,
     UsersComponent,
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedRoutingModule
   ],
   providers: [
     UserService
