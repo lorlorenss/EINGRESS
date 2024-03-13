@@ -38,7 +38,7 @@
 }
 
 .project-name{
-    text-align: center;
+    font-size: 1.5rem;
 }
 
 /* Show the inner text of the project when hovering over the side bar */
@@ -63,7 +63,6 @@ span{
     opacity: 0; /* Initially hidden */
     transition: opacity 0.2s ease; /* Smooth transition for opacity and color */
     color: white;
-    margin-left: 16px;
 }
 
 
@@ -80,12 +79,16 @@ span{
 .dashboard{
     display: flex;
     align-items: center;
-   margin-top: 50px;
+   margin-top: 100px;
     height: 50px;
    font-family: "Poppins", sans-serif;
    font-weight: 700;
    font-style: normal;
    font-size: 1rem;
+}
+
+.dashboard span{
+   margin-left: 16px;
 }
 .dashboard:hover{
     background-color: var(--hover);
@@ -115,6 +118,9 @@ span{
    font-size: 1rem;
    color: white;
 }
+.reports span{
+    margin-left: 16px;
+ }
 .reports:hover{
     background-color: var(--hover);
     cursor: pointer;
@@ -137,6 +143,9 @@ span{
    font-size: 1rem;
    color: white;
 }
+.users span{
+    margin-left: 16px;
+ }
 .users:hover{
     background-color: var(--hover);
     cursor: pointer;
@@ -159,6 +168,9 @@ span{
    font-size: 1rem;
    color: white;
 }
+.logout span{
+    margin-left: 16px;
+ }
 .logout:hover{
     background-color: var(--hover);
     cursor: pointer;
@@ -184,13 +196,16 @@ span{
    font-size: 1rem;
    color: white;
    margin-bottom: 20px;
+
 }
+.lock-side span{
+    margin-left: 25px;
+ }
 .lock-side:hover{
     background-color: var(--hover);
     cursor: pointer;
-
 }
 
 .side-bar:hover .collapse-icon{
-    content: url('/assets/images/collapse-right.png');  
+    content: url('/assets/images/collapse-left.png');  
 }
