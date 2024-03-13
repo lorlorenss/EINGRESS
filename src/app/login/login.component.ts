@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -20,23 +20,22 @@ export class LoginComponent {
     private http: HttpClient
   ){
     this.form = this.formBuilder.group({
-      username: '',
-      password: ''
+      username: ['', Validators.required],
+      password: ['', Validators.required]
   });
   }
 
   submitCredentials() {
-
-    console.log(this.form.value);
-
-    this.userService.loginUser(this.form.value).subscribe( //Use Subscribe method to the Observable object
-      (res: any) => {
-        if(res.result){
-          alert('Login Success')
-          this.router.navigate(['/main']);
+    debugger;
+    this.userService.loginUser(this.form.getRawValue()).subscribe( //Use Subscribe method to the Observable object
+      (response: any) => {
+        if(response.success){
+          alert('Login Success');
+          localStorage.setItem('token', response.data.accessToken);
+          this.router.navigateByUrl('/main');
         }
         else{
-          alert(res.message)
+          alert(response.message)
         }
         
       }
