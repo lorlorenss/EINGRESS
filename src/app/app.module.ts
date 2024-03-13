@@ -14,6 +14,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
+import { SecuritySummaryComponent } from './main/dashboard/security-summary/security-summary.component';
+import { SearchfieldComponent } from './main/users/searchfield/searchfield.component';
+import { ImportBtnComponent } from './main/users/import-btn/import-btn.component';
+import { AddUserBtnComponent } from './main/users/add-user-btn/add-user-btn.component';
+import { DeleteBtnComponent } from './main/users/delete-btn/delete-btn.component';
+import { CheckboxComponent } from './main/users/checkbox/checkbox.component';
+import { TableComponent } from './main/users/table/table.component';
+import { UserSelectionComponent } from './main/users/table/user-selection/user-selection.component';
 
 
 @NgModule({
@@ -26,6 +34,14 @@ import { UserService } from './user.service';
     DashboardComponent,
     ReportsComponent,
     UsersComponent,
+    SecuritySummaryComponent,
+    SearchfieldComponent,
+    ImportBtnComponent,
+    AddUserBtnComponent,
+    DeleteBtnComponent,
+    CheckboxComponent,
+    TableComponent,
+    UserSelectionComponent,
 
   ],
   imports: [

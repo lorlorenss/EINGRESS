@@ -1,0 +1,32 @@
+.search {
+    width: 240px; /* Updated width */
+    height: 40px; /* Updated height */
+    border-radius: 10px; /* Updated border-radius */
+    background-color: white; /* Updated background-color */
+    display: flex;
+    align-items: center;  
+}
+
+.search:hover {
+    border: 1px solid var(--background);
+}
+
+
+.search img {
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+.search input{
+    margin-left: 20px;
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.search.active {
+    border: 1px solid var(--background); /* Border color when input is focused */
+}
