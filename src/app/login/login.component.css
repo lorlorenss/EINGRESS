@@ -64,7 +64,7 @@
     z-index: 2;
 }
 
-.login-input input[type=email]{
+.login-input input[type=text]{
     border-radius: 10px;
     padding: 20px;
     background-color: #1F3049;
