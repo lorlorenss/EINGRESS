@@ -58,12 +58,17 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "eingress-project:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "eingress-project:build:production"
             },
             "development": {
-              "browserTarget": "eingress-project:build:development"
+              "browserTarget": "eingress-project:build:development"              
+              
             }
           },
           "defaultConfiguration": "development"
@@ -72,6 +77,7 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "eingress-project:build"
+           
           }
         },
         "test": {

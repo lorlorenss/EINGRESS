@@ -27,20 +27,22 @@ export class LoginComponent {
 
   submitCredentials() {
 
-    console.log(this.form.value);
+    // console.log(this.form.value);
 
-    this.userService.loginUser(this.form.value).subscribe( //Use Subscribe method to the Observable object
-      (res: any) => {
-        if(res.result){
-          alert('Login Success')
-          this.router.navigate(['/main']);
-        }
-        else{
-          alert(res.message)
-        }
+    // this.userService.loginUser(this.form.value).subscribe( //Use Subscribe method to the Observable object
+    //   (res: any) => {
+    //     if(res.result){
+    //       alert('Login Success')
+    //       this.router.navigate(['/main']);
+    //     }
+    //     else{
+    //       alert(res.message)
+    //     }
         
-      }
-    );
+    //   }
+    // );
+
+    this.userService.loginUser('mikei5', 'hashcode').subscribe(data => console.log('Successs'));
   }
 
 }
