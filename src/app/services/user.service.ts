@@ -11,15 +11,16 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+  getUser(): Observable<any> {
+    const getUserUrl = `${this.apiUrl}/current-user}`;
+    return this.http.get<any>(getUserUrl);
   }
 
   addUser(user: User): Observable<User[]>{
     return this.http.post<User[]>(this.apiUrl, user);
   }
 
-  loginUser(credentials: {username: string, password: string}): Observable<any> { //An observable begins publishing values only when someone subscribes to it
+  loginUser(credentials: {username: string, password: string}): Observable<any> { 
     const loginUrl = `${this.apiUrl}/login`;
     return this.http.post<any>(loginUrl, credentials);
   }

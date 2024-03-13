@@ -12,9 +12,10 @@ import { ReportsComponent } from './main/reports/reports.component';
 import { UsersComponent } from './main/users/users.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserService } from './services/user.service';
 import { SharedRoutingModule } from './shared-routing/shared-routing.module';
+import { CustomInterceptor } from './services/custom.interceptor';
 
 
 @NgModule({
@@ -37,7 +38,12 @@ import { SharedRoutingModule } from './shared-routing/shared-routing.module';
     SharedRoutingModule
   ],
   providers: [
-    UserService
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
