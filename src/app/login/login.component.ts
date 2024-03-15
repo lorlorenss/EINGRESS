@@ -26,17 +26,19 @@ export class LoginComponent {
   }
 
   submitCredentials() {
-    debugger;
+   // debugger;
     this.userService.loginUser(this.form.getRawValue()).subscribe( //Use Subscribe method to the Observable object
       (response: any) => {
-        if(response.success){
+        if(response){
+          console.log(response)
           alert('Login Success');
-          localStorage.setItem('token', response.data.accessToken);
+          localStorage.setItem('token', response.access_token);
           this.router.navigateByUrl('/main');
         }
-        else{
-          alert(response.message)
-        }
+        // else{
+        //   console.log(response)
+        //   alert(response.message)
+        // }
         
       }
     );

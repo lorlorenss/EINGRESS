@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { User } from '../interface/user.interface';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://api.freeapi.app/api/v1/users';
+  private apiUrl = '/api/user';
 
   constructor(private http: HttpClient) { }
 
@@ -20,9 +21,9 @@ export class UserService {
     return this.http.post<User[]>(this.apiUrl, user);
   }
 
-  loginUser(credentials: {username: string, password: string}): Observable<any> { 
+  loginUser(loginform: User): Observable<any> { 
     const loginUrl = `${this.apiUrl}/login`;
-    return this.http.post<any>(loginUrl, credentials);
+    return this.http.post<any>(loginUrl, {username: loginform.username, password:loginform.password});
   }
 
   logoutUser(){

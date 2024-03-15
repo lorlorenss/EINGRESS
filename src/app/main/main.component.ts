@@ -15,12 +15,12 @@ export class MainComponent {
   constructor(
     private userService: UserService
   ){
-    this.loadUser();
+    // this.loadUser();
   }
 
-  loadUser(){
-    this.userService.getUser().subscribe((response: any)=>{
-      this.users = response.data;
-    })
-  }
+  // loadUser(){
+  //  // this.userService.getUser().subscribe((response: any)=>{
+  // /    this.users = response.data;
+  //   })
+  // }
 }
