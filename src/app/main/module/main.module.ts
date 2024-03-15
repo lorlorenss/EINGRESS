@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+/*import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from '../main.component';
 
@@ -11,4 +11,4 @@ import { MainComponent } from '../main.component';
     CommonModule,
   ]
 })
-export class MainModule { }
+export class MainModule { }*/
