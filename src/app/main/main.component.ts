@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../interface/user.interface';
 
@@ -8,13 +8,15 @@ import { User } from '../interface/user.interface';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent {
+export class MainComponent implements OnInit{
 
   users: any[] = [];
 
   constructor(
     private userService: UserService
-  ){
+  ){}
+
+  ngOnInit(): void {
     this.loadUser();
   }
 
