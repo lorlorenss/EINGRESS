@@ -7,13 +7,13 @@ import { User } from '../interface/user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = '/api/users';
+  private apiUrl = 'https://api.freeapi.app/api/v1/users';
 
   constructor(private http: HttpClient) { }
 
-  getUser(): Observable<any> {
+  getUser(): Observable<User[]> {
     const getUserUrl = `${this.apiUrl}/current-user}`;
-    return this.http.get<any>(getUserUrl);
+    return this.http.get<User[]>(getUserUrl);
   }
 
   addUser(user: User): Observable<User[]>{

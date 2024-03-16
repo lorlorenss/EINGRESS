@@ -10,7 +10,7 @@ import { User } from '../interface/user.interface';
 })
 export class MainComponent implements OnInit{
 
-  users: any[] = [];
+  private user: User[] =[]
 
   constructor(
     private userService: UserService
@@ -22,7 +22,7 @@ export class MainComponent implements OnInit{
 
   loadUser(){
     this.userService.getUser().subscribe((response: any)=>{
-      this.users = response.data;
+      this.user = response.data;
     })
   }
 }
