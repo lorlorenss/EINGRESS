@@ -52,16 +52,16 @@ span {
 
 .left-container {
     display: grid;
-  grid-template-rows: 160px 60px 60px 300px 1fr;
+  grid-template-rows: 160px 60px 60px 300px 40px;
   grid-template-columns: auto; /* Adjust as needed */
-  grid-gap: 20px; /* Adjust the gap between grid items */
+  grid-gap: 10px; /* Adjust the gap between grid items */
 }   
 
 .right-container {
     display: grid;
-  grid-template-rows: 160px 60px 60px 300px 1fr;
+    grid-template-rows: 160px 60px 60px 300px 40px;
   grid-template-columns: auto; /* Adjust as needed */
-  grid-gap: 20px; /* Adjust the gap between grid items */
+  grid-gap: 10px; /* Adjust the gap between grid items */
 }
 
 .photo-section {
