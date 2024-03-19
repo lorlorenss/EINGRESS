@@ -5,6 +5,7 @@ import { AdminLoginService } from '../services/admin-login.service';
 
 @Controller('user')
 export class AdminLoginController {
+  [x: string]: any;
   constructor(private userService: AdminLoginService) {}
 
   @Post()
