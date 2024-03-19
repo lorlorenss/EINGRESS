@@ -52,14 +52,14 @@ span {
 
 .left-container {
     display: grid;
-  grid-template-rows: 160px 60px 60px auto 40px;
+  grid-template-rows: 160px 60px 60px 300px 1fr;
   grid-template-columns: auto; /* Adjust as needed */
   grid-gap: 20px; /* Adjust the gap between grid items */
 }   
 
 .right-container {
     display: grid;
-  grid-template-rows: 160px 60px 60px auto 40px;
+  grid-template-rows: 160px 60px 60px 300px 1fr;
   grid-template-columns: auto; /* Adjust as needed */
   grid-gap: 20px; /* Adjust the gap between grid items */
 }
@@ -146,7 +146,7 @@ span {
 
 .roles {
     width: 100%;
-    height: 100%;
+    height: 300px;
     background-color: var(--background);
     border-radius: 20px;
     padding-left: 20px;
@@ -206,7 +206,7 @@ span {
 
 .fingerprint-content{
     background-color: var(--background);
-    height: 100%;
+    height: 300px;
     display: flex;
     justify-content: center;
     flex-direction: column;
