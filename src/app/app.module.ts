@@ -23,6 +23,10 @@ import { CheckboxComponent } from './main/users/checkbox/checkbox.component';
 import { TableComponent } from './main/users/table/table.component';
 import { UserSelectionComponent } from './main/users/table/user-selection/user-selection.component';
 import { AddUserFormComponent } from './main/users/add-user-btn/add-user-form/add-user-form.component';
+import { Table1Component } from './main/reports/table1/table1.component';
+import { UserDetailsComponent } from './main/reports/user-details/user-details.component';
+import { LoginSessionsComponent } from './main/reports/login-sessions/login-sessions.component';
+import { ReportsSelectionComponent } from './main/reports/table1/reports-selection/reports-selection.component';
 
 
 @NgModule({
@@ -44,6 +48,10 @@ import { AddUserFormComponent } from './main/users/add-user-btn/add-user-form/ad
     TableComponent,
     UserSelectionComponent,
     AddUserFormComponent,
+    Table1Component,
+    UserDetailsComponent,
+    LoginSessionsComponent,
+    ReportsSelectionComponent,
 
   ],
   imports: [
