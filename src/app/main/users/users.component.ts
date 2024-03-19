@@ -1,3 +1,4 @@
+// users.component.ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent {
+  isAddUserFormVisible = false;
 
+  toggleAddUserForm(): void {
+    this.isAddUserFormVisible = !this.isAddUserFormVisible;
+  }
 }

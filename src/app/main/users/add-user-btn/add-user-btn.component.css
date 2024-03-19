@@ -1,0 +1,28 @@
+
+
+.add-user{
+    width: 140px;
+    height: 40px;
+    border-radius: 10px; /* Updated border-radius */
+    display: flex;
+    align-items: center;
+    background-color: white;
+    justify-content: center;
+    color: var(--secondary);
+    cursor: pointer;
+}
+
+.add-user img{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.add-user:hover{
+    background-color: var(--secondary);
+    color: white;
+}
+
+.add-user:hover img{
+    content: url('/assets/images/add-white.png');
+}

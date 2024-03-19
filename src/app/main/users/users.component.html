@@ -1,1 +1,23 @@
-<p>users works!</p>
+<!-- users.component.html -->
+<div class="main-container">
+  <span>Users</span>
+  <div class="inner-container">
+    <div class="upper">
+      <div class="upper-left">
+        <app-searchfield></app-searchfield>
+      </div>
+      <div class="upper-right">
+        <app-delete-btn class="pointer"></app-delete-btn>
+        <app-add-user-btn  class="pointer"></app-add-user-btn>
+        <app-import-btn class="pointer"></app-import-btn>
+      </div>
+    </div>
+    <div class="lower">
+      <app-table></app-table>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isAddUserFormVisible">
+ <app-add-user-form></app-add-user-form>
+</div>
