@@ -1,5 +1,5 @@
 .contents {
-    width: 1250px;
+    width: calc(100vw - 285px);
     /* Set the width of the container */
     height: 100%;
     /* Set the height to 100% of viewport height */
@@ -10,10 +10,11 @@
     /* 4 rows with height based on content */
     gap: 20px;
     /* Gap between grid items */
+    
 }
 
 .users-list {
-    padding: 20px;
+    padding: 40px;
     grid-column: 1 / 2;
     grid-row: 1 / 5;
     background-color: white;

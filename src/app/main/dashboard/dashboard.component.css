@@ -1,5 +1,5 @@
 .contents {
-  width: 1250px;
+  width: calc(100vw - 285px);
   /* Set the width of the container */
   height: 100%;
   /* Set the height to 100% of viewport height */
@@ -51,7 +51,7 @@
 
 @media screen and (max-width: 1300px) {
   .contents {
-    width: 100%;
+    width: calc(100vw - 285px);
     height: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);

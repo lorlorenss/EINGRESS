@@ -1,0 +1,75 @@
+<body>
+    <div class="header">
+        <span>User</span>
+        <button class="close pointer" [routerLink]="['/users']">
+            <img class="icon pointer" src="/assets/images/exit.png">
+        </button>
+    </div>
+
+
+    <div class="main-container">
+        <div class="left-container">
+            <div class="photo-section">
+                <img class="photoholder" src="/assets/images/max-smith.png">
+                <div class="icons">
+                    <div class="edit">
+                        <img class="icon pointer" src="/assets/images/edit-blue.png">
+                    </div>
+                    <div class="delete">
+                        <img class="icon pointer" src="/assets/images/delete-red.png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="name">
+                <span>Full Name</span>
+                <input class="textbox" type="text" placeholder="Enter Name">
+            </div>
+            <div class="email">
+                <span>Email</span>
+                <input class="textbox" type="text" placeholder="Enter Name">
+            </div>
+            <div class="role-container">
+                <span>Role</span>
+                <div class="roles">
+                    <div class="role r1 ">
+                        <input type="radio" name="position">
+                        <span>Administrator</span>
+                    </div>
+                    <div class="role r1 ">
+                        <input type="radio" name="position">
+                        <span>Administrator</span>
+                    </div>
+                    <div class="role r1 ">
+                        <input type="radio" name="position">
+                        <span>Administrator</span>
+                    </div>
+                    <div class="role r1 ">
+                        <input type="radio" name="position">
+                        <span>Administrator</span>
+                    </div>
+                    <div class="role r1 ">
+                        <input type="radio" name="position">
+                        <span>Administrator</span>
+                    </div>
+        
+                </div>
+            </div>
+            <div class="dismiss-container">
+                <div class="dismiss pointer">
+                    Dismiss
+                </div>
+            </div>
+            
+        </div>
+        <div class="right-container">
+            <div class="contact-number">
+                <span>Contact Number</span>
+                <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx">
+            </div>
+            <div class="fingerprint-container"></div>
+            <div class="submit pointer">Submit</div>
+        </div>
+    </div>
+
+</body>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+// add-user-btn.component.ts
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add-user-btn',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-user-btn.component.css']
 })
 export class AddUserBtnComponent {
+  @Output() addUserClicked = new EventEmitter<void>();
 
+  onClick(): void {
+    this.addUserClicked.emit();
+  }
 }

@@ -1,0 +1,222 @@
+body {
+    width: calc(100vw - 800px);
+    height: 100%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+span {
+    font-size: 12px;
+}
+
+.textbox {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 20px;
+    background-color: var(--background);
+}
+
+.textbox:hover {
+    border: 2px solid lightgray;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.close {
+    border-radius: 5px;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.main-container {
+    width: 100%;
+    height: calc(100% - 20px);
+    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1;
+    padding: 20px;
+}
+
+.left-container {
+    grid-column: 1 / 2;
+    grid-row: 1 / 6;
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 5;
+    gap: 10px;
+
+}
+
+.right-container {
+    grid-column: 2 / 3;
+    grid-row: 1 / 6;
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 145px repeat(4, 1fr);
+    gap: 20px;
+}
+
+.photo-section {
+    display: flex;
+}
+
+.photoholder {
+    width: 160px;
+    height: 160px;
+    border: 5px solid var(--background);
+    border-radius: 5px;
+}
+
+.icons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+
+.edit:hover {
+    background-color: var(--secondary);
+
+}
+
+.edit:hover img {
+    content: url('/assets/images/edit-white.png');
+}
+
+.delete {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.delete img {
+    width: 25px;
+    height: 25px;
+}
+
+.delete:hover {
+    background-color: var(--error);
+}
+
+.delete:hover img {
+    content: url('/assets/images/delete-white.png');
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+}
+
+.name:hover {
+    border-radius: 5px;
+}
+
+.email {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.roles {
+    width: 100%;
+    height: auto;
+    background-color: var(--background);
+    border-radius: 10px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.role {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.role input {
+    margin-right: 20px;
+}
+
+.dismiss-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.dismiss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: gray;
+    width: 90px;
+    height: 40px;
+}
+
+.dismiss:hover {
+
+    color: white;
+    background-color: var(--error);
+}
+
+.contact-number {
+    grid-column: 1;
+    grid-row: 2 / 3;
+}
+
+.fingerprint-container{
+    grid-column: 1;
+    grid-row: 4 / 5;
+    background-color: var(--background);
+    border-radius: 10px;
+    height: auto;
+}
+
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: var(--secondary);
+    width: 90px;
+    height: 40px;
+    grid-row: 5 / 6;
+}
+
+.submit:hover {
+
+    color: white;
+    background-color: var(--secondary);
+}

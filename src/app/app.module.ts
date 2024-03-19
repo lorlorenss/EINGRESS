@@ -22,6 +22,7 @@ import { DeleteBtnComponent } from './main/users/delete-btn/delete-btn.component
 import { CheckboxComponent } from './main/users/checkbox/checkbox.component';
 import { TableComponent } from './main/users/table/table.component';
 import { UserSelectionComponent } from './main/users/table/user-selection/user-selection.component';
+import { AddUserFormComponent } from './main/users/add-user-btn/add-user-form/add-user-form.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { UserSelectionComponent } from './main/users/table/user-selection/user-s
     CheckboxComponent,
     TableComponent,
     UserSelectionComponent,
+    AddUserFormComponent,
 
   ],
   imports: [

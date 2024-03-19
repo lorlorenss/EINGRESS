@@ -6,5 +6,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./user-selection.component.css']
 })
 export class UserSelectionComponent {
+  
   @Input() isHeaderChecked: boolean = false; // Receive state of header checkbox
+  
+
+  toggleCheckbox(index: number) {
+    this.isHeaderChecked = !this.isHeaderChecked;
+  }
 }

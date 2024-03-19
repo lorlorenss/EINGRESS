@@ -7,6 +7,7 @@
     background-color: white;
     justify-content: center;
     color: var(--secondary);
+    cursor: pointer;
 }
 
 .delete img{
