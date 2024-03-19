@@ -18,7 +18,6 @@ input[type="checkbox"] {
     padding-left: 20px;
     padding-right: 20px;
 
-    overflow: hidden; /* Hide any overflow from the table */
 }
 
 .table-header {
@@ -33,4 +32,3 @@ input[type="checkbox"] {
     background-color: white; /* Optional: set a background color */
     z-index: 1; /* Ensure header is above table body */
 }
-

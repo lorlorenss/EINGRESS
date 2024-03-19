@@ -1,5 +1,4 @@
 body {
-    
     min-width: calc(100vw - 800px); 
     height: 100%;
     background-color: white;
@@ -150,8 +149,6 @@ span {
     background-color: var(--background);
     border-radius: 20px;
     padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     overflow-y: auto;
     display: grid;
 }
@@ -159,8 +156,6 @@ span {
 .role {
     display: flex;
     align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
     font-size: 1rem;
 }
 

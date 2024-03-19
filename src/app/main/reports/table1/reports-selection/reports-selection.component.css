@@ -2,17 +2,11 @@
     font-size: 12px;
 }
 
-input[type="checkbox"] {
-    padding-top: 10px;
-    width: 15px;
-    height: 15px;
-}
-
 .user {
     padding-left: 20px; /* Add padding for better appearance */
     padding-right: 20px; /* Add padding for better appearance */
     display: grid;
-    grid-template-columns: 20px repeat(4, 1fr); /* Fixed width first column, rest are 1fr */
+    grid-template-columns: 50% 50%; /* Fixed width first column, rest are 1fr */
     align-items: center;
     gap: 20px;
     border-top: 1px solid var(--background);
