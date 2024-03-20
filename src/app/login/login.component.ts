@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 
@@ -18,7 +18,7 @@ export class LoginComponent {
     private userService: UserService
   ){
     this.form = this.formBuilder.group({
-      email: ['',Validators.required],
+      username: ['',Validators.required],
       password: ['',Validators.required]
   });
   }
@@ -28,9 +28,16 @@ export class LoginComponent {
       return;
     }
 
-    this.userService.loginUser(this.form.value).subscribe( //Use Subscribe method to the Observable object
-      () => {
-        this.router.navigate(['/main']);
+    this.userService.loginUser(this.form.getRawValue()).subscribe( 
+      (response: any) => {
+        if(response){
+          alert('Login success');
+          localStorage.setItem('token', response.token)
+          this.router.navigateByUrl('/main');
+        }
+        else{
+          alert('Login failed');
+        }
       }
     );
   }

@@ -8,7 +8,9 @@ import { UsersComponent } from './main/users/users.component';
 import { AddUserFormComponent } from './main/users/add-user-btn/add-user-form/add-user-form.component';
 
 const routes: Routes = [
-
+  { path: 'login', component: LoginComponent},
+  { path: 'main', component: MainComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 @NgModule({
