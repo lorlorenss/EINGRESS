@@ -3,7 +3,7 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { User } from '../models/user.interface';
 import { AdminLoginService } from '../services/admin-login.service';
 
-@Controller('user')
+@Controller('users')
 export class AdminLoginController {
   constructor(private userService: AdminLoginService) {}
 
