@@ -12,8 +12,8 @@ import { ReportsComponent } from './main/reports/reports.component';
 import { UsersComponent } from './main/users/users.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './user.service';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { UserService } from './services/user.service';
 import { SecuritySummaryComponent } from './main/dashboard/security-summary/security-summary.component';
 import { SearchfieldComponent } from './main/users/searchfield/searchfield.component';
 import { ImportBtnComponent } from './main/users/import-btn/import-btn.component';
@@ -27,6 +27,9 @@ import { Table1Component } from './main/reports/table1/table1.component';
 import { UserDetailsComponent } from './main/reports/user-details/user-details.component';
 import { LoginSessionsComponent } from './main/reports/login-sessions/login-sessions.component';
 import { ReportsSelectionComponent } from './main/reports/table1/reports-selection/reports-selection.component';
+import { SharedRoutingModule } from './shared-routing/shared/shared-routing.module';
+import { CustomInterceptor } from './services/custom.interceptor';
+
 
 
 @NgModule({
@@ -59,10 +62,16 @@ import { ReportsSelectionComponent } from './main/reports/table1/reports-selecti
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedRoutingModule
   ],
   providers: [
-    UserService
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

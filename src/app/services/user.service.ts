@@ -9,19 +9,20 @@ import { User } from '../interface/user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8000/api/users';
+  private apiUrl = '/api/users';
 
   constructor(private http: HttpClient) { }
 
   getUser(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    const getUserUrl = `${this.apiUrl}/current-user}`;
+    return this.http.get<User[]>(getUserUrl);
   }
 
   addUser(user: User): Observable<User[]>{
     return this.http.post<User[]>(this.apiUrl, user);
   }
 
-  loginUser(credentials: {email: string, password: string}): Observable<any> { 
+  loginUser(credentials: {username: string, password: string}): Observable<any> { 
     const loginUrl = `${this.apiUrl}/login`;
     return this.http.post<any>(loginUrl, credentials);
   }
