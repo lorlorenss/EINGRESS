@@ -1,0 +1,27 @@
+* {
+    font-size: 1rem;
+
+}
+
+.table {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 60px auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.table-header {
+    color: gray;
+    display: grid;
+    grid-template-columns: auto auto; /* Fixed width first column, rest are 1fr */
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+
+    top: 0; /* Stick the header to the top */
+    background-color: white; /* Optional: set a background color */
+    z-index: 1; /* Ensure header is above table body */
+    width: 100%;
+}
