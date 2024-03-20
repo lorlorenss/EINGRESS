@@ -31,8 +31,9 @@ export class LoginComponent {
     this.userService.loginUser(this.form.getRawValue()).subscribe( 
       (response: any) => {
         if(response){
+          console.log(response),
           alert('Login success');
-          localStorage.setItem('token', response.token)
+          localStorage.setItem('token', response.access_token)
           this.router.navigateByUrl('/main');
         }
         else{
