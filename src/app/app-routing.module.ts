@@ -10,7 +10,7 @@ import { AddUserFormComponent } from './main/users/add-user-btn/add-user-form/ad
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'main', component: MainComponent},
-  { path: '', redirectTo: 'login', component: LoginComponent}
+  { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
 @NgModule({
