@@ -1,6 +1,10 @@
 * {
     font-size: 1rem;
+}
 
+span {
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .table {
@@ -13,15 +17,17 @@
 }
 
 .table-header {
+    display: grid;
     color: gray;
     display: grid;
-    grid-template-columns: auto auto; /* Fixed width first column, rest are 1fr */
     align-items: center;
-    gap: 20px;
-    padding: 20px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    grid-template-columns: 50% 50%; /* Fixed width first column, rest are 1fr */
+}
 
-    top: 0; /* Stick the header to the top */
-    background-color: white; /* Optional: set a background color */
-    z-index: 1; /* Ensure header is above table body */
-    width: 100%;
+.table-body {
+    overflow-y: auto;
 }
