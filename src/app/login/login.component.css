@@ -109,17 +109,7 @@
 }
 
 .remember{
-    color: var(--white);
-}
-
-.forgot-pass{
-    display: flex;
-    position: relative;
-    left: 48%;
     cursor: pointer;
-}
-
-.forgot-pass a{
     color: var(--white);
 }
 
