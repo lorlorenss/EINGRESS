@@ -29,6 +29,7 @@ import { LoginSessionsComponent } from './main/reports/login-sessions/login-sess
 import { ReportsSelectionComponent } from './main/reports/table1/reports-selection/reports-selection.component';
 import { SharedRoutingModule } from './shared-routing/shared/shared-routing.module';
 import { CustomInterceptor } from './services/custom.interceptor';
+import { SessionComponent } from './main/reports/login-sessions/session/session.component';
 
 
 
@@ -55,6 +56,7 @@ import { CustomInterceptor } from './services/custom.interceptor';
     UserDetailsComponent,
     LoginSessionsComponent,
     ReportsSelectionComponent,
+    SessionComponent,
 
   ],
   imports: [

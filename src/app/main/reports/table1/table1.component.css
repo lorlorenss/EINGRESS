@@ -1,6 +1,5 @@
 * {
     font-size: 1rem;
-
 }
 
 .table {
@@ -19,9 +18,13 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
-
+    position: sticky;
     top: 0; /* Stick the header to the top */
     background-color: white; /* Optional: set a background color */
     z-index: 1; /* Ensure header is above table body */
     width: 100%;
+}
+
+.table-body{
+    overflow-y: auto;
 }

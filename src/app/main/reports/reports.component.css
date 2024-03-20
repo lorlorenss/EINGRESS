@@ -6,11 +6,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* 4 columns of equal width */
-    grid-template-rows: repeat(4, auto);
+    grid-template-rows: repeat(4, 1fr);
     /* 4 rows with height based on content */
     gap: 20px;
     /* Gap between grid items */
-    
+    overflow: hidden;
 }
 
 .users-list {
@@ -19,7 +19,6 @@
     grid-row: 1 / 5;
     background-color: white;
     border-radius: 20px;
-    overflow-y: auto;
 }
 
 .user-details {
@@ -31,7 +30,7 @@
 }
 
 .login-sessions {
-    padding: 20px;
+    padding: 40px;
     grid-column: 2 / 3;
     grid-row: 2 / 5;
     background-color: white;

@@ -17,10 +17,11 @@ input[type="checkbox"] {
     grid-template-rows: 60px auto; /* Fixed height for header, rest fills remaining space */
     padding-left: 20px;
     padding-right: 20px;
-
+    
 }
 
 .table-header {
+    position: sticky;
     color: gray;
     display: grid;
     grid-template-columns: 20px repeat(4, 1fr); /* Fixed width first column, rest are 1fr */
@@ -31,4 +32,8 @@ input[type="checkbox"] {
     top: 0; /* Stick the header to the top */
     background-color: white; /* Optional: set a background color */
     z-index: 1; /* Ensure header is above table body */
+}
+
+.table-body{
+    overflow-y: auto;
 }
