@@ -6,7 +6,7 @@ import { ReportsComponent } from 'src/app/main/reports/reports.component';
 import { UsersComponent } from 'src/app/main/users/users.component';
 
 const routes: Routes = [
-  { path: 'main', 
+  { path: '', 
   component: MainComponent,
   children: [
     { path: 'dashboard', component: DashboardComponent },
