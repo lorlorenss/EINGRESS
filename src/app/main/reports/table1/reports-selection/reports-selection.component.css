@@ -1,6 +1,3 @@
-* {
-    font-size: 12px;
-}
 
 .user {
     padding-left: 20px; /* Add padding for better appearance */
@@ -29,4 +26,15 @@
     height: 50px;
     border-radius: 50px;
     border: 2px solid var(--secondary);
+}
+
+.name-email{
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.useremail{
+    color: var(--secondary);
 }
