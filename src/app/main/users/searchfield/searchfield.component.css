@@ -33,7 +33,5 @@
 }
 
 @media screen and (max-width: 700px) {
-    input ::placeholder{
-        display: none;
-    }
+ 
  }
