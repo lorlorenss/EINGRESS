@@ -32,3 +32,12 @@ input[type="checkbox"] {
 .table-body{
     overflow-y: auto;
 }
+
+@media screen and (max-width: 1000px) {
+.table{
+    padding: 0;
+    height: auto;
+    width: auto;
+    overflow-x: auto;
+}
+ }

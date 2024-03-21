@@ -53,31 +53,46 @@
 
 
 @media screen and (max-width: 1300px) {
-  .contents{
+  .contents {
     width: calc(100vw - 60px);
+
   }
 }
 
 
 @media screen and (max-width: 1300px) {
-  .contents{
+  .contents {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    overflow: auto;
+    height: auto;
   }
 
-  .security-summary{
+  .security-summary {
     grid-column: 1 / 3;
-    grid-row: 1 / 3;
+    grid-row: 1 / 4;
   }
 
-  .recent-alerts{
+  .recent-alerts {
     grid-column: 1 / 2;
-    grid-row: 3 / 4;
+    grid-row: 4 / 5;
+    padding: 20px;
   }
 
-  .recent-login{
+  .recent-login {
     grid-column: 2 / 3;
-    grid-row: 3 / 4;
+    grid-row: 4 / 5;
+    padding: 20px;
   }
 }
 
+@media screen and (max-width: 700px) {
+  .contents {
+    overflow: auto;
+    height: auto;
+  }
+
+  .security-summary{
+padding: 10px;
+  }
+}

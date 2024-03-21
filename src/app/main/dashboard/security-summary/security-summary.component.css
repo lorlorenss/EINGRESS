@@ -2,10 +2,10 @@
     width: 100%;
     height: calc(100% - 50px); /* Set the height to fill the remaining viewport height */
     display: grid;
-    grid-template-rows: 20% 1fr;
+    grid-template-rows: repeat(6, 1fr);
     gap: 20px;
   }
-  
+
 .upper{
   gap: 20px;
   display: grid;
@@ -13,8 +13,9 @@
 }
 
 .lower{
+  grid-row: 2 / 7;
+  height: 100%;
 
-  grid-row: 2 / 5;
 }
   .logins-today {
     display: grid;
@@ -23,7 +24,6 @@
     grid-row: 1 / 2;
     align-items: center;
     font-family: Poppins;
-
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -31,6 +31,7 @@
     background-color: var(--background);
     border-radius: 10px;
     color: var(--success);
+    padding: 0;
   }
   
   .not-on-site {
@@ -80,11 +81,12 @@
   }
   
   .activity-content {
+    padding-top: 20px;
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: 20px 1fr; /* First column 20px, second column fills the remaining width */
-    grid-template-rows: repeat(8, 1fr) 10px 1fr; /* 9 rows with equal height, 9th row with 10px height, 10th row returns to 1fr */
+    grid-template-rows: repeat(8, 1fr) 10px 50px; /* 9 rows with equal height, 9th row with 10px height, 10th row returns to 1fr */
     gap: 10px; /* Gap between grid items */
   }
   
@@ -135,8 +137,22 @@
 
   @media screen and (max-width: 1300px) {
     .security-content{
-      grid-template-rows: 1fr 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
     }
-
+    .upper{
+      grid-row: 1 / 2;
+    }
+    .lower{
+      grid-row: 2 / 6;
+    }
   }
   
+
+  @media screen and (max-width: 700px) {
+    .upper{
+      font-size: 12px;
+    }
+    .count{
+      font-size: 1rem;
+    }
+  }

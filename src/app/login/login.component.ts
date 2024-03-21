@@ -34,7 +34,7 @@ export class LoginComponent {
           console.log(response),
           alert('Login success');
           localStorage.setItem('token', response.access_token)
-          this.router.navigateByUrl('/main');
+          this.router.navigateByUrl('/dashboard');
         }
         else{
           alert('Login failed');
