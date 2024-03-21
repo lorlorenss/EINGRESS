@@ -47,7 +47,7 @@
 
 
 .inner-page{
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     display:flex;
     justify-content: center;
     max-height: 100%;
