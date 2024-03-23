@@ -8,4 +8,16 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
+  constructor(private router: Router){
+  }
+
+  logout(){
+    const confirmation = confirm('Do you want to Logout?');
+
+    if(confirmation){
+      localStorage.removeItem('token');
+      this.router.navigateByUrl('/login');
+    }
+  }
+  
 }
