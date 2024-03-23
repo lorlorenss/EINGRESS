@@ -19,6 +19,7 @@
 
 .security-summary {
   padding: 40px;
+  padding-bottom: 0;
   grid-row-start: 1;
   grid-row-end: 3;
   grid-column-start: 1;
@@ -35,6 +36,7 @@
   grid-column-end: 4;
   background-color: white;
   border-radius: 20px;
+  padding-bottom: 0;
 }
 
 .recent-login {
@@ -45,12 +47,52 @@
   grid-column-end: 4;
   background-color: white;
   border-radius: 20px;
+  padding-bottom: 0;
 }
 
 
 
 @media screen and (max-width: 1300px) {
+  .contents {
+    width: calc(100vw - 60px);
 
+  }
 }
 
 
+@media screen and (max-width: 1300px) {
+  .contents {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    overflow: auto;
+    height: auto;
+  }
+
+  .security-summary {
+    grid-column: 1 / 3;
+    grid-row: 1 / 4;
+  }
+
+  .recent-alerts {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+    padding: 20px;
+  }
+
+  .recent-login {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .contents {
+    overflow: auto;
+    height: auto;
+  }
+
+  .security-summary{
+padding: 10px;
+  }
+}
