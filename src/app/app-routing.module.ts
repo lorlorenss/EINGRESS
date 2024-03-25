@@ -7,6 +7,7 @@ import { ReportsComponent } from './main/reports/reports.component';
 import { UsersComponent } from './main/users/users.component';
 import { AddUserFormComponent } from './main/users/add-user-btn/add-user-form/add-user-form.component';
 import { authGuard } from './guards/auth.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -25,6 +26,10 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
     ]
   },
+  {
+    path:'**',
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

@@ -29,6 +29,7 @@ import { LoginSessionsComponent } from './main/reports/login-sessions/login-sess
 import { ReportsSelectionComponent } from './main/reports/table1/reports-selection/reports-selection.component';
 import { CustomInterceptor } from './services/custom.interceptor';
 import { SessionComponent } from './main/reports/login-sessions/session/session.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -56,6 +57,7 @@ import { SessionComponent } from './main/reports/login-sessions/session/session.
     LoginSessionsComponent,
     ReportsSelectionComponent,
     SessionComponent,
+    PageNotFoundComponent,
 
   ],
   imports: [
