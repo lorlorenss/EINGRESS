@@ -1,6 +1,6 @@
 export interface Employee {
     fullname: string;
     role: string;
-    regidate: string;
+    regdate: string;
     lastlogdate: string;
 }
