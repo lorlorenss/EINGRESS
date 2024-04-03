@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { config } from './orm.config';
 import { AuthModule } from './auth/auth.module';
 import { AdminLoginModule } from './admin-login/admin-login.module';
+import { EmployeeListModule } from './employee-list/employee-list.module';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { AdminLoginModule } from './admin-login/admin-login.module';
     }),
     AdminLoginModule,
     AuthModule,
+    EmployeeListModule,
   ],
   controllers: [AppController],
   providers: [AppService],
