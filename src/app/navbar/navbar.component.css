@@ -205,3 +205,9 @@ span{
 .side-bar:hover .collapse-icon{
     content: url('/assets/images/collapse-left.png');  
 }
+
+.logout-pointer{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
