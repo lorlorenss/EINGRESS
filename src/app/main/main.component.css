@@ -47,6 +47,7 @@
 
 
 .inner-page{
+    /* background-color: aquamarine; */
     display:flex;
     justify-content: center;
     max-height: 100%;
@@ -57,4 +58,11 @@
     overflow: auto; /* Allow scrolling */
     transition: left 0.2s ease, width 0.2s ease-out;
     /* background-color: pink; */
+}
+
+
+@media screen and (max-width: 1300px){
+    .inner-page{
+        width: 100vw;
+    }
 }

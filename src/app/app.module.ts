@@ -27,8 +27,9 @@ import { Table1Component } from './main/reports/table1/table1.component';
 import { UserDetailsComponent } from './main/reports/user-details/user-details.component';
 import { LoginSessionsComponent } from './main/reports/login-sessions/login-sessions.component';
 import { ReportsSelectionComponent } from './main/reports/table1/reports-selection/reports-selection.component';
-import { SharedRoutingModule } from './shared-routing/shared/shared-routing.module';
 import { CustomInterceptor } from './services/custom.interceptor';
+import { SessionComponent } from './main/reports/login-sessions/session/session.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -55,6 +56,8 @@ import { CustomInterceptor } from './services/custom.interceptor';
     UserDetailsComponent,
     LoginSessionsComponent,
     ReportsSelectionComponent,
+    SessionComponent,
+    PageNotFoundComponent,
 
   ],
   imports: [
@@ -63,7 +66,6 @@ import { CustomInterceptor } from './services/custom.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedRoutingModule
   ],
   providers: [
     UserService,

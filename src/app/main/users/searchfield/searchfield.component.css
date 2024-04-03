@@ -1,5 +1,5 @@
 .search {
-    width: 240px; /* Updated width */
+    width: 100%; /* Updated width */
     height: 40px; /* Updated height */
     border-radius: 20px; /* Updated border-radius */
     background-color: white; /* Updated background-color */
@@ -31,3 +31,7 @@
 .search.active {
     border: 1px solid var(--background); /* Border color when input is focused */
 }
+
+@media screen and (max-width: 700px) {
+ 
+ }
