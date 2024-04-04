@@ -7,4 +7,5 @@ export interface Employee {
     regdate?: string;
     lastlogdate?: string;
     profileImage?: string;
+    profileImagePath?: string;
   }
