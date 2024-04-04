@@ -1,12 +1,12 @@
-<div class="user" (click)="toggleCheckbox(1)">
+<div *ngFor="let employee of employee" class="user">
     <div class="checkbox-content">
-        <input type="checkbox" [checked]="isHeaderChecked">
+        <input type="checkbox" >
     </div>
     <div class="user-content">
         <img src="/assets/images/max-smith.png" alt="">
-       <div>Max Smith</div>
+       <div>{{ employee.fullname }}</div>
     </div>
-    <div class="role-content">Employee</div>
-    <div class="registered-date-content">February 1, 2024</div>
-    <div class="last-login-content">February 1, 2024</div>
+    <div class="role-content">{{ employee.role }}</div>
+    <div class="registered-date-content">{{ employee.regdate }}</div>
+    <div class="last-login-content">{{ employee.lastlogdate }}</div>
 </div>
