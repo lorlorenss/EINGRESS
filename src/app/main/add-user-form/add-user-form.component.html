@@ -1,7 +1,7 @@
 <body>
     <div class="header">
         <span>User</span>
-        <button class="close pointer" [routerLink]="['/users']">
+        <button class="close pointer" [routerLink]="['/main/users']">
             <img class="icon pointer" src="/assets/images/exit.png">
         </button>
     </div>
@@ -11,8 +11,9 @@
         <div class="left-container">
             <div class="photo-section">
                 <img class="photoholder" src="/assets/images/max-smith.png">
-                <div class="icons">
-                    <div class="edit">
+                <div class="icons pointer">
+                    <div class="edit" (click)="importButtonClick()">
+                        <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
                         <img class="icon pointer" src="/assets/images/edit-blue.png">
                     </div>
                     <div class="delete">
