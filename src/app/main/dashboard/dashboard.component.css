@@ -52,7 +52,8 @@
 
 
 
-@media screen and (max-width: 1300px) {
+
+@media screen and (max-width: 1700px) {
   .contents {
     width: calc(100vw - 60px);
 
@@ -65,7 +66,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
     overflow: auto;
-    height: auto;
+    height: 100%;
   }
 
   .security-summary {
@@ -89,7 +90,7 @@
 @media screen and (max-width: 700px) {
   .contents {
     overflow: auto;
-    height: auto;
+    height: 100%;
   }
 
   .security-summary{
