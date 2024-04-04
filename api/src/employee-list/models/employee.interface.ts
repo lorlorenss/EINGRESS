@@ -6,4 +6,5 @@ export interface Employee {
     role?:string;
     regdate?: string;
     lastlogdate?: string;
+    profileImage?: string;
   }

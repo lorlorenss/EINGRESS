@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { _dbemployee } from '../models/employee.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Observable, from } from 'rxjs';
+import { Observable, from, switchMap } from 'rxjs';
 import { Employee } from '../models/employee.interface';
 
 @Injectable()
@@ -29,7 +29,10 @@ export class EmployeeService {
       }
 
       updateOne(id: number, employee: Employee): Observable<any> {
-      return from(this.userRepository.update(id, employee));
+      return from(this.userRepository.update(id, employee)).pipe(
+        switchMap(()=> this.findOne(id))
+      );
       }      
+      
       
 }
