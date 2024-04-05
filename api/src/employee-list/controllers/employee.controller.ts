@@ -1,8 +1,28 @@
-import { Body, Controller, Get, Param, Post , Delete, Put} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post , Delete, Put, UseInterceptors, UploadedFile, NotFoundException, Res} from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of, switchMap } from 'rxjs';
+import { FileInterceptor } from '@nestjs/platform-express';
+import {diskStorage} from 'multer';
+import {v4 as uuid4} from 'uuid';
+import { Response } from 'express';
+import * as path from 'path';
+import { join } from 'path';
 
+
+export const storage = {
+  storage: diskStorage ({
+    destination: './uploads/profileimages',
+    filename: (req, file, cb) => {
+      const filename: string = path.parse(file.originalname).name.replace(/\s/g,'')+uuid4();
+      const extenstion: string =path.parse(file.originalname).ext;
+
+      cb(null, `${filename}${extenstion}`)
+    }
+  })
+
+  
+}
 @Controller('employee')
 export class EmployeeController {
     constructor(private userService: EmployeeService) {}
@@ -17,6 +37,28 @@ export class EmployeeController {
       return this.userService.findOne(params.id);
     }
 
+    // @Get(':id') // Route for findOne
+    // findOne(@Param('id') id: string, @Res() res: Response): Observable<Employee> {
+    //   const employeeId: number = parseInt(id, 10);
+
+    //   // Fetch the employee by ID
+    //   return this.userService.findOne(employeeId).pipe(
+    //     switchMap(employee => {
+    //       // Check if employee with given ID exists
+    //       if (!employee) {
+    //         throw new NotFoundException(`Employee with ID ${employeeId} not found`);
+    //       }
+
+    //       // If employee profile image exists, add its path to the employee object
+    //       if (employee.profileImage) {
+    //         employee.profileImagePath = `/employee/${employeeId}/profileimage`;
+    //       }
+
+    //       return of(employee);
+    //     })
+    //   );
+    // }
+    
     @Get() // Custom route name for findAll
     findAll(): Observable<Employee[]> {
       return this.userService.findAll();
@@ -31,4 +73,75 @@ export class EmployeeController {
     updateOne(@Param('id') id: string, @Body() employee: Employee): Observable<any> {
       return this.userService.updateOne(Number(id), employee);
     }
+
+    @Post(':id/upload') // Route for uploading photo for specific employee
+    @UseInterceptors(FileInterceptor('file', storage))
+    uploadFile(@UploadedFile() file, @Param('id') id: string): Observable<Object> {
+      const employeeId: number = parseInt(id, 10);
+  
+      // Fetch the employee by ID
+      return this.userService.findOne(employeeId).pipe(
+        switchMap(employee => {
+          // Check if employee with given ID exists
+          if (!employee) {
+            throw new NotFoundException(`Employee with ID ${employeeId} not found`);
+          }
+  
+          // Update employee's profile image
+          return this.userService.updateOne(employeeId, { profileImage: file.filename }).pipe(
+            map(updatedEmployee => ({ imagePath: file.filename }))
+          );
+        })
+      );
+    }
+
+    // @Get('profile-image/:imagename')
+    // findProfileImage(@Param('imagename') imagename, @Res() res): Observable<Object> {
+    //     return of(res.sendFile(join(process.cwd(), 'uploads/profileimages/' + imagename)));
+    // }
+
+
+    @Get(':id/profile')
+    findProfileImage(@Param('id') id, @Res() res): Observable<Object> {
+      const employeeId: number = parseInt(id, 10);
+      return this.userService.findOne(employeeId).pipe(
+        switchMap(employee => {
+          if (!employee) {
+            throw new NotFoundException(`Employee with ID ${employeeId} not found`);
+          }
+          if (!employee.profileImage) {
+            throw new NotFoundException(`Profile image not found for employee with ID ${employeeId}`);
+          }
+          const imagePath = path.join(process.cwd(), 'uploads/profileimages' + employee.profileImage);
+          // Here you can return both the employee details and the image file path
+          console.log(employee)
+          return of({ imagePath });
+        }),
+        catchError(error => {
+          throw new NotFoundException(`Employee with ID ${employeeId} not found`);
+        })
+      );
+    }
+    // @Post('upload')
+    // @UseInterceptors(FileInterceptor('file', storage))
+    // uploadFile(@UploadedFile() file, ): Observable<Object> {
+    //   console.log(file);
+    //   return of({imagePath: file.filename});
+    // }
+
+      // @Post(':/upload')
+    // @UseInterceptors(FileInterceptor('file', storage))
+    // uploadFile(@UploadedFile() file, @Request() req): Observable<Object> {
+      
+    //   const employee: Employee = req.employee;
+    //   console.log(employee);
+
+    //   return this.userService.updateOne(employee.id, {profileImage: file.filename}).pipe(
+    //     map((employee: Employee) => ({profileImage: employee.profileImage}))
+    //   )
+
+    //   // return of({imagePath: file.filename});
+    // }
 }
+
+
