@@ -12,19 +12,32 @@ export class UserSelectionComponent implements OnInit {
   @Input() isHeaderChecked: boolean = false; // Receive state of header checkbox
   employee: Employee[] = [];
 
-  toggleCheckbox(index: number) {
-    this.isHeaderChecked = !this.isHeaderChecked;
+  toggleSelection(employee: Employee): void{
+    employee.selected = !employee.selected;
   }
+
+  constructor(private employeeService: EmployeeService,){}
 
   ngOnInit(){
     this.loadEmployeeInfo();
+    this.employeeService.deletedClicked$.subscribe(() => {
+      this.deleteEmployee();
+    });
   }
-
-  constructor(private employeeService: EmployeeService){}
 
   loadEmployeeInfo(){
     this.employeeService.getEmployee().subscribe(employee => {
       this.employee = employee;
     })
   }
+
+  deleteEmployee(){
+    const selectedEmployee = this.employee.filter(employee => employee.selected).map(employee => employee.id)
+    if(selectedEmployee.length > 0){
+      this.employeeService.deleteEmployee(selectedEmployee).subscribe(()=>{
+        this.loadEmployeeInfo();
+      })
+    }
+  }
+
 }

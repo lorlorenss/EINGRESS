@@ -1,7 +1,7 @@
 <div class="table">
     <div class="table-header">
         <div class="checkbox-header">
-            <input type="checkbox" (change)="toggleHeaderCheckbox($event)" [checked]="isHeaderChecked">
+            <input type="checkbox">
           </div>
         <div class="user-header">User</div>
         <div class="role-header">Role</div>
@@ -10,7 +10,7 @@
     </div>
 
     <div class="table-body">
-        <app-user-selection [isHeaderChecked]="isHeaderChecked"></app-user-selection>
+        <app-user-selection></app-user-selection>
     </div>
   
     </div>  

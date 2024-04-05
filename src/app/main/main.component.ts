@@ -7,7 +7,7 @@ import { User } from '../interface/user.interface';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent{
 
   private user: User[] = []
 
@@ -16,7 +16,7 @@ export class MainComponent implements OnInit {
   ){
   }
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     this.loadUser();
   }
 
@@ -24,5 +24,5 @@ export class MainComponent implements OnInit {
     this.userService.getUser().subscribe((response: any) =>{
       this.user = response.data;
     })
-  }
+  }*/
 }
