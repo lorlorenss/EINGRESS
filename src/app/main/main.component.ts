@@ -16,7 +16,7 @@ export class MainComponent{
   ){
   }
 
-  /*ngOnInit(): void {
+  ngOnInit(): void {
     this.loadUser();
   }
 
@@ -24,5 +24,5 @@ export class MainComponent{
     this.userService.getUser().subscribe((response: any) =>{
       this.user = response.data;
     })
-  }*/
+  }
 }
