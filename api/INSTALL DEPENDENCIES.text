@@ -12,6 +12,8 @@
 
 # npm i --save @nestjs/config
 # npm install --save @nestjs/typeorm typeorm pg -->
+# npm install --save-dev @types/multer
+# npm i uuid --save
 ---------------------------------------------------
 CREAATE AN .env file
 

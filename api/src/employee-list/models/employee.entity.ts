@@ -21,4 +21,7 @@ export class _dbemployee {
 
   @Column()
   lastlogdate: string;
+
+  @Column({nullable: true })
+  profileImage: string;
 }
