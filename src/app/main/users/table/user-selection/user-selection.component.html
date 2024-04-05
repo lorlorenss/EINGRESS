@@ -1,6 +1,6 @@
 <div *ngFor="let employee of employee" class="user">
     <div class="checkbox-content">
-        <input type="checkbox" >
+        <input type="checkbox" [(ngModel)]="employee.selected" change="toggleSelection(employee)">
     </div>
     <div class="user-content">
         <img src="/assets/images/max-smith.png" alt="">

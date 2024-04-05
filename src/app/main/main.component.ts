@@ -7,7 +7,7 @@ import { User } from '../interface/user.interface';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent{
 
   private user: User[] = []
 
