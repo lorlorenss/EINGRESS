@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Employee } from 'src/app/interface/employee.interface';
 import { EmployeeService } from 'src/app/services/employee.service';
 
@@ -9,8 +9,9 @@ import { EmployeeService } from 'src/app/services/employee.service';
 })
 export class UserSelectionComponent implements OnInit {
   
-  @Input() isHeaderChecked: boolean = false; // Receive state of header checkbox
-  employee: Employee[] = [];
+  employees: Employee[] = [];
+
+  @Output() employeeSelected = new EventEmitter<any>();
 
   toggleSelection(employee: Employee): void{
     employee.selected = !employee.selected;
@@ -20,19 +21,21 @@ export class UserSelectionComponent implements OnInit {
 
   ngOnInit(){
     this.loadEmployeeInfo();
+
     this.employeeService.deletedClicked$.subscribe(() => {
       this.deleteEmployee();
     });
+    
   }
 
   loadEmployeeInfo(){
     this.employeeService.getEmployee().subscribe(employee => {
-      this.employee = employee;
+      this.employees = employee;
     })
   }
 
   deleteEmployee(){
-    const selectedEmployee = this.employee.filter(employee => employee.selected).map(employee => employee.id)
+    const selectedEmployee = this.employees.filter(employees => employees.selected).map(employees => employees.id)
     if(selectedEmployee.length > 0){
       this.employeeService.deleteEmployee(selectedEmployee).subscribe(()=>{
         this.loadEmployeeInfo();
@@ -40,4 +43,7 @@ export class UserSelectionComponent implements OnInit {
     }
   }
 
+  selectedEmployee(employee: Employee){
+    this.employeeSelected.emit(employee);
+  }
 }

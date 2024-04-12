@@ -1,0 +1,20 @@
+<div *ngIf="employeeDetails" class="container">
+    <div class="card">
+        <div class="close-container">
+            <button class="close-pointer">
+                <img class="icon-pointer" src="/assets/images/exit.png">
+            </button>
+        </div>
+        <div class="user-image">
+        </div>
+        <div class="user-employee-information">
+            <p>Name: {{ employeeDetails.fullname }}</p>
+            <p>Position: {{ employeeDetails.role }}</p>
+            <p>Id: {{ employeeDetails.id }}</p>
+            <p>Age: </p>
+            <p>Birthday: </p>
+            <p>Logins: </p>
+            <p>Login Days: </p>
+        </div>
+    </div>
+</div>

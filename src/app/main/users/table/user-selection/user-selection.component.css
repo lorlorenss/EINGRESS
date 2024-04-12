@@ -5,10 +5,10 @@ input[type="checkbox"] {
 }
 
 .user {
-    padding-left: 20px; /* Add padding for better appearance */
-    padding-right: 20px; /* Add padding for better appearance */
-    display: grid;
-    grid-template-columns: 20px repeat(4, 1fr); /* Fixed width first column, rest are 1fr */
+    padding-left: 20px; 
+    padding-right: 20px; 
+    display: flex;
+    grid-template-columns: 20px repeat(4, 1fr); 
     align-items: center;
     gap: 20px;
     border-top: 1px solid var(--background);
@@ -31,4 +31,13 @@ input[type="checkbox"] {
     height: 50px;
     border-radius: 50px;
     border: 2px solid var(--secondary);
+    cursor: pointer;
+}
+
+.employee-info-container{
+    display: grid;
+    cursor: pointer;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
