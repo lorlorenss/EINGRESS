@@ -36,7 +36,7 @@ export class EmployeeService {
       return from(this.userRepository.delete(id));
       }
 
-      updateOne(id: number, employee: Employee): Observable<any> {
+      updateOne(id: number, employee: Employee): Observable<Employee> {
       return from(this.userRepository.update(id, employee)).pipe(
         switchMap(()=> this.findOne(id))
       );
