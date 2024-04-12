@@ -67,7 +67,10 @@ export class EmployeeController {
           }
   
           // Update employee's profile image
-          return this.userService.updateOne(employeeId, { profileImage: file.filename }).pipe(
+          return this.userService.updateOne(employeeId, {
+            profileImage: file.filename,
+            regdate: ''
+          }).pipe(
             map(updatedEmployee => ({ imagePath: file.filename }))
           );
         })
