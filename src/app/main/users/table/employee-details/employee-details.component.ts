@@ -11,9 +11,13 @@ import { EventEmitter } from '@angular/core';
 })
 export class EmployeeDetailsComponent {
   
-   employeeDetails!: Employee;
+   employeeDetails!: Employee | undefined;
   
   showEmployeeDetails(employee: Employee){
     this.employeeDetails = employee;
+  }
+
+  hideEmployeeDetails(){
+    this.employeeDetails = undefined;
   }
 }

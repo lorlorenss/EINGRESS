@@ -1,7 +1,7 @@
 <div *ngIf="employeeDetails" class="container">
     <div class="card">
         <div class="close-container">
-            <button class="close-pointer">
+            <button class="close-pointer" (click)="hideEmployeeDetails()">
                 <img class="icon-pointer" src="/assets/images/exit.png">
             </button>
         </div>
