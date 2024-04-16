@@ -1,13 +1,7 @@
-<body>
-    <div class="header">
-        <span>User</span>
-        <button class="close pointer" [routerLink]="['/main/users']">
-            <img class="icon pointer" src="/assets/images/exit.png">
-        </button>
-    </div>
-
+<div *ngIf="addUserForm" class="container">
 
     <div class="main-container">
+        
         <div class="left-container">
             <div class="photo-section">
                 <img class="photoholder" src="/assets/images/max-smith.png">
@@ -67,6 +61,11 @@
 
         </div>
         <div class="right-container">
+
+            <button (click)="hideAddUserForm()" class="close">
+                <img class="icon pointer" src="/assets/images/exit.png">
+            </button>
+
             <div class="contact-number">
                 <span>Contact Number</span>
                 <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx">
@@ -95,4 +94,4 @@
         </div>
     </div>
 
-</body>
+</div>

@@ -16,6 +16,9 @@ export class EmployeeService {
   private deletedClickedSource = new Subject<void>();
   deletedClicked$ = this.deletedClickedSource.asObservable();
 
+  private addUserClickedSource = new Subject<void>();
+  addUserClicked$ = this.addUserClickedSource.asObservable();
+
   constructor(private http: HttpClient) { }
 
   getEmployee(): Observable<Employee[]> {
@@ -31,6 +34,10 @@ export class EmployeeService {
 
   triggerDelete(){
     this.deletedClickedSource.next();
+  }
+
+  triggerAddUser(){
+    this.addUserClickedSource.next();
   }
 
 

@@ -1,13 +1,16 @@
 
-body {
-    /* min-width: calc(100vw - 800px);  */
-    height: 100%;
-    background-color: white;
-    border-radius: 20px;
-    padding: 20px;
-    overflow-y: auto;
-    max-width: 800px;
-
+.container {
+    display: flex; 
+    position: fixed; 
+    z-index: 6; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    /*overflow-y: scroll;*/
+    background-color: rgba(0,0,0,0.4); 
+    justify-content: center;
+    padding-top: 80px;
 }
 
 span {
@@ -15,7 +18,7 @@ span {
 }
 
 .textbox {
-    width: 100%;
+    width: 70%;
     height: 40px;
     border-radius: 10px;
     padding-left: 20px;
@@ -26,17 +29,13 @@ span {
     border: 2px solid lightgray;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-
-}
-
 .close {
+    position: absolute;
     border-radius: 5px;
     background-color: white;
     width: 20px;
     height: 20px;
+    right: 0px;
 }
 
 .icon {
@@ -45,26 +44,29 @@ span {
 }
 
 .main-container {
-    width: 100%;
+    width: 50%;
     height: calc(100% - 20px);
     gap: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 20px;
+    align-items: center;
+    background-color: var(--white);
 }
 
 .left-container {
     display: grid;
-  grid-template-rows: 160px 60px 60px 300px 40px;
-  grid-template-columns: auto; /* Adjust as needed */
-  grid-gap: 10px; /* Adjust the gap between grid items */
+    grid-template-rows: 160px 60px 60px 300px 40px;
+    grid-template-columns: auto; /* Adjust as needed */
+    grid-gap: 10px; /* Adjust the gap between grid items */
 }   
 
 .right-container {
     display: grid;
+    position: relative;
     grid-template-rows: 160px 60px 60px 300px 40px;
-  grid-template-columns: auto; /* Adjust as needed */
-  grid-gap: 10px; /* Adjust the gap between grid items */
+    grid-template-columns: auto; /* Adjust as needed */
+    grid-gap: 10px; /* Adjust the gap between grid items */
 }
 
 .photo-section {
@@ -146,6 +148,9 @@ span {
     flex-direction: column;
 }
 
+.role-container{
+    width: 100%;    
+}
 
 .roles {
     width: 100%;
