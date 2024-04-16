@@ -6,4 +6,5 @@ export interface Employee {
     lastlogdate: string;
     selected?: boolean;
     email: string;
+    phone: string;
 }
