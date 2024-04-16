@@ -1,7 +1,15 @@
-<div *ngIf="addUserForm" class="container">
+<body *ngIf="addUserForm">
+<div  class="container">
+
+    <div class="header">
+        <span>User</span>
+        <button (click)="hideAddUserForm()" class="close">
+            <img class="icon pointer" src="/assets/images/exit.png">
+        </button>
+    </div>
+
 
     <div class="main-container">
-        
         <div class="left-container">
             <div class="photo-section">
                 <img class="photoholder" src="/assets/images/max-smith.png">
@@ -62,9 +70,7 @@
         </div>
         <div class="right-container">
 
-            <button (click)="hideAddUserForm()" class="close">
-                <img class="icon pointer" src="/assets/images/exit.png">
-            </button>
+           
 
             <div class="contact-number">
                 <span>Contact Number</span>
@@ -95,3 +101,4 @@
     </div>
 
 </div>
+</body>
