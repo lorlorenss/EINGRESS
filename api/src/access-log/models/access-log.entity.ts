@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { _dbemployee } from '../../employee-list/models/employee.entity';
 
 @Entity()
-export class _dbAccessLog {
+export class _dbaccesslog {
   @PrimaryGeneratedColumn()
   id: number;
 

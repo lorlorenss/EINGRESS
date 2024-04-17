@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { _dbAccessLog } from '../../access-log/models/access-log.entity'; // Import the AccessLog entity
+import { _dbaccesslog } from '../../access-log/models/access-log.entity'; // Import the AccessLog entity
 
 @Entity()
 export class _dbemployee {
@@ -21,12 +21,15 @@ export class _dbemployee {
   @Column()
   regdate: string;
 
+  @Column()
+  lastlogdate: string;
+
   @Column({ nullable: true })
   profileImage: string;
 
   // @Column({ nullable: true })
   // profileImagePath?: string;
 
-  @OneToMany(() => _dbAccessLog, accessLog => accessLog.employee)
-  accessLogs: _dbAccessLog[]; // One-to-many relationship with AccessLog
+  @OneToMany(() => _dbaccesslog, accessLog => accessLog.employee)
+  accessLogs: _dbaccesslog[]; // One-to-many relationship with AccessLog
 }

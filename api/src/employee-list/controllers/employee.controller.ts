@@ -28,8 +28,9 @@ export class EmployeeController {
     constructor(private userService: EmployeeService) {}
 
     @Post()
-    create(@Body() employee: Employee): Observable<Employee | Object> {
-      return this.userService.create(employee);
+    @UseInterceptors(FileInterceptor('file', storage))
+    create(@Body() employee: Employee, @UploadedFile() file: Express.Multer.File): Observable<Employee | Object> {
+        return this.userService.create(employee, file);
     }
 
     @Get(':id') // Route for findOne
@@ -69,7 +70,8 @@ export class EmployeeController {
           // Update employee's profile image
           return this.userService.updateOne(employeeId, {
             profileImage: file.filename,
-            regdate: ''
+            regdate: '',
+            lastlogdate: ''
           }).pipe(
             map(updatedEmployee => ({ imagePath: file.filename }))
           );
