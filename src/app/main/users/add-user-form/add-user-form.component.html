@@ -12,11 +12,11 @@
     <div class="main-container">
         <div class="left-container">
             <div class="photo-section">
-                <img class="photoholder" src="/assets/images/max-smith.png">
+                <img class="photoholder" [src]="photoSrc">
                 <div class="icons pointer">
-                    <div class="edit" (click)="importButtonClick()">
-                        <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
-                        <img class="icon pointer" src="/assets/images/edit-blue.png">
+                    <div class="edit">
+                        <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display:none">
+                        <img class="icon pointer" src="/assets/images/edit-blue.png" (click)="fileInput.click()">
                     </div>
                     <div class="delete">
                         <img class="icon pointer" src="/assets/images/delete-red.png">
@@ -26,40 +26,41 @@
 
             <div class="name">
                 <span>Full Name</span>
-                <input class="textbox" type="text" placeholder="Enter Name">
+                <input class="textbox" type="text" placeholder="Enter Name" [(ngModel)]="newEmployee.fullname">
             </div>
             <div class="email">
                 <span>Email</span>
-                <input class="textbox" type="text" placeholder="Enter Name">
+                <input class="textbox" type="text" placeholder="Enter Email" [(ngModel)]="newEmployee.email">
             </div>
             <div class="role-container">
                 <span>Role</span>
                 <div class="roles">
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input type="radio" name="position" [value]="'CEO'" (change)="onRoleChange($event)">
                         <span>CEO</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input type="radio" name="position" [value]="'Administrator'" (change)="onRoleChange($event)">
                         <span>Administrator</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input type="radio" name="position" [value]="'Manager'" (change)="onRoleChange($event)">
                         <span>Manager</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input type="radio" name="position" [value]="'Developer'" (change)="onRoleChange($event)">
                         <span>Developer</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input type="radio" name="position" [value]="'HR'" (change)="onRoleChange($event)">
                         <span>HR</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input type="radio" name="position" [value]="'Guest'" (change)="onRoleChange($event)">
                         <span>Guest</span>
                     </div>
                 </div>
+                <div *ngIf="!newEmployee.role" class="validation-message">Please select a role.</div>
             </div>
             <div class="dismiss-container">
                 <div class="dismiss-user pointer">
@@ -74,7 +75,7 @@
 
             <div class="contact-number">
                 <span>Contact Number</span>
-                <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx">
+                <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx" [(ngModel)]="newEmployee.phone">
             </div>
 
             <div class="fingerprint-container">
@@ -96,7 +97,7 @@
                 </div>
                 </div>
             </div>
-            <div class="submit-user pointer">Submit</div>
+            <div class="submit-user pointer" (click)="submitUser()">Submit</div>
         </div>
     </div>
 
