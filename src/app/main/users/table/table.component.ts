@@ -1,5 +1,7 @@
-import { Component, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, ViewChild, } from '@angular/core';
 import { UserSelectionComponent } from './user-selection/user-selection.component';
+import { Employee } from 'src/app/interface/employee.interface';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
 @Component({
   selector: 'app-table',
@@ -7,4 +9,9 @@ import { UserSelectionComponent } from './user-selection/user-selection.componen
   styleUrls: ['./table.component.css']
 })
 export class TableComponent  {
+  @ViewChild(EmployeeDetailsComponent) employeeDetailsComponent!: EmployeeDetailsComponent; 
+
+  onEmployeeSelected(employee: Employee){
+    this.employeeDetailsComponent.showEmployeeDetails(employee);
+  }
 }

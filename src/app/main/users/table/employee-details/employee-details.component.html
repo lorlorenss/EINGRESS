@@ -1,19 +1,19 @@
-<body>
+<body *ngIf="employeeDetails">
+    <div class="container">
     <div class="header">
-        <span>User</span>
-        <button class="close pointer" [routerLink]="['/main/users']">
+        <span>Update User</span>
+        <button class="close pointer" (click)="hideEmployeeDetails()">
             <img class="icon pointer" src="/assets/images/exit.png">
         </button>
     </div>
-
 
     <div class="main-container">
         <div class="left-container">
             <div class="photo-section">
                 <img class="photoholder" src="/assets/images/max-smith.png">
                 <div class="icons pointer">
-                    <div class="edit" (click)="importButtonClick()">
-                        <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
+                    <div class="edit">
+                        <input type="file" #fileInput style="display: none;">
                         <img class="icon pointer" src="/assets/images/edit-blue.png">
                     </div>
                     <div class="delete">
@@ -24,11 +24,11 @@
 
             <div class="name">
                 <span>Full Name</span>
-                <input class="textbox" type="text" placeholder="Enter Name">
+                <input class="textbox" type="text" placeholder="Enter Name" value="{{ employeeDetails.fullname }}">
             </div>
             <div class="email">
                 <span>Email</span>
-                <input class="textbox" type="text" placeholder="Enter Name">
+                <input class="textbox" type="text" placeholder="Enter Name" value="{{ employeeDetails.email }}">
             </div>
             <div class="role-container">
                 <span>Role</span>
@@ -69,7 +69,7 @@
         <div class="right-container">
             <div class="contact-number">
                 <span>Contact Number</span>
-                <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx">
+                <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx" value="{{ employeeDetails.phone }}">
             </div>
 
             <div class="fingerprint-container">
@@ -94,5 +94,5 @@
             <div class="submit-user pointer">Submit</div>
         </div>
     </div>
-
+</div>
 </body>

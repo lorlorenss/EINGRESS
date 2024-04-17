@@ -8,6 +8,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 
 export class AddUserFormComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  addUserForm: boolean = false;
 
   constructor() { }
 
@@ -18,6 +19,14 @@ export class AddUserFormComponent {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     // Do something with the selected file
+  }
+
+  showAddUserForm(){
+    this.addUserForm = true;
+  }
+
+  hideAddUserForm(){
+    this.addUserForm = false;
   }
 }
 

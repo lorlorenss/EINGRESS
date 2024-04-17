@@ -1,0 +1,337 @@
+body {
+
+    display: flex; 
+    position: fixed; 
+    z-index: 6; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    /*overflow-y: scroll;*/
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+   
+}
+
+.container{
+        display: flex; 
+        position: fixed; 
+        z-index: 6; 
+        left: 30%;
+        top: 68px;
+        max-width: 800px; 
+        height: 90%;
+        background-color: white; 
+        border-radius: 20px;
+        flex-direction: column;
+        padding: 20px;
+}
+
+span {
+    font-size: 12px;
+}
+
+.textbox {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 20px;
+    background-color: var(--background);
+}
+
+.textbox:hover {
+    border: 2px solid lightgray;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.close {
+    border-radius: 5px;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.main-container {
+    width: 100%;
+    height: calc(100% - 20px);
+    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+}
+
+.left-container {
+    display: grid;
+  grid-template-rows: 160px 60px 60px 300px 40px;
+  grid-template-columns: auto; /* Adjust as needed */
+  grid-gap: 10px; /* Adjust the gap between grid items */
+}   
+
+.right-container {
+    display: grid;
+    grid-template-rows: 160px 60px 60px 300px 40px;
+  grid-template-columns: auto; /* Adjust as needed */
+  grid-gap: 10px; /* Adjust the gap between grid items */
+}
+
+.photo-section {
+    max-height: 160px;
+    height: 160px;
+    display: flex;
+}
+
+.photoholder {
+    width: 160px;
+    height: 160px;
+    border: 5px solid var(--background);
+    border-radius: 5px;
+}
+
+.icons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+
+.edit:hover {
+    background-color: var(--secondary);
+
+}
+
+.edit:hover img {
+    content: url('/assets/images/edit-white.png');
+}
+
+.delete {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.delete img {
+    width: 25px;
+    height: 25px;
+}
+
+.delete:hover {
+    background-color: var(--error);
+}
+
+.delete:hover img {
+    content: url('/assets/images/delete-white.png');
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+}
+
+.name:hover {
+    border-radius: 5px;
+}
+
+.email {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.roles {
+    width: 100%;
+    height: 300px;
+    background-color: var(--background);
+    border-radius: 20px;
+    padding-left: 20px;
+    overflow-y: auto;
+    display: grid;
+}
+
+.role {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.role input {
+    margin-right: 20px;
+}
+
+.dismiss-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 20px;
+}
+
+.dismiss-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: gray;
+    width: 90px;
+    height: 40px;
+    margin-top: 20px;
+
+}
+
+.dismiss-user:hover {
+
+    color: white;
+    background-color: var(--error);
+}
+
+.contact-number {
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.fingerprint-container{
+    grid-row: 4 / 5;
+    border-radius: 10px;
+}
+
+.fingerprint-content{
+    background-color: var(--background);
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;  
+}
+
+.icon-holder{
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fingerprint-icon{
+    height: 50px;
+    width: auto;
+}
+
+.begin-scan{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+    color: var(--secondary);
+    background-color: white;
+}
+
+.begin-scan:hover{
+    color:white;
+    background-color: var(--secondary);
+}
+
+.details-holder{
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    width: 100%;
+}
+
+.details-holder input{
+    height: 40px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.fingerprint-confirmation{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.dismiss-fingerprint{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: var(--error);
+    width: 90px;
+    height: 40px;
+}
+.dismiss-fingerprint:hover{
+    color: white;
+    background-color: var(--error);
+}
+
+.submit-fingerprint{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: var(--secondary);
+    width: 90px;
+    height: 40px;
+}
+.submit-fingerprint:hover{
+    color: white;
+    background-color: var(--secondary);
+}
+
+.submit-container{
+    
+    padding: 20px;
+}
+.submit-user{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: var(--secondary);
+    width: 90px;
+    height: 40px;
+    grid-row: 5 / 6;
+    margin-top: 40px;
+}
+
+.submit-user:hover {
+    color: white;
+    background-color: var(--secondary);
+}

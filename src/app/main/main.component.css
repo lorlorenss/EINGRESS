@@ -30,6 +30,7 @@
 .pages{
     display: flex;
     position: absolute;
+    justify-content: center;
     background-color: var(--background);
     width: calc(100% - 48px);
     height: calc(100% - 48px);
@@ -48,6 +49,8 @@
 
 .inner-page{
     /* background-color: aquamarine; */
+    /* display: flex;
+    justify-content: center; */
     max-height: 100%;
     width: calc(100vw - 285px);
     margin-top: 20px;

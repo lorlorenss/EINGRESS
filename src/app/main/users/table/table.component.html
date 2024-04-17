@@ -10,7 +10,8 @@
     </div>
 
     <div class="table-body">
-        <app-user-selection></app-user-selection>
+        <app-user-selection (employeeSelected)="onEmployeeSelected($event)"></app-user-selection>
+        <app-employee-details></app-employee-details>
     </div>
   
 </div>  

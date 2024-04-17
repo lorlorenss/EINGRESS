@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Employee } from '../interface/employee.interface';
 import { Subject } from 'rxjs'; 
 import { forkJoin } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,10 @@ export class EmployeeService {
   private apiUrl = '/api/employee';
   
   private deletedClickedSource = new Subject<void>();
-
   deletedClicked$ = this.deletedClickedSource.asObservable();
+
+  private addUserClickedSource = new Subject<void>();
+  addUserClicked$ = this.addUserClickedSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -32,5 +35,11 @@ export class EmployeeService {
   triggerDelete(){
     this.deletedClickedSource.next();
   }
+
+  triggerAddUser(){
+    this.addUserClickedSource.next();
+  }
+
+
 
 }
