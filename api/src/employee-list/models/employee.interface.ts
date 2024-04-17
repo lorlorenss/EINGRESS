@@ -5,6 +5,7 @@ export interface Employee {
     email?: string;  
     role?:string;
     regdate: string;
+    lastlogdate: string;
     profileImage?: string;
     // profileImagePath?: string;
   }
