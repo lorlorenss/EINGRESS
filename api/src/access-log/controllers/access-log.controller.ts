@@ -27,6 +27,13 @@ export class AccessLogController {
     return this.accessLogService.create(accessLogData);
   }
 
+  @Post('employee/:employeeId')
+  createForUser(@Param('employeeId') employeeId: number, @Body() accessLogData: Partial<_dbaccesslog>): Promise<_dbaccesslog> {
+    // Add user ID to access log data
+    accessLogData.employee.id = employeeId;
+    return this.accessLogService.create(accessLogData);
+  }
+
   @Put(':id')
   update(@Param('id') id: number, @Body() accessLogData: Partial<_dbaccesslog>): Promise<_dbaccesslog> {
     return this.accessLogService.update(id, accessLogData);
