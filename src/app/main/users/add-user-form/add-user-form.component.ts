@@ -18,7 +18,7 @@ export class AddUserFormComponent {
     id: 0,
     fullname: '',
     role: '', // Initialize role as an empty string
-    regdate: '',
+    regdate: new Date(), 
     lastlogdate: '',
     email: '',
     phone: ''
@@ -99,7 +99,7 @@ export class AddUserFormComponent {
       id: 0,
       fullname: '',
       role: '',
-      regdate: new Date().toISOString(),
+      regdate: new Date(),
       lastlogdate: new Date().toISOString(),
       email: '',
       phone: ''
