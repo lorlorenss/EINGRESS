@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,14 @@ import { CustomInterceptor } from './services/custom.interceptor';
 import { SessionComponent } from './main/reports/login-sessions/session/session.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { EmployeeDetailsComponent } from './main/users/table/employee-details/employee-details.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 
 
 
@@ -69,7 +77,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatInputModule,
+    MatFormFieldModule,
     MatDatepickerModule,
+    MatIconModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule
   ],
   providers: [
     UserService,
