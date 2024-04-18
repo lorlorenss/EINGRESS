@@ -18,9 +18,9 @@ export class _dbemployee {
   @Column()
   role: string;
 
-  @Column()
-  regdate: string;
-
+  @Column({ type: 'date', default: () => 'CURRENT_DATE' })
+  regdate: Date; // Registration date (date only)
+  
   @Column()
   lastlogdate: string;
 
