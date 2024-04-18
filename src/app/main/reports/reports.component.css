@@ -37,7 +37,10 @@
     border-radius: 20px;
 }
 
-
+.header{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 @media screen and (max-width: 1700px) {
     .contents{
         width: 100vw;
