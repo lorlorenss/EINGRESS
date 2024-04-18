@@ -1,104 +1,105 @@
 <body *ngIf="addUserForm">
-<div  class="container">
-
-    <div class="header">
-        <span>User</span>
-        <button (click)="hideAddUserForm()" class="close">
-            <img class="icon pointer" src="/assets/images/exit.png">
-        </button>
-    </div>
-
-
-    <div class="main-container">
-        <div class="left-container">
-            <div class="photo-section">
-                <img class="photoholder" src="/assets/images/max-smith.png">
-                <div class="icons pointer">
-                    <div class="edit" (click)="importButtonClick()">
-                        <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)">
-                        <img class="icon pointer" src="/assets/images/edit-blue.png">
-                    </div>
-                    <div class="delete">
-                        <img class="icon pointer" src="/assets/images/delete-red.png">
-                    </div>
-                </div>
-            </div>
-
-            <div class="name">
-                <span>Full Name</span>
-                <input class="textbox" type="text" placeholder="Enter Name">
-            </div>
-            <div class="email">
-                <span>Email</span>
-                <input class="textbox" type="text" placeholder="Enter Name">
-            </div>
-            <div class="role-container">
-                <span>Role</span>
-                <div class="roles">
-                    <div class="role r1 ">
-                        <input type="radio" name="position">
-                        <span>CEO</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input type="radio" name="position">
-                        <span>Administrator</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input type="radio" name="position">
-                        <span>Manager</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input type="radio" name="position">
-                        <span>Developer</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input type="radio" name="position">
-                        <span>HR</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input type="radio" name="position">
-                        <span>Guest</span>
-                    </div>
-                </div>
-            </div>
-            <div class="dismiss-container">
-                <div class="dismiss-user pointer">
-                    Dismiss
-                </div>
-            </div>
-
+    <div  class="container">
+    
+        <div class="header">
+            <span>User</span>
+            <button (click)="hideAddUserForm()" class="close">
+                <img class="icon pointer" src="/assets/images/exit.png">
+            </button>
         </div>
-        <div class="right-container">
-
-           
-
-            <div class="contact-number">
-                <span>Contact Number</span>
-                <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx">
-            </div>
-
-            <div class="fingerprint-container">
-                <span>Fingerprint</span>
-                <div class="fingerprint-content">
-                    <div class="icon-holder">
-                    <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
-                </div>
-                    <div class="begin-scan pointer">
-                        Begin scan
+    
+    
+        <div class="main-container">
+            <div class="left-container">
+                <div class="photo-section">
+                    <img class="photoholder" [src]="photoSrc">
+                    <div class="icons pointer">
+                        <div class="edit">
+                            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display:none">
+                            <img class="icon pointer" src="/assets/images/edit-blue.png" (click)="fileInput.click()">
+                        </div>
+                        <div class="delete">
+                            <img class="icon pointer" src="/assets/images/delete-red.png">
+                        </div>
                     </div>
-                    <div class="details-holder">
-                        <span>Fingerprint ID</span>
-                        <input type="text" placeholder="135135115161">
+                </div>
+    
+                <div class="name">
+                    <span>Full Name</span>
+                    <input class="textbox" type="text" placeholder="Enter Name" [(ngModel)]="newEmployee.fullname">
+                </div>
+                <div class="email">
+                    <span>Email</span>
+                    <input class="textbox" type="text" placeholder="Enter Email" [(ngModel)]="newEmployee.email">
+                </div>
+                <div class="role-container">
+                    <span>Role</span>
+                    <div class="roles">
+                        <div class="role r1 ">
+                            <input type="radio" name="position" [value]="'CEO'" (change)="onRoleChange($event)">
+                            <span>CEO</span>
+                        </div>
+                        <div class="role r1 ">
+                            <input type="radio" name="position" [value]="'Administrator'" (change)="onRoleChange($event)">
+                            <span>Administrator</span>
+                        </div>
+                        <div class="role r1 ">
+                            <input type="radio" name="position" [value]="'Manager'" (change)="onRoleChange($event)">
+                            <span>Manager</span>
+                        </div>
+                        <div class="role r1 ">
+                            <input type="radio" name="position" [value]="'Developer'" (change)="onRoleChange($event)">
+                            <span>Developer</span>
+                        </div>
+                        <div class="role r1 ">
+                            <input type="radio" name="position" [value]="'HR'" (change)="onRoleChange($event)">
+                            <span>HR</span>
+                        </div>
+                        <div class="role r1 ">
+                            <input type="radio" name="position" [value]="'Guest'" (change)="onRoleChange($event)">
+                            <span>Guest</span>
+                        </div>
                     </div>
-                    <div class="fingerprint-confirmation">
-                    <div class="dismiss-fingerprint pointer">Dismiss</div>
-                    <div class="submit-fingerprint pointer">Submit</div>
+                    <div *ngIf="!newEmployee.role" class="validation-message">Please select a role.</div>
                 </div>
+                <div class="dismiss-container">
+                    <div class="dismiss-user pointer">
+                        Dismiss
+                    </div>
                 </div>
+    
             </div>
-            <div class="submit-user pointer">Submit</div>
+            <div class="right-container">
+    
+               
+    
+                <div class="contact-number">
+                    <span>Contact Number</span>
+                    <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx" [(ngModel)]="newEmployee.phone">
+                </div>
+    
+                <div class="fingerprint-container">
+                    <span>Fingerprint</span>
+                    <div class="fingerprint-content">
+                        <div class="icon-holder">
+                        <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
+                    </div>
+                        <div class="begin-scan pointer">
+                            Begin scan
+                        </div>
+                        <div class="details-holder">
+                            <span>Fingerprint ID</span>
+                            <input type="text" placeholder="135135115161">
+                        </div>
+                        <div class="fingerprint-confirmation">
+                        <div class="dismiss-fingerprint pointer">Dismiss</div>
+                        <div class="submit-fingerprint pointer">Submit</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="submit-user pointer" (click)="submitUser()">Submit</div>
+            </div>
         </div>
+    
     </div>
-
-</div>
-</body>
+    </body>
