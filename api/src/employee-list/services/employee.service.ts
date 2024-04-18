@@ -42,7 +42,7 @@ export class EmployeeService {
                                     id: employee.id,
                                     fullname: employee.fullname,
                                     role: employee.role,
-                                    regdate: employee.regdate,
+                                    regdate: '',
                                     lastLoginDate: latestAccessLog ? latestAccessLog.accessDateTime : null,
                                 };
                             })
