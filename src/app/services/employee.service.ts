@@ -40,6 +40,9 @@ export class EmployeeService {
     this.addUserClickedSource.next();
   }
 
-
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(this.apiUrl, employee);
+  }
+  
 
 }
