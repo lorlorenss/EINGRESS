@@ -1,4 +1,4 @@
-<body *ngIf="employeeDetails">
+<div class="employee-details-container" *ngIf="employeeDetails">
     <div class="container">
     <div class="header">
         <span>Update User</span>
@@ -7,7 +7,7 @@
         </button>
     </div>
 
-    <div class="main-container">
+    <div [formGroup]="updateEmployeeForm" class="main-container">
         <div class="left-container">
             <div class="photo-section">
                 <img class="photoholder" src="/assets/images/max-smith.png">
@@ -24,37 +24,37 @@
 
             <div class="name">
                 <span>Full Name</span>
-                <input class="textbox" type="text" placeholder="Enter Name" value="{{ employeeDetails.fullname }}">
+                <input formControlName="fullname" class="textbox" type="text" placeholder="Enter Name">
             </div>
             <div class="email">
                 <span>Email</span>
-                <input class="textbox" type="text" placeholder="Enter Name" value="{{ employeeDetails.email }}">
+                <input formControlName="email" class="textbox" type="text" placeholder="Enter Name">
             </div>
             <div class="role-container">
                 <span>Role</span>
                 <div class="roles">
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input formControlName="role" type="radio" name="role" value="CEO" (change)="onRoleChange($event)">
                         <span>CEO</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input formControlName="role" type="radio" name="role" value="Administrator" (change)="onRoleChange($event)">
                         <span>Administrator</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input formControlName="role" type="radio" name="role" value="Manager" (change)="onRoleChange($event)">
                         <span>Manager</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input formControlName="role" type="radio" name="role" value="Developer" (change)="onRoleChange($event)">
                         <span>Developer</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input formControlName="role" type="radio" name="role" value="HR" (change)="onRoleChange($event)">
                         <span>HR</span>
                     </div>
                     <div class="role r1 ">
-                        <input type="radio" name="position">
+                        <input formControlName="role" type="radio" name="role" value="Guest" (change)="onRoleChange($event)">
                         <span>Guest</span>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
         <div class="right-container">
             <div class="contact-number">
                 <span>Contact Number</span>
-                <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx" value="{{ employeeDetails.phone }}">
+                <input formControlName="phone" class="textbox" type="text" placeholder="+639 xxx xxx xxxx">
             </div>
 
             <div class="fingerprint-container">
@@ -91,8 +91,8 @@
                 </div>
                 </div>
             </div>
-            <div class="submit-user pointer">Submit</div>
+            <div (click)="updateEmployee()" class="submit-user pointer">Update</div>
         </div>
     </div>
 </div>
-</body>
+</div>
