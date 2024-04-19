@@ -39,7 +39,9 @@ export class EmployeeDetailsComponent implements OnChanges {
       console.log(updateEmployee);
       this.employeeService.updateEmployee(id, updateEmployee).subscribe(
         (response) => {
+          alert('Employee update successfully');
           console.log('Employee update successfully', response);
+          this.hideEmployeeDetails();
         }
       )
     }
