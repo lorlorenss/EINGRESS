@@ -32,6 +32,15 @@ export class EmployeeService {
     return forkJoin(deleteRequest);
   }
 
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(this.apiUrl, employee);
+  }
+
+  updateEmployee(id: number, employee: Employee): Observable<any>{
+    const updateEmployeeUrl = `${this.apiUrl}/${id}`
+    return this.http.put<Employee>(updateEmployeeUrl, employee);
+  }
+
   triggerDelete(){
     this.deletedClickedSource.next();
   }
@@ -39,7 +48,5 @@ export class EmployeeService {
   triggerAddUser(){
     this.addUserClickedSource.next();
   }
-
-
 
 }

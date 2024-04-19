@@ -4,7 +4,8 @@ export interface Employee {
     phone?:string;
     email?: string;  
     role?:string;
-    regdate: string;
+    regdate?: Date;
+    lastlogdate: string;
     profileImage?: string;
     // profileImagePath?: string;
   }
