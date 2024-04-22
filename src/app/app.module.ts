@@ -38,6 +38,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/reports-searchfield.component';
 
 
 
@@ -67,6 +68,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     LoginSessionsComponent,
     PageNotFoundComponent,
     EmployeeDetailsComponent,
+    ReportsSearchfieldComponent,
 
   ],
   imports: [

@@ -3,6 +3,8 @@ import { Employee } from 'src/app/interface/employee.interface';
 import { AccessLogService } from 'src/app/services/access-log.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -12,6 +14,8 @@ export class ReportsComponent implements OnInit {
   employeeList: Employee[] = [];
   selectedEmployee: Employee | null = null;
   loginSessions: { date: string, time: string }[] = [];
+  searchTerm: string = '';
+filteredEmployees: Employee[] = [];
 
   constructor(
     private accessLogService: AccessLogService,
@@ -61,4 +65,16 @@ export class ReportsComponent implements OnInit {
     this.selectedEmployee = employee;
     this.fetchLoginSessions(employee);
   }
+
+  onSearchChanged(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.filterEmployees();
+  }
+  
+  filterEmployees() {
+    this.filteredEmployees = this.employeeList.filter((employee: Employee) => 
+      employee.fullname.toLowerCase().startsWith(this.searchTerm.toLowerCase())
+    );
+  }
+  
 }

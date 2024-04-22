@@ -1,30 +1,30 @@
 <div class="contents">
-    <div class="users-list">
-      <div class="header">
-        <app-searchfield></app-searchfield>
-        <div class="datepicker">
-          <mat-form-field appearance="fill">
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
+  <div class="users-list">
+    <div class="header">
+      <app-reports-searchfield (searchChanged)="onSearchChanged($event)"></app-reports-searchfield>
+      <div class="datepicker">
+        <mat-form-field appearance="fill">
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
       </div>
+    </div>
 
-      <app-table1 class="table"
-        [employees]="employeeList" 
-        (employeeSelected)="handleEmployeeSelected($event)">
-      </app-table1>
-    
-    </div>
-    <div class="user-details">
-      <app-user-details 
-        [selectedEmployee]="selectedEmployee">
-      </app-user-details>
-    </div>
-    <div class="login-sessions">
-        <span id="login-sessions-text">Login Sessions</span>
-        <app-login-sessions [loginSessions]="loginSessions"></app-login-sessions>
-    </div>
+    <app-table1 
+      [employees]="filteredEmployees.length ? filteredEmployees : employeeList" 
+      (employeeSelected)="handleEmployeeSelected($event)">
+    </app-table1>
+  
   </div>
+  <div class="user-details">
+    <app-user-details 
+      [selectedEmployee]="selectedEmployee">
+    </app-user-details>
+  </div>
+  <div class="login-sessions">
+      <span id="login-sessions-text">Login Sessions</span>
+      <app-login-sessions [loginSessions]="loginSessions"></app-login-sessions>
+  </div>
+</div>
