@@ -1,4 +1,4 @@
-<div *ngFor="let employee of employees" class="user" >
+<div *ngFor="let employee of filteredEmployees" class="user" >
     <div class="checkbox-content">
         <input type="checkbox" [(ngModel)]="employee.selected" change="toggleSelection(employee)">
     </div>

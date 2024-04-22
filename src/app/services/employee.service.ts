@@ -5,6 +5,8 @@ import { Employee } from '../interface/employee.interface';
 import { Subject } from 'rxjs'; 
 import { forkJoin } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +18,8 @@ export class EmployeeService {
   private deletedClickedSource = new Subject<void>();
   deletedClicked$ = this.deletedClickedSource.asObservable();
 
-  private addUserClickedSource = new Subject<void>();
-  addUserClicked$ = this.addUserClickedSource.asObservable();
+  private searchedUserClickedSource = new Subject<string>();
+  searchUserClicked$ = this.searchedUserClickedSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -41,12 +43,29 @@ export class EmployeeService {
     return this.http.put<Employee>(updateEmployeeUrl, employee);
   }
 
+  searchEmployee(searchInputValue: string): Observable<Employee[]>{
+    return this.getEmployee().pipe(
+      map(employees => {
+        const filteredEmployees = employees.filter(
+          employee => employee.fullname.toLowerCase().includes(searchInputValue.toLowerCase())
+        );
+
+        if(filteredEmployees.length === 0){
+          return [{ id: 0, fullname: 'No matching results found', role: '', lastlogdate: '', email: '', phone: '' }];
+        }
+        else{
+          return filteredEmployees;
+        }
+      })
+    );
+  }
+
   triggerDelete(){
     this.deletedClickedSource.next();
   }
 
-  triggerAddUser(){
-    this.addUserClickedSource.next();
+  triggerSearchUser(searchInputValue: string){
+    this.searchedUserClickedSource.next(searchInputValue);
   }
 
 }
