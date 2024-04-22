@@ -5,7 +5,21 @@
     </div>
 
     <div class="table-body">
-        <app-reports-selection></app-reports-selection>
+        <div *ngFor="let employee of employees" 
+             class="user" 
+             [class.selected]="employee === selectedEmployee"
+             (click)="selectEmployee(employee)">
+            <div class="user-content">
+                <img src="/assets/images/max-smith.png" alt="">
+                <div class="name-email">
+                    <div class="username">{{ employee.fullname }}</div>
+                    <div class="useremail">{{ employee.email }}</div>
+                </div>
+            </div>
+            <div class="role-content">{{ employee.role }}</div>
+        </div>
     </div>
-  
-    </div>  
+    
+    
+    
+</div>
