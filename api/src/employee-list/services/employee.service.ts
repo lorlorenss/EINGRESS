@@ -5,12 +5,14 @@ import { Observable, from, map, switchMap,mergeMap } from 'rxjs';
 import { Employee } from '../models/employee.interface';
 import { _dbemployee } from '../models/employee.entity';
 import { _dbaccesslog } from '../../access-log/models/access-log.entity';  // Update this import path
+import { AccessLogService } from 'src/access-log/services/access-log.service';
 
 @Injectable()
 export class EmployeeService {
     constructor(
         @InjectRepository(_dbemployee)
         private readonly userRepository: Repository<_dbemployee>,
+        private readonly accessLogService: AccessLogService,
         @InjectRepository(_dbaccesslog)
         private readonly accessLogRepository: Repository<_dbaccesslog>,
     ) {}
@@ -44,6 +46,82 @@ create(employee: Employee): Observable<Employee> {
         return from(this.userRepository.find());
     }
 
+
+    logEmployeeAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<any> {
+        // Find the employee by ID
+        return from(this.userRepository.findOne({ where: { id: employeeId } })).pipe(
+          switchMap(employee => {
+            if (!employee) {
+              throw new BadRequestException('Employee not found');
+            }
+      
+            // Update the last login date for the employee
+            const dateOnly = this.getOnlyDate(new Date().toISOString());
+            employee.lastlogdate = dateOnly;
+      
+            // Save the updated employee
+            return from(this.userRepository.save(employee)).pipe(
+              switchMap(() => {
+                // Log the access in AccessLogService
+                return this.accessLogService.logAccess(employeeId, accessType, roleAtAccess);
+              })
+            );
+          })
+        );
+      }
+      
+      getOnlyDate(datetime: string): string {
+        const date = new Date(datetime);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+      
+        return `${year}-${month}-${day}`;
+      }
+      
+    
+    
+    deleteOne(id: number): Observable<any> {
+        return from(this.userRepository.delete(id));
+    }
+
+    updateOne(id: number, employee: Employee): Observable<Employee> {
+        return from(this.userRepository.update(id, employee)).pipe(
+            switchMap(() => this.findOne(id))
+        );
+    }
+
+    
+
+}
+
+
+    // logEmployeeAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<any> {
+    //     // Find the employee by ID
+    //     return from(this.userRepository.findOne({ where: { id: employeeId } })).pipe(
+    //         switchMap(employee => {
+    //             if (!employee) {
+    //                 throw new BadRequestException('Employee not found');
+    //             }
+
+    //             // Update the last login date for the employee
+    //             employee.lastlogdate = new Date().toISOString();
+    //             return from(this.userRepository.save(employee)).pipe(
+    //                 switchMap(() => {
+    //                     // Create a new accessLog entry
+    //                     const accessLog = new _dbaccesslog();
+    //                     accessLog.employee = employee;
+    //                     accessLog.accessDateTime = new Date();
+    //                     accessLog.accessType = accessType;
+    //                     accessLog.roleAtAccess = roleAtAccess;
+
+    //                     return from(this.accessLogRepository.save(accessLog));
+    //                 })
+    //             );
+    //         })
+    //     );
+    // } 
+
     
 //     findAll(): Observable<any> {
 //       // Fetch all employees
@@ -75,15 +153,3 @@ create(employee: Employee): Observable<Employee> {
 //   }
   
   
-    
-    deleteOne(id: number): Observable<any> {
-        return from(this.userRepository.delete(id));
-    }
-
-    updateOne(id: number, employee: Employee): Observable<Employee> {
-        return from(this.userRepository.update(id, employee)).pipe(
-            switchMap(() => this.findOne(id))
-        );
-    }
-
-}

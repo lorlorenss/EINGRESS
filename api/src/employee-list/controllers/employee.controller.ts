@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
 import { Observable } from 'rxjs';
@@ -31,4 +31,16 @@ export class EmployeeController {
     updateOne(@Param('id') id: string, @Body() employee: Employee): Observable<any> {
       return this.userService.updateOne(Number(id), employee);
     }
+
+    @Post('log-access')
+    logEmployeeAccess(@Body() accessData: { employeeId: number, accessType: string, roleAtAccess: string }): Promise<void> {
+      const { employeeId, accessType, roleAtAccess } = accessData;
+    
+      if (!employeeId || !accessType || !roleAtAccess) {
+        throw new BadRequestException('Invalid access data');
+      }
+    
+      return this.userService.logEmployeeAccess(employeeId, accessType, roleAtAccess).toPromise();
+    }
+    
 }
