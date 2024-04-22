@@ -1,23 +1,28 @@
 <div class="contents">
     <div class="users-list">
-        <app-searchfield></app-searchfield>
-        <app-table1></app-table1>
+        <div class="header">
+            <app-searchfield></app-searchfield>
+            <div class="datepicker">
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <app-table1 
+            [employees]="employeeList" 
+            (employeeSelected)="handleEmployeeSelected($event)">
+        </app-table1>
     </div>
     <div class="user-details">
-       <app-user-details></app-user-details>
+        <app-user-details 
+            [selectedEmployee]="selectedEmployee">
+        </app-user-details>
     </div>
     <div class="login-sessions">
-        <div class="header">
         <span id="login-sessions-text">Login Sessions</span>
-        <div class="datepicker">
-            <mat-form-field appearance="fill">
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div>
-        </div>
         <app-login-sessions></app-login-sessions>
     </div>
 </div>
