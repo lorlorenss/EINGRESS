@@ -1,5 +1,8 @@
 <div class="search" [class.active]="isFocused">
-    <img src="/assets/images/search.png">
+    <div (click)="onSearchUserClicked()" class="search-img-container">
+        <img src="/assets/images/search.png">
+    </div>
     <input type="text" name="user" placeholder="Search User" 
-           (focus)="isFocused = true" (blur)="isFocused = false">
+           (focus)="isFocused = true" (blur)="isFocused = false"
+           #searchInput>
 </div>
