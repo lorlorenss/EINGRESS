@@ -34,6 +34,12 @@ export class AccessLogController {
     return this.accessLogService.create(accessLogData);
   }
 
+  @Get('employee/:employeeId')
+  findByEmployeeId(@Param('employeeId') employeeId: number): Promise<_dbaccesslog[]> {
+    return this.accessLogService.findByEmployeeId(employeeId);
+  }
+  
+
   @Put(':id')
   update(@Param('id') id: number, @Body() accessLogData: Partial<_dbaccesslog>): Promise<_dbaccesslog> {
     return this.accessLogService.update(id, accessLogData);
