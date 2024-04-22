@@ -1,7 +1,7 @@
 <div class="contents">
     <div class="users-list">
       <div class="header">
-        <app-searchfield></app-searchfield>
+        <app-searchfield (searchChanged)="onSearchChanged($event)"></app-searchfield>
         <div class="datepicker">
           <mat-form-field appearance="fill">
             <input matInput [matDatepicker]="picker" placeholder="Choose a date">
@@ -13,9 +13,10 @@
       </div>
 
       <app-table1 class="table"
-        [employees]="employeeList" 
-        (employeeSelected)="handleEmployeeSelected($event)">
-      </app-table1>
+      [employees]="filteredEmployees" 
+      (employeeSelected)="handleEmployeeSelected($event)">
+    </app-table1>
+    
     
     </div>
     <div class="user-details">
