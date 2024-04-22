@@ -70,9 +70,9 @@ export class AccessLogService {
 
   // AccessLogService
 
-findByEmployeeId(employeeId: number): Promise<_dbaccesslog[]> {
-  return this.accessLogRepository.find({ where: { employee: { id: employeeId } } });
-}
+  findByEmployeeId(employeeId: number): Promise<_dbaccesslog[]> {
+    return this.accessLogRepository.find({ where: { employee: { id: employeeId } } });
+  }
 
 
 }
