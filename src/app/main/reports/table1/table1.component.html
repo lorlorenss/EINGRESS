@@ -1,11 +1,23 @@
 <div class="table">
     <div class="table-header">
-        <div class="user-header">User</div>
-        <div class="role-header">Role</div>
-    </div>
-
-    <div class="table-body">
-        <app-reports-selection></app-reports-selection>
+      <div class="user-header">User</div>
+      <div class="role-header">Role</div>
     </div>
   
-    </div>  
+    <div class="table-body">
+      <div *ngFor="let employee of employees" 
+           class="user" 
+           [class.selected]="employee === selectedEmployee"
+           (click)="selectEmployee(employee)">
+        <div class="user-content">
+            <img src="/assets/images/max-smith.png" alt="">
+            <div class="name-email">
+                <div class="username">{{ employee.fullname }}</div>
+                <div class="useremail">{{ employee.email }}</div>
+            </div>
+        </div>
+        <div class="role-content">{{ employee.role }}</div>
+      </div>
+    </div>
+  </div>
+  
