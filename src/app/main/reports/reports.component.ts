@@ -3,6 +3,8 @@ import { Employee } from 'src/app/interface/employee.interface';
 import { AccessLogService } from 'src/app/services/access-log.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -12,7 +14,8 @@ export class ReportsComponent implements OnInit {
   employeeList: Employee[] = [];
   selectedEmployee: Employee | null = null;
   loginSessions: { date: string, time: string }[] = [];
-  filteredEmployees: Employee[] = [];
+  searchTerm: string = '';
+filteredEmployees: Employee[] = [];
 
   constructor(
     private accessLogService: AccessLogService,
@@ -28,11 +31,10 @@ export class ReportsComponent implements OnInit {
     this.employeeService.getEmployee().subscribe(
       employees => {
         this.employeeList = employees;
-        this.filteredEmployees = [...this.employeeList]; // Initially set filteredEmployees to all employees
         
         // Set default selected employee and fetch access logs
-        if (this.filteredEmployees.length > 0) {
-          this.selectedEmployee = this.filteredEmployees[0];
+        if (this.employeeList.length > 0) {
+          this.selectedEmployee = this.employeeList[0];
           this.fetchLoginSessions(this.selectedEmployee);
         }
       },
@@ -51,6 +53,7 @@ export class ReportsComponent implements OnInit {
             date: new Date(log.accessDateTime).toLocaleDateString(),
             time: new Date(log.accessDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }));
+          console.log('Updated login sessions:', this.loginSessions); // Log the updated login sessions
         },
         error => {
           console.error('Error fetching access logs:', error);
@@ -64,20 +67,14 @@ export class ReportsComponent implements OnInit {
   }
 
   onSearchChanged(searchTerm: string) {
-    if (searchTerm) {
-      this.filteredEmployees = this.employeeList.filter(employee => 
-        employee.fullname.toLowerCase().startsWith(searchTerm.toLowerCase())
-      );
-    } else {
-      this.filteredEmployees = [...this.employeeList]; // Reset to all employees if search term is empty
-    }
-
-    if (this.filteredEmployees.length > 0) {
-      this.selectedEmployee = this.filteredEmployees[0];
-      this.fetchLoginSessions(this.selectedEmployee);
-    } else {
-      this.selectedEmployee = null;
-      this.loginSessions = []; // Clear login sessions if no employees match the search term
-    }
+    this.searchTerm = searchTerm;
+    this.filterEmployees();
   }
+  
+  filterEmployees() {
+    this.filteredEmployees = this.employeeList.filter((employee: Employee) => 
+      employee.fullname.toLowerCase().startsWith(this.searchTerm.toLowerCase())
+    );
+  }
+  
 }

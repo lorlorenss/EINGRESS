@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-searchfield',
@@ -7,15 +7,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class SearchfieldComponent {
   isFocused: boolean = false;
-  searchTerm: string = '';
-  
-  @Output() searchChanged = new EventEmitter<string>();
 
   constructor() { }
-
-  onInputChange() {
-    this.searchChanged.emit(this.searchTerm);
-  }
 
   toggleActive() {
     this.isFocused = !this.isFocused;
