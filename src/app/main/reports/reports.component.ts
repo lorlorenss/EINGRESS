@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/app/interface/employee.interface';
 import { AccessLogService } from 'src/app/services/access-log.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+type LoginSession = {
+  date: string;
+  time: string;
+};
 
 @Component({
   selector: 'app-reports',
@@ -13,9 +17,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class ReportsComponent implements OnInit {
   employeeList: Employee[] = [];
   selectedEmployee: Employee | null = null;
-  loginSessions: { date: string, time: string }[] = [];
+  loginSessions: LoginSession[] = [];
   searchTerm: string = '';
-filteredEmployees: Employee[] = [];
+  filteredEmployees: Employee[] = [];
+  selectedDate: string = ''; // Store the selected date from the date picker
 
   constructor(
     private accessLogService: AccessLogService,
@@ -23,7 +28,6 @@ filteredEmployees: Employee[] = [];
   ) {}
 
   ngOnInit(): void {
-    // Load initial employee data and set default selected employee
     this.loadEmployeeInfo();
   }
 
@@ -32,7 +36,6 @@ filteredEmployees: Employee[] = [];
       employees => {
         this.employeeList = employees;
         
-        // Set default selected employee and fetch access logs
         if (this.employeeList.length > 0) {
           this.selectedEmployee = this.employeeList[0];
           this.fetchLoginSessions(this.selectedEmployee);
@@ -45,15 +48,18 @@ filteredEmployees: Employee[] = [];
   }
 
   fetchLoginSessions(employee: Employee) {
-    // Fetch access logs for the selected employee
     this.accessLogService.getAccessLogsByEmployeeId(employee.id)
       .subscribe(
         accessLogs => {
           this.loginSessions = accessLogs.map(log => ({
             date: new Date(log.accessDateTime).toLocaleDateString(),
             time: new Date(log.accessDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          }));
-          console.log('Updated login sessions:', this.loginSessions); // Log the updated login sessions
+          })) as LoginSession[];
+
+          // Filter login sessions to only show sessions for the selected date
+          this.loginSessions = this.loginSessions.filter(session => session.date === this.selectedDate);
+          
+          console.log('Updated login sessions:', this.loginSessions);
         },
         error => {
           console.error('Error fetching access logs:', error);
@@ -76,5 +82,14 @@ filteredEmployees: Employee[] = [];
       employee.fullname.toLowerCase().startsWith(this.searchTerm.toLowerCase())
     );
   }
-  
+
+  onDateChanged(event: MatDatepickerInputEvent<Date>) {
+    if (event.value) {
+      this.selectedDate = event.value.toLocaleDateString(); // Update selectedDate when the date picker value changes
+      if (this.selectedEmployee) {
+        this.fetchLoginSessions(this.selectedEmployee);
+      }
+    }
+  }
+
 }
