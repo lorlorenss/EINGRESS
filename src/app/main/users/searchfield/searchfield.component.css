@@ -11,10 +11,6 @@
     border: 1px solid var(--background);
 }
 
-.search-img-container{
-    cursor: pointer;
-}
-
 .search img {
     width: 15px;
     height: 15px;
