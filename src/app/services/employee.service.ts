@@ -68,4 +68,8 @@ export class EmployeeService {
     this.searchedUserClickedSource.next(searchInputValue);
   }
 
+  reloadPage(){
+    window.location.reload();
+  }
+
 }
