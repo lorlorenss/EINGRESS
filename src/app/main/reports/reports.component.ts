@@ -54,8 +54,14 @@ export class ReportsComponent implements OnInit {
           this.loginSessions = accessLogs.map(log => ({
             date: new Date(log.accessDateTime).toLocaleDateString(),
             time: new Date(log.accessDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          })) as LoginSession[];
-
+          }));
+  
+          // If selectedDate is empty, show all login sessions
+          if (!this.selectedDate) {
+            console.log('All login sessions:', this.loginSessions);
+            return;
+          }
+  
           // Filter login sessions to only show sessions for the selected date
           this.loginSessions = this.loginSessions.filter(session => session.date === this.selectedDate);
           
@@ -66,6 +72,7 @@ export class ReportsComponent implements OnInit {
         }
       );
   }
+  
 
   handleEmployeeSelected(employee: Employee) {
     this.selectedEmployee = employee;
@@ -86,10 +93,14 @@ export class ReportsComponent implements OnInit {
   onDateChanged(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
       this.selectedDate = event.value.toLocaleDateString(); // Update selectedDate when the date picker value changes
-      if (this.selectedEmployee) {
-        this.fetchLoginSessions(this.selectedEmployee);
-      }
+    } else {
+      this.selectedDate = ''; // Reset selectedDate if the date picker value is null or undefined
+    }
+    
+    if (this.selectedEmployee) {
+      this.fetchLoginSessions(this.selectedEmployee);
     }
   }
+  
 
 }
