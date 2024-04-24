@@ -30,8 +30,9 @@ import { ReportsSelectionComponent } from './main/reports/table1/reports-selecti
 import { CustomInterceptor } from './services/custom.interceptor';
 import { SessionComponent } from './main/reports/login-sessions/session/session.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EmployeeDetailsComponent } from './main/users/table/employee-details/employee-details.component';
-
 
 
 @NgModule({
@@ -68,6 +69,8 @@ import { EmployeeDetailsComponent } from './main/users/table/employee-details/em
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxChartsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     UserService,
