@@ -1,11 +1,25 @@
-
 <div class="table">
     <div class="table-header">
-        <div class="date-header">Date</div>
-        <div class="time-header">Time</div>
+      <div class="date-header">Date</div>
+      <div class="time-header">Time</div>
     </div>
-
+  
     <div class="table-body">
-        <app-session></app-session>
+      <div *ngIf="loginSessions && loginSessions.length > 0; else noLoginSessions">
+        <div class="session" *ngFor="let session of loginSessions">
+          <div class="date">
+            {{ session.date }}
+          </div>
+          <div class="time">
+            {{ session.time }}
+          </div>
+        </div>
+      </div>
+      <ng-template #noLoginSessions>
+        <div class="no-login">
+          No logins yet
+        </div>
+      </ng-template>
     </div>
-    </div>  
+  </div>
+  

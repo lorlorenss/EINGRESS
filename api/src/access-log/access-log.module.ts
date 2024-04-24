@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forFeature([_dbaccesslog]), // Import the AccessLog entity
   ],
   providers: [AccessLogService],
+  exports: [AccessLogService],
   controllers: [AccessLogController]
 })
 export class AccessLogModule {}

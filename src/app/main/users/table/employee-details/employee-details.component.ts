@@ -42,6 +42,7 @@ export class EmployeeDetailsComponent implements OnChanges {
           alert('Employee update successfully');
           console.log('Employee update successfully', response);
           this.hideEmployeeDetails();
+          this.employeeService.reloadPage();
         }
       )
     }
