@@ -12,20 +12,6 @@
     /* Gap between grid items */
     overflow: hidden;
 }
-.header{
-    display: flex;
-    flex-direction:row;
-    justify-content: space-between;
-}
-
-.table{
-    overflow-y: auto;
-    padding-bottom: 80px;
-}
-.datepicker{
-    display: flex;
-    align-items: center;
-}
 
 .users-list {
     padding: 40px;
@@ -50,6 +36,7 @@
     background-color: white;
     border-radius: 20px;
 }
+
 
 @media screen and (max-width: 1700px) {
     .contents{

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-login-sessions',
@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./login-sessions.component.css']
 })
 export class LoginSessionsComponent {
-  @Input() loginSessions: { date: string, time: string }[] = [];
+
 }

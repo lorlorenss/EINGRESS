@@ -1,5 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-import { EmployeeService } from 'src/app/services/employee.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-searchfield',
@@ -7,24 +6,9 @@ import { EmployeeService } from 'src/app/services/employee.service';
   styleUrls: ['./searchfield.component.css']
 })
 export class SearchfieldComponent {
-
-  @ViewChild('searchInput') searchInput!: ElementRef;
-
-  searchEmployee: string = ''
   isFocused: boolean = false;
 
-  constructor(private searchUserService: EmployeeService) { }
-
-  onSearchUserInputChanged(){
-    this.searchEmployee = this.searchInput.nativeElement.value;
-    this.searchUserService.triggerSearchUser(this.searchEmployee);
-  }
-
-  onInputBlur(){
-    if(!this.searchEmployee.trim()){
-      this.searchUserService.triggerSearchUser('');
-    }
-  }
+  constructor() { }
 
   toggleActive() {
     this.isFocused = !this.isFocused;

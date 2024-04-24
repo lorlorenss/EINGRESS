@@ -71,7 +71,6 @@ export class AddUserFormComponent {
           this.newEmployee.id = response.id;
 
           alert('Employee created successfully! ID: ' + this.newEmployee.id);
-          this.employeeService.reloadPage();
 
           // Optionally, reset the form or navigate to another page
           // this.resetForm();
