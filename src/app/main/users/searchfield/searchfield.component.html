@@ -3,6 +3,6 @@
         <img src="/assets/images/search.png">
     </div>
     <input type="text" name="user" placeholder="Search User" 
-           (focus)="isFocused = true" (blur)="isFocused = false"
-           #searchInput>
+           (focus)="isFocused = true" (blur)="onInputBlur()"
+           [(ngModel)]="searchEmployee" #searchInput>
 </div>

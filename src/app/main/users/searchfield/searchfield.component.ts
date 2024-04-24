@@ -20,6 +20,12 @@ export class SearchfieldComponent {
     this.searchUserService.triggerSearchUser(this.searchEmployee);
   }
 
+  onInputBlur(){
+    if(!this.searchEmployee.trim()){
+      this.searchUserService.triggerSearchUser('');
+    }
+  }
+
   toggleActive() {
     this.isFocused = !this.isFocused;
   }
