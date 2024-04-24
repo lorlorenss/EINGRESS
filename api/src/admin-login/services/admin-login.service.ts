@@ -66,17 +66,25 @@ export class AdminLoginService {
     );
   }
 
-  login(user: User): Observable<string> {
+  login(user: User): Observable<string | any> {
     return this.validateUser(user.username, user.password).pipe(
       switchMap((user: User) => {
         if (user) {
-          return this.authService
-            .generateJWT(user)
-            .pipe(map((jwt: string) => jwt));
+          return this.authService.generateJWT(user).pipe(
+            map((jwt: string) => jwt),
+            catchError((error) => {
+              return throwError('Error generating JWT');
+            })
+          );
         } else {
-          return 'Wrong Credentials';
+          // Return an error message if user credentials are incorrect
+          return throwError('Wrong Credentials');
         }
       }),
+      catchError((error) => {
+        // Handle any unexpected errors
+        return throwError('Login failed');
+      })
     );
   }
 

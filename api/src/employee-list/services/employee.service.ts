@@ -85,6 +85,19 @@ create(employee: Employee): Observable<Employee> {
         return from(this.userRepository.delete(id));
     }
 
+    deleteEmployeeWithAccessLogs(id: number): Observable<any> {
+      return from(this.userRepository.findOne({ where: { id } })).pipe(
+          switchMap(user => {
+              if (!user) {
+                  throw new BadRequestException('User not found');
+              }
+              // Delete associated access logs
+              return from(this.accessLogRepository.delete({ employee: user }));
+          }),
+          switchMap(() => this.userRepository.delete(id)) // Delete the user
+      );
+  }
+
     updateOne(id: number, employee: Employee): Observable<Employee> {
         return from(this.userRepository.update(id, employee)).pipe(
             switchMap(() => this.findOne(id))
