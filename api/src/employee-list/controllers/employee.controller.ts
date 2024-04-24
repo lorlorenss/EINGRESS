@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 
 @Controller('employee')
 export class EmployeeController {
@@ -22,9 +22,14 @@ export class EmployeeController {
       return this.userService.findAll();
     }
 
-    @Delete(':id')
+    @Delete(':id') //this code will delete the user and its logs
     deleteOne(@Param('id') id: string): Observable<any> {
-      return this.userService.deleteOne(Number(id));
+        return this.userService.deleteEmployeeWithAccessLogs(Number(id)).pipe(
+            catchError(error => {
+                throw new NotFoundException('User not found');
+            }),
+            map(() => ({ message: 'User and associated access logs deleted successfully' }))
+        );
     }
 
     @Put(':id')
