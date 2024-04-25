@@ -34,8 +34,12 @@ export class EmployeeService {
     return forkJoin(deleteRequest);
   }
 
-  addEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.apiUrl, employee);
+  addEmployee(employee: Employee, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file); // Assuming the profileImage is always present
+    formData.append('employee', JSON.stringify(employee)); // Convert employee object to JSON string
+  
+    return this.http.post<any>(`${this.apiUrl}`, formData);
   }
 
   updateEmployee(id: number, employee: Employee): Observable<any>{
