@@ -31,6 +31,8 @@ import { LoginSessionsComponent } from './main/reports/login-sessions/login-sess
 import { CustomInterceptor } from './services/custom.interceptor';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EmployeeDetailsComponent } from './main/users/table/employee-details/employee-details.component';
 
 import { MatInputModule } from '@angular/material/input';
@@ -39,7 +41,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/reports-searchfield.component';
-
 
 
 
@@ -77,6 +78,7 @@ import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxChartsModule,
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
