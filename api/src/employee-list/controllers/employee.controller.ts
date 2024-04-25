@@ -38,8 +38,10 @@ export class EmployeeController {
       employee.profileImage = file.path;
   
       // Call the service method to create the employee
-      return this.userService.create(employee);
-    }
+
+  return this.userService.create(employee);
+}
+
 
     @Get(':id') // Route for findOne
     findOne(@Param() params): Observable<Employee> {
@@ -68,14 +70,15 @@ export class EmployeeController {
 
     @Post('log-access')
     logEmployeeAccess(@Body() accessData: { employeeId: number, accessType: string, roleAtAccess: string }): Promise<void> {
-      const { employeeId, accessType, roleAtAccess } = accessData;
-    
-      if (!employeeId || !accessType || !roleAtAccess) {
-        throw new BadRequestException('Invalid access data');
-      }
-    
-      return this.userService.logEmployeeAccess(employeeId, accessType, roleAtAccess).toPromise();
-    }
+    const { employeeId, accessType, roleAtAccess } = accessData;
+
+  if (!employeeId || !accessType || !roleAtAccess) {
+    throw new BadRequestException('Invalid access data');
+  }
+
+  return this.userService.logEmployeeAccess(employeeId, accessType, roleAtAccess).toPromise();
+  }
+
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file',storage))
@@ -84,5 +87,15 @@ export class EmployeeController {
       return of({imagePath: file.path});
 
     }
+
+    @Put(':id/rfid')
+  updaterfidtag(@Param('id') id: string, @Body('rfidtag') rfidtag: string): Observable<Employee> {
+    return this.userService.updaterfidtag(Number(id), rfidtag);
+  }
+
+  @Put(':id/fingerprint')
+  updatefingerprint(@Param('id') id: string, @Body('fingerprint') fingerprint: string): Observable<Employee> {
+    return this.userService.updatefingerprint(Number(id), fingerprint);
+  }
     
 }
