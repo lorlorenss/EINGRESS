@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { InvalidUserDialogComponent } from './invalid-user-dialog/invalid-user-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,8 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ){
     this.form = this.formBuilder.group({
       username: ['',Validators.required],
@@ -28,19 +31,22 @@ export class LoginComponent {
       return;
     }
 
-    this.userService.loginUser(this.form.getRawValue()).subscribe( 
-      (response: any) => {
-        if(response){
-          console.log(response),
-          alert('Login success');
-          localStorage.setItem('token', response.access_token)
+    this.userService.loginUser(this.form.getRawValue()).subscribe({
+        next: (response: any) => {
+          localStorage.setItem('token', response.access_token);
           this.router.navigateByUrl('/main');
+        },
+        error: (error) => {
+          console.error(error);
+          this.openErrorDialog(); 
         }
-        else{
-          alert('Login failed');
-        }
-      }
+      } 
     );
+  }
+
+  openErrorDialog(): void {
+    this.dialog.open(InvalidUserDialogComponent, {
+    });
   }
 
 }
