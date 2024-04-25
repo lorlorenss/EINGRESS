@@ -54,12 +54,14 @@ export class AccessLogService {
         regdate: undefined,
         lastlogdate: '',
         profileImage: '',
-        accessLogs: []
+        accessLogs: [],
+        rfidtag: '',
+        fingerprint: ''
       }, // Set employee ID
       accessDateTime: new Date(),
       accessType,
       roleAtAccess,
-      id: 0
+      id: 0,
     };
 
     // Save the access log

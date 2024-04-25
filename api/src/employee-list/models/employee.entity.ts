@@ -30,9 +30,17 @@ export class _dbemployee {
   @Column({nullable: true })
   profileImage: string;
 
+  @Column({ nullable: true })
+  rfidtag: string;
+
+  @Column({ nullable: true })
+  fingerprint: string;
+
   // @Column({ nullable: true })
   // profileImagePath?: string;
 
   @OneToMany(() => _dbaccesslog, accessLog => accessLog.employee)
   accessLogs: _dbaccesslog[]; // One-to-many relationship with AccessLog
+
+  
 }
