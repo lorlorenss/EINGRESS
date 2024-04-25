@@ -39,7 +39,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/reports-searchfield.component';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { InvalidUserDialogComponent } from './login/invalid-user-dialog/invalid-user-dialog.component';
 
 
 
@@ -69,6 +72,7 @@ import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/
     PageNotFoundComponent,
     EmployeeDetailsComponent,
     ReportsSearchfieldComponent,
+    InvalidUserDialogComponent,
 
   ],
   imports: [
@@ -82,7 +86,10 @@ import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/
     MatDatepickerModule,
     MatIconModule,
     MatNativeDateModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatToolbarModule
   ],
   providers: [
     UserService,
