@@ -71,6 +71,7 @@ export class AddUserFormComponent {
         response => {
           console.log('Employee added successfully', response);
           alert('Employee created successfully!');
+          this.employeeService.reloadPage();
 
           // Optionally reset the form
           // this.resetForm();

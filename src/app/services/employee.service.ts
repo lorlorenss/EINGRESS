@@ -36,9 +36,9 @@ export class EmployeeService {
 
   addEmployee(employee: Employee, file: File): Observable<any> {
     const formData: FormData = new FormData();
+    console.log(employee);
     formData.append('file', file); // Assuming the profileImage is always present
     formData.append('employee', JSON.stringify(employee)); // Convert employee object to JSON string
-  
     return this.http.post<any>(`${this.apiUrl}`, formData);
   }
 

@@ -29,17 +29,23 @@ export class EmployeeController {
     // }
     @Post()
     @UseInterceptors(FileInterceptor('file', storage))
-    create(@Body() employee: Employee, @UploadedFile() file): Observable<Employee | Object> {
+    create(@Body() payload: {employee: Employee}, @UploadedFile() file): Observable<Employee | Object> {
       if (!file) {
         throw new BadRequestException('Image file is required');
       }
+
+      const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
+
+      console.log('typeof ', updatedEmployeeData)
+
   
       // Assign the file path to the employee object
-      employee.profileImage = file.path;
+      // employee.profileImage = file.path;
   
       // Call the service method to create the employee
-      return this.userService.create(employee);
-    }
+  return this.userService.create({...updatedEmployeeData, profileImage: file.path});
+}
+
 
     @Get(':id') // Route for findOne
     findOne(@Param() params): Observable<Employee> {
