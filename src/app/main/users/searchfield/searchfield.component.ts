@@ -15,7 +15,7 @@ export class SearchfieldComponent {
 
   constructor(private searchUserService: EmployeeService) { }
 
-  onSearchUserClicked(){
+  onSearchUserInputChanged(){
     this.searchEmployee = this.searchInput.nativeElement.value;
     this.searchUserService.triggerSearchUser(this.searchEmployee);
   }
