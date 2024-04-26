@@ -1,10 +1,12 @@
 export interface Employee {
-    id: number
+    id: number;
     fullname: string;
+    phone: string;
+    email: string;
     role: string;
     regdate?: Date;
-    lastlogdate: string;
+    lastlogdate?: string; // Make lastlogdate optional to align with the backend
+    profileImage?: string;
     selected?: boolean;
-    email: string;
-    phone: string;
-}
+  }
+  
