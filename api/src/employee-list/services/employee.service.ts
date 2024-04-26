@@ -35,6 +35,7 @@ export class EmployeeService {
 
 create(employee: Employee): Observable<Employee> {
   
+  employee.lastlogdate = '';
   console.log('EMPLOYEE FINAL VALUE ', employee)
     // Save the employee data
     return from(this.userRepository.save(employee));
