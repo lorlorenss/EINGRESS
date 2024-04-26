@@ -31,7 +31,6 @@ import { LoginSessionsComponent } from './main/reports/login-sessions/login-sess
 import { CustomInterceptor } from './services/custom.interceptor';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EmployeeDetailsComponent } from './main/users/table/employee-details/employee-details.component';
 
