@@ -76,5 +76,22 @@ export class AccessLogService {
     return this.accessLogRepository.find({ where: { employee: { id: employeeId } } });
   }
 
+  findByDate(date: Date): Promise<_dbaccesslog[]> {
+    // Filter access logs by date (ignoring time) and include additional information
+    return this.accessLogRepository
+      .createQueryBuilder('accessLog')
+      .where('DATE(accessLog.accessDateTime) = :date', { date: date.toISOString().split('T')[0] })
+      .select(['accessLog.id', 'accessLog.accessDateTime', 'accessLog.accessType'])
+      .getMany()
+      .then(filteredLogs => {
+        if (!filteredLogs || filteredLogs.length === 0) {
+          throw new NotFoundException(`No access logs found for date: ${date}`);
+        }
+        return filteredLogs;
+      })
+      .catch(error => {
+        throw new Error(`Error fetching access logs by date: ${error.message}`);
+      });
+  }
 
 }
