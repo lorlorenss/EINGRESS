@@ -1,7 +1,8 @@
 <div mat-dialog-content>
-    Are you sure you want to do this?
+   {{data?.message}}
 </div>
 
 <div mat-dialog-actions [align]="'end'">
-    <button mat-raised-button>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary">Confirm</button>
 </div>
