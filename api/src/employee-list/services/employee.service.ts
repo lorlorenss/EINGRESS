@@ -47,7 +47,7 @@ create(employee: Employee): Observable<Employee> {
     }
 
     findAll(): Observable<Employee[]> {
-        return from(this.userRepository.find());
+        return from(this.userRepository.find({relations:['accessLogs']}));
     }
 
 
