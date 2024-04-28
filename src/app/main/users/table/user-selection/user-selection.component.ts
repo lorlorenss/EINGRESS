@@ -40,7 +40,7 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
   }
 
   loadEmployeeInfo(){
-    this.searchSubscription = this.employeeService.searchUserClicked$.pipe(
+    this.searchSubscription = this.employeeService.searchUserTrigger$.pipe(
       startWith(''),
       switchMap( searchInputValue => {
         if(!searchInputValue.trim()){

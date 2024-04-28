@@ -18,8 +18,8 @@ export class EmployeeService {
   private deletedClickedSource = new Subject<void>();
   deletedClicked$ = this.deletedClickedSource.asObservable();
 
-  private searchedUserClickedSource = new Subject<string>();
-  searchUserClicked$ = this.searchedUserClickedSource.asObservable();
+  private searchedUserTriggerSource = new Subject<string>();
+  searchUserTrigger$ = this.searchedUserTriggerSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -53,13 +53,7 @@ export class EmployeeService {
         const filteredEmployees = employees.filter(
           employee => employee.fullname.toLowerCase().includes(searchInputValue.toLowerCase())
         );
-
-        if(filteredEmployees.length === 0){
-          return [{ id: 0, fullname: 'No matching results found', role: '', lastlogdate: '', email: '', phone: '' }];
-        }
-        else{
-          return filteredEmployees;
-        }
+        return filteredEmployees;
       })
     );
   }
@@ -69,7 +63,7 @@ export class EmployeeService {
   }
 
   triggerSearchUser(searchInputValue: string){
-    this.searchedUserClickedSource.next(searchInputValue);
+    this.searchedUserTriggerSource.next(searchInputValue);
   }
 
   reloadPage(){
