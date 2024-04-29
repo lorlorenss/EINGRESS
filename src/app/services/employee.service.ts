@@ -18,8 +18,8 @@ export class EmployeeService {
   private deletedClickedSource = new Subject<void>();
   deletedClicked$ = this.deletedClickedSource.asObservable();
 
-  private searchedUserClickedSource = new Subject<string>();
-  searchUserClicked$ = this.searchedUserClickedSource.asObservable();
+  private searchedUserTriggerSource = new Subject<string>();
+  searchUserTrigger$ = this.searchedUserTriggerSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -34,8 +34,12 @@ export class EmployeeService {
     return forkJoin(deleteRequest);
   }
 
-  addEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.apiUrl, employee);
+  addEmployee(employee: Employee, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    console.log(employee);
+    formData.append('file', file); // Assuming the profileImage is always present
+    formData.append('employee', JSON.stringify(employee)); // Convert employee object to JSON string
+    return this.http.post<any>(`${this.apiUrl}`, formData);
   }
 
   updateEmployee(id: number, employee: Employee): Observable<any>{
@@ -49,13 +53,7 @@ export class EmployeeService {
         const filteredEmployees = employees.filter(
           employee => employee.fullname.toLowerCase().includes(searchInputValue.toLowerCase())
         );
-
-        if(filteredEmployees.length === 0){
-          return [{ id: 0, fullname: 'No matching results found', role: '', lastlogdate: '', email: '', phone: '' }];
-        }
-        else{
-          return filteredEmployees;
-        }
+        return filteredEmployees;
       })
     );
   }
@@ -65,7 +63,7 @@ export class EmployeeService {
   }
 
   triggerSearchUser(searchInputValue: string){
-    this.searchedUserClickedSource.next(searchInputValue);
+    this.searchedUserTriggerSource.next(searchInputValue);
   }
 
   reloadPage(){

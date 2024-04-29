@@ -3,6 +3,7 @@ import { Employee } from 'src/app/interface/employee.interface';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { startWith, switchMap } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-user-selection',
@@ -21,7 +22,7 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
     employee.selected = !employee.selected;
   }
 
-  constructor(private employeeService: EmployeeService,){}
+  constructor(private employeeService: EmployeeService, private dialogService: DialogService){}
 
   ngOnInit(){
     this.loadEmployeeInfo();
@@ -39,7 +40,7 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
   }
 
   loadEmployeeInfo(){
-    this.searchSubscription = this.employeeService.searchUserClicked$.pipe(
+    this.searchSubscription = this.employeeService.searchUserTrigger$.pipe(
       startWith(''),
       switchMap( searchInputValue => {
         if(!searchInputValue.trim()){
@@ -58,8 +59,12 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
   deleteEmployee(){
     const selectedEmployee = this.employees.filter(employees => employees.selected).map(employees => employees.id)
     if(selectedEmployee.length > 0){
-      this.employeeService.deleteEmployee(selectedEmployee).subscribe(()=>{
-        this.loadEmployeeInfo();
+      this.dialogService.openConfirmDialog('Do you want to Delete this user/s?').subscribe(confirmed =>{
+        if(confirmed){
+          this.employeeService.deleteEmployee(selectedEmployee).subscribe(()=>{
+            this.loadEmployeeInfo();
+          })
+        }
       })
     }
   }

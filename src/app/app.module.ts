@@ -46,6 +46,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { InvalidUserDialogComponent } from './login/invalid-user-dialog/invalid-user-dialog.component';
 import { RecentAlertsComponent } from './main/dashboard/recent-alerts/recent-alerts.component';
 import { RecentLoginComponent } from './main/dashboard/recent-login/recent-login.component';
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 
 
 
@@ -77,7 +78,7 @@ import { RecentLoginComponent } from './main/dashboard/recent-login/recent-login
     InvalidUserDialogComponent,
     RecentAlertsComponent,
     RecentLoginComponent,
-
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
