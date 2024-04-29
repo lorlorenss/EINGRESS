@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 import { Observable } from 'rxjs';
+import { AlertDialogComponent } from '../dialogs/alert-dialog/alert-dialog.component';
+import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +12,37 @@ export class DialogService {
 
   constructor(private dialog: MatDialog) { }
 
-  openConfirmDialog(message: string): Observable<boolean> {
+  openConfirmDialog(message: string, cancelText:string, confirmText: string): Observable<boolean> {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
-      data: { message }
+      data: 
+      { 
+        message,
+        cancelText,
+        confirmText
+      }
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  openAlertDialog(message: string) {
+    this.dialog.open(AlertDialogComponent, {
+      width: '350px',
+      data: 
+      { 
+        message 
+      }
+    });
+  }
+
+  openSuccessDialog(message: string): Observable<boolean> {
+    const dialogRef = this.dialog.open(SuccessDialogComponent, {
+      width: '350px',
+      data: 
+      { 
+        message
+      }
     });
 
     return dialogRef.afterClosed();

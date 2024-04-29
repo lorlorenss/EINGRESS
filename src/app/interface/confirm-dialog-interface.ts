@@ -1,5 +1,5 @@
 export interface ConfirmDialog {
     message: string;
-    confirmTest:string;
+    confirmText:string;
     cancelText:string;
 }

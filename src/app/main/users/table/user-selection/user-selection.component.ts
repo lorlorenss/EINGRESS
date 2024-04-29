@@ -59,7 +59,7 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
   deleteEmployee(){
     const selectedEmployee = this.employees.filter(employees => employees.selected).map(employees => employees.id)
     if(selectedEmployee.length > 0){
-      this.dialogService.openConfirmDialog('Do you want to Delete this user/s?').subscribe(confirmed =>{
+      this.dialogService.openConfirmDialog('Do you want to Delete this user/s?', 'Cancel', 'Confirm').subscribe(confirmed =>{
         if(confirmed){
           this.employeeService.deleteEmployee(selectedEmployee).subscribe(()=>{
             this.loadEmployeeInfo();
