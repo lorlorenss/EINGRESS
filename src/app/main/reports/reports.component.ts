@@ -91,9 +91,17 @@ export class ReportsComponent implements OnInit {
   }
 
   onSearchChanged(searchTerm: string) {
-    this.searchTerm = searchTerm;
-    this.filterEmployeesByDate(); // Reapply date filtering after search term changes
+    // Filter employees whose names start with the search term
+    if (searchTerm) {
+      this.filteredEmployees = this.employeeList.filter(employee => 
+        employee.fullname.toLowerCase().startsWith(searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredEmployees = [...this.employeeList]; // Reset to all employees if search term is empty
+    }
+  
   }
+  
 
   onDateChanged(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
