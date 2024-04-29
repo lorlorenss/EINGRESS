@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employee } from 'src/app/interface/employee.interface';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-add-user-form',
@@ -23,7 +24,7 @@ export class AddUserFormComponent {
     profileImage: '' // Change the type to match the backend
   };
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private dialogService: DialogService) { }
 
   showAddUserForm() {
     this.addUserForm = true;
@@ -56,12 +57,12 @@ export class AddUserFormComponent {
     console.log('Form Data:', this.newEmployee);
 
     if (!this.newEmployee.fullname || !this.newEmployee.email || !this.newEmployee.phone || !this.newEmployee.role) {
-      alert('Please fill in all fields.');
+      this.dialogService.openAlertDialog('Please fill in all credentials');
       return;
     }
 
     if (!this.selectedImage) {
-      alert('Please select an image.');
+      this.dialogService.openAlertDialog('Please select an image');
       return;
     }
   
@@ -69,10 +70,11 @@ export class AddUserFormComponent {
     this.employeeService.addEmployee(this.newEmployee, this.selectedImage)
       .subscribe(
         response => {
-          console.log('Employee added successfully', response);
-          alert('Employee created successfully!');
-          this.employeeService.reloadPage();
-
+          this.dialogService.openSuccessDialog('Employee Created Successfully').subscribe(confirmed => {
+            if(confirmed){
+              this.employeeService.reloadPage();
+            }
+          });
           // Optionally reset the form
           // this.resetForm();
         },

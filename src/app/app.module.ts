@@ -43,8 +43,9 @@ import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { InvalidUserDialogComponent } from './login/invalid-user-dialog/invalid-user-dialog.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from './dialogs/alert-dialog/alert-dialog.component';
+import { SuccessDialogComponent } from './dialogs/success-dialog/success-dialog.component';
 
 
 
@@ -73,9 +74,9 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     PageNotFoundComponent,
     EmployeeDetailsComponent,
     ReportsSearchfieldComponent,
-    InvalidUserDialogComponent,
     ConfirmDialogComponent,
-
+    AlertDialogComponent,
+    SuccessDialogComponent,
   ],
   imports: [
     BrowserModule,

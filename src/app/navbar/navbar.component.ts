@@ -13,7 +13,7 @@ export class NavbarComponent {
   }
 
   logout() {
-    this.dialogService.openConfirmDialog('Do you want to Logout?').subscribe(confirmed => {
+    this.dialogService.openConfirmDialog('Do you want to Logout?', 'No', 'Yes').subscribe(confirmed => {
       if (confirmed) {
         localStorage.removeItem('token');
         this.router.navigateByUrl('/login');
