@@ -31,7 +31,6 @@ import { LoginSessionsComponent } from './main/reports/login-sessions/login-sess
 import { CustomInterceptor } from './services/custom.interceptor';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EmployeeDetailsComponent } from './main/users/table/employee-details/employee-details.component';
 
@@ -45,6 +44,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { InvalidUserDialogComponent } from './login/invalid-user-dialog/invalid-user-dialog.component';
+import { RecentAlertsComponent } from './main/dashboard/recent-alerts/recent-alerts.component';
+import { RecentLoginComponent } from './main/dashboard/recent-login/recent-login.component';
 
 
 
@@ -74,6 +75,8 @@ import { InvalidUserDialogComponent } from './login/invalid-user-dialog/invalid-
     EmployeeDetailsComponent,
     ReportsSearchfieldComponent,
     InvalidUserDialogComponent,
+    RecentAlertsComponent,
+    RecentLoginComponent,
 
   ],
   imports: [
