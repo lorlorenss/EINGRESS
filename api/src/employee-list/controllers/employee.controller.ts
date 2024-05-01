@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
 import { Observable, catchError, map, of } from 'rxjs';
@@ -6,6 +6,7 @@ import {FileInterceptor} from '@nestjs/platform-express'
 import { diskStorage } from 'multer';
 import {v4 as uuid4} from 'uuid';
 import * as path from 'path';
+import { join } from 'path';
 
 export const storage = {
   storage: diskStorage({
@@ -43,7 +44,7 @@ export class EmployeeController {
       // employee.profileImage = file.path;
   
       // Call the service method to create the employee
-  return this.userService.create({...updatedEmployeeData, profileImage: file.path});
+  return this.userService.create({...updatedEmployeeData, profileImage: file.filename});
 }
 
 
@@ -87,8 +88,13 @@ export class EmployeeController {
     @UseInterceptors(FileInterceptor('file',storage))
     uploadFile(@UploadedFile()file): Observable<Object> {
       console.log(file);
-      return of({imagePath: file.path});
+      return of({imagePath: file.filename});
 
     }
     
+    @Get('profile-image/:imagename')
+    findProfileImage(@Param('imagename')imagename, @Res() res):Observable<Object> {
+      return of(res.sendFile(join(process.cwd(), 'uploads/profileimages/'+ imagename)))
+    }
+
 }
