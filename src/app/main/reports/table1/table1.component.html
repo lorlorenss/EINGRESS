@@ -10,7 +10,7 @@
            [class.selected]="employee === selectedEmployee"
            (click)="selectEmployee(employee)">
         <div class="user-content">
-            <img src="/assets/images/max-smith.png" alt="">
+          <img class="photoholder" src="http://localhost:3000/api/employee/profile-image/{{employee.profileImage}}">
             <div class="name-email">
                 <div class="username">{{ employee.fullname }}</div>
                 <div class="useremail">{{ employee.email }}</div>
