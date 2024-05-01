@@ -1,0 +1,8 @@
+.mat-dialog-container{
+    background-color: var(--error);
+    color: var(--white);
+}
+
+.mat-btn{
+    background-color: var(--white);
+}

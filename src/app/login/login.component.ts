@@ -4,7 +4,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { InvalidUserDialogComponent } from './invalid-user-dialog/invalid-user-dialog.component';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dialogService: DialogService
   ){
     this.form = this.formBuilder.group({
       username: ['',Validators.required],
@@ -37,16 +38,11 @@ export class LoginComponent {
           this.router.navigateByUrl('/main');
         },
         error: (error) => {
-          console.error(error);
-          this.openErrorDialog(); 
+          this.dialogService.openAlertDialog('Invalid User please try again!');
+          console.error(error); 
         }
       } 
     );
-  }
-
-  openErrorDialog(): void {
-    this.dialog.open(InvalidUserDialogComponent, {
-    });
   }
 
 }
