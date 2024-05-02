@@ -68,23 +68,7 @@ export class EmployeeDetailsComponent implements OnChanges {
       )
     }
   }
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      if (file.type === 'image/jpeg' || file.type === 'image/png') {
-        this.selectedImage = file;
-  
-        // Update the image source for preview
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          this.photoSrc = reader.result;
-        };
-      } else {
-        alert('Please select a valid image format (jpg, png).');
-      }
-    }
-  }
+
 
   onRoleChange(event: Event){
     const target = event.target as HTMLInputElement;
