@@ -13,8 +13,8 @@
                 <img class="photoholder" src="http://localhost:3000/api/employee/profile-image/{{employeeDetails.profileImage}}">
                 <div class="icons pointer">
                     <div class="edit">
-                        <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display:none">
-                        <img class="icon pointer" src="/assets/images/edit-blue.png">
+                        <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
+                        <img class="icon pointer" src="/assets/images/edit-blue.png" (click)="fileInput.click()">
                     </div>
                     <div class="delete">
                         <img class="icon pointer" src="/assets/images/delete-red.png">
@@ -30,34 +30,11 @@
                 <span>Email</span>
                 <input formControlName="email" class="textbox" type="text" placeholder="Enter Name">
             </div>
-            <div class="role-container">
-                <span>Role</span>
-                <div class="roles">
-                    <div class="role r1 ">
-                        <input formControlName="role" type="radio" name="role" value="CEO" (change)="onRoleChange($event)">
-                        <span>CEO</span>
+            <div class="rfid-container">
+                <span>RFID</span>
+                    <div class="rfid">
+
                     </div>
-                    <div class="role r1 ">
-                        <input formControlName="role" type="radio" name="role" value="Administrator" (change)="onRoleChange($event)">
-                        <span>Administrator</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input formControlName="role" type="radio" name="role" value="Manager" (change)="onRoleChange($event)">
-                        <span>Manager</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input formControlName="role" type="radio" name="role" value="Developer" (change)="onRoleChange($event)">
-                        <span>Developer</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input formControlName="role" type="radio" name="role" value="HR" (change)="onRoleChange($event)">
-                        <span>HR</span>
-                    </div>
-                    <div class="role r1 ">
-                        <input formControlName="role" type="radio" name="role" value="Guest" (change)="onRoleChange($event)">
-                        <span>Guest</span>
-                    </div>
-                </div>
             </div>
             <div class="dismiss-container">
                 <div class="dismiss-user pointer">
@@ -70,6 +47,20 @@
             <div class="contact-number">
                 <span>Contact Number</span>
                 <input formControlName="phone" class="textbox" type="text" placeholder="+639 xxx xxx xxxx">
+            </div>
+
+            <div class="roles">
+                <label for="roles">Select Roles</label>
+                <select name="roles" formControlName="role">
+                    <option value="CEO">CEO</option>
+                    <option value="Administrator">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="HR">HR</option>
+                    <option value="DevOps">DevOps</option>
+                    <option value="QA">QA</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Guest">Guest</option>
+                </select>
             </div>
 
             <div class="fingerprint-container">
