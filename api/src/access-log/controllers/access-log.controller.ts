@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException, Query } from '@nestjs/common';
 import { AccessLogService } from '../services/access-log.service';
 import { _dbaccesslog } from './../../access-log/models/access-log.entity'; // Adjust the import path if necessary
 
@@ -6,9 +6,24 @@ import { _dbaccesslog } from './../../access-log/models/access-log.entity'; // A
 export class AccessLogController {
   constructor(private readonly accessLogService: AccessLogService) {}
 
+  // @Get()
+  // findAll(): Promise<_dbaccesslog[]> {
+  //   return this.accessLogService.findAll();
+  // }
+
   @Get()
-  findAll(): Promise<_dbaccesslog[]> {
-    return this.accessLogService.findAll();
+  findAll(@Query('date') date?: string): Promise<_dbaccesslog[]> {
+    if (date) {
+      // If date parameter is provided, convert it into a Date object
+      const parsedDate = new Date(date.split('T')[0]);
+      // Call a service method to fetch access logs filtered by the provided date
+      return this.accessLogService.findByDate(parsedDate)
+        .then(filteredLogs => filteredLogs);
+    } else {
+      // If no date parameter is provided, return all access logs
+      return this.accessLogService.findAll()
+        .then(allLogs => allLogs);
+    }
   }
 
   @Get(':id')
