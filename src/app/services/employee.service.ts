@@ -42,10 +42,15 @@ export class EmployeeService {
     return this.http.post<any>(`${this.apiUrl}`, formData);
   }
 
-  updateEmployee(id: number, employee: Employee): Observable<any>{
+  updateEmployee(id: number, employee: Employee, file: File): Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('file', file); // Append the file to the FormData
+    formData.append('employee', JSON.stringify(employee)); // Append the employee object to the FormData
+  
     const updateEmployeeUrl = `${this.apiUrl}/${id}`
-    return this.http.put<Employee>(updateEmployeeUrl, employee);
+    return this.http.put<Employee>(updateEmployeeUrl, formData); // Use FormData in the PUT request
   }
+  
 
   searchEmployee(searchInputValue: string): Observable<Employee[]>{
     return this.getEmployee().pipe(

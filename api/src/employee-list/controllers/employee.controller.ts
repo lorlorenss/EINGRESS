@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, mergeMap, of } from 'rxjs';
 import {FileInterceptor} from '@nestjs/platform-express'
 import { diskStorage } from 'multer';
 import {v4 as uuid4} from 'uuid';
@@ -67,11 +67,35 @@ export class EmployeeController {
             map(() => ({ message: 'User and associated access logs deleted successfully' }))
         );
     }
-
     @Put(':id')
-    updateOne(@Param('id') id: string, @Body() employee: Employee): Observable<any> {
-      return this.userService.updateOne(Number(id), employee);
+    @UseInterceptors(FileInterceptor('file', storage))
+    updateOne(@Param('id') id: string, @Body() payload: {employee: Employee}, @UploadedFile() file): Observable<any> {
+      if (!file) {
+        throw new BadRequestException('Image file is required');
+      }
+    
+      return this.userService.findOne(Number(id)).pipe(
+        catchError(() => {
+          throw new NotFoundException(`Employee with ID ${id} not found`);
+        }),
+        
+        mergeMap(existingEmployee => {
+          // Update the employee data
+          const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
+
+          console.log('typeof ', updatedEmployeeData)
+    
+          const updatedEmployee: Employee = {
+            ...updatedEmployeeData,
+            profileImage: file.filename // Assign the file name as the profile image
+          };
+    
+          // Update the employee using the service method
+          return this.userService.updateOne(Number(id), updatedEmployee);
+        })
+      );
     }
+    
 
     @Post('log-access')
     logEmployeeAccess(@Body() accessData: { employeeId: number, accessType: string, roleAtAccess: string }): Promise<void> {
