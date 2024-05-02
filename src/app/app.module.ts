@@ -42,6 +42,8 @@ import { ReportsSearchfieldComponent } from './main/reports/reports-searchfield/
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RecentAlertsComponent } from './main/dashboard/recent-alerts/recent-alerts.component';
+import { RecentLoginComponent } from './main/dashboard/recent-login/recent-login.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 import { AlertDialogComponent } from './dialogs/alert-dialog/alert-dialog.component';
 import { SuccessDialogComponent } from './dialogs/success-dialog/success-dialog.component';
@@ -73,6 +75,9 @@ import { SuccessDialogComponent } from './dialogs/success-dialog/success-dialog.
     PageNotFoundComponent,
     EmployeeDetailsComponent,
     ReportsSearchfieldComponent,
+    RecentAlertsComponent,
+    RecentLoginComponent,
+    ConfirmDialogComponent,
     ConfirmDialogComponent,
     AlertDialogComponent,
     SuccessDialogComponent,

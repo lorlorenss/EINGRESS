@@ -34,8 +34,21 @@
                 </div>
                 <div class="rfid-container">
                     <span>RFID</span>
-                        <div class="rfid">
-
+                        <div class="rfid-content">
+                            <div class="icon-holder ">
+                                <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="fingerprint icon">
+                            </div>
+                            <div class="begin-scan pointer">
+                                Begin scan
+                            </div>
+                            <div class="details-holder">
+                                <span>RFID</span>
+                                <input type="text" placeholder="ABC19021DC" disabled>
+                            </div>
+                            <div class="rfid-confirmation">
+                                <div class="dismiss-rfid pointer">Dismiss</div>
+                                <div class="submit-rfid pointer">Submit</div>
+                            </div>
                         </div>
                 </div>
                 <div class="dismiss-container">
@@ -53,8 +66,8 @@
                 </div>
 
                 <div class="roles">
-                    <label for="roles">Select Roles</label>
-                    <select name="roles" #employeeRole>
+                    <span>Roles</span>
+                    <select name="roles" #employeeRole class="roles-select">
                         <option value="CEO">CEO</option>
                         <option value="Administrator">Admin</option>
                         <option value="Manager">Manager</option>
@@ -77,7 +90,7 @@
                         </div>
                         <div class="details-holder">
                             <span>Fingerprint ID</span>
-                            <input type="text" placeholder="135135115161">
+                            <input type="text" placeholder="135135115161" disabled>
                         </div>
                         <div class="fingerprint-confirmation">
                         <div class="dismiss-fingerprint pointer">Dismiss</div>
@@ -88,6 +101,5 @@
                 <div class="submit-user pointer" (click)="submitUser()">Submit</div>
             </div>
         </div>
-    
     </div>
     </body>

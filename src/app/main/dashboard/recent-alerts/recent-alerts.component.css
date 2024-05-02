@@ -1,0 +1,36 @@
+.main-container {
+    max-width: 380px;
+    margin: 20px auto;
+    border: none;
+    border-radius: 5px;
+    height: 210px; /* Set a fixed height */
+    overflow-y: auto;
+    padding-right: 20px; /* Add padding for the scrollbar */
+    box-sizing: border-box; /* Ensure padding doesn't increase container size */
+}
+
+.alerts-holder{
+    display: flex;
+    align-items: center;
+}
+
+.color-holder {
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+
+.text-holder {
+    flex: 1;
+}
+
+.login {
+    background-color: var(--success);
+}
+
+.attempts {
+    background-color: var(--error);
+}
+
