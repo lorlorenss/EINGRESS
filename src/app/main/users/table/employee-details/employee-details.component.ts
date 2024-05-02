@@ -24,7 +24,8 @@ export class EmployeeDetailsComponent implements OnChanges {
       fullname: [''],
       email: [''],
       role: [''],
-      phone: ['']
+      phone: [''],
+      
     });
   }
 
@@ -52,23 +53,34 @@ export class EmployeeDetailsComponent implements OnChanges {
     }
   }
 
-  updateEmployee(){
+  updateEmployee(): void {
     const id = this.employeeDetails?.id;
-
-    if(id){
+  
+    if (id) {
       const updateEmployee: Employee = this.updateEmployeeForm.value;
-      console.log(updateEmployee);
-      this.employeeService.updateEmployee(id, updateEmployee).subscribe(
+      const file: File = this.selectedImage; // Assuming you have selectedFile defined in your component class
+  
+      if (!file) {
+        // Handle error if no file is selected
+        console.error('No file selected');
+        return;
+      }
+  
+      this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
         (response) => {
-          alert('Employee update successfully');
-          console.log('Employee update successfully', response);
+          alert('Employee update successful');
+          console.log('Employee update successful', response);
           this.hideEmployeeDetails();
           this.employeeService.reloadPage();
+        },
+        (error) => {
+          // Handle error
+          console.error('Error updating employee', error);
         }
-      )
+      );
     }
   }
-
+  
 
   onRoleChange(event: Event){
     const target = event.target as HTMLInputElement;
