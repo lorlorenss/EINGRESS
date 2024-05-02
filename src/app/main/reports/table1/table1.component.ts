@@ -13,7 +13,7 @@ export class Table1Component implements OnInit {
   @Output() employeeSelected = new EventEmitter<Employee>();
   selectedEmployee: Employee | null = null;
   loginSessions: { accessDateTime: Date, date: string, time: string }[] = []; // Initialize as empty array
-
+  noEmployeesFound: boolean = false; // Variable to track if no employees are found
   constructor(
     private employeeService: EmployeeService,
     private accessLogService: AccessLogService
