@@ -13,7 +13,7 @@
                 <img class="photoholder" src="http://localhost:3000/api/employee/profile-image/{{employeeDetails.profileImage}}">
                 <div class="icons pointer">
                     <div class="edit">
-                        <input type="file" #fileInput style="display: none;">
+                        <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display:none">
                         <img class="icon pointer" src="/assets/images/edit-blue.png">
                     </div>
                     <div class="delete">
