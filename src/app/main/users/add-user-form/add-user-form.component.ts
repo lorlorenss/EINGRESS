@@ -10,6 +10,8 @@ import { DialogService } from 'src/app/services/dialog.service';
 })
 export class AddUserFormComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('employeeRole', {static: false}) employeeRole?: ElementRef
+
   addUserForm: boolean = false;
   selectedImage!: File ;
   photoSrc: string | ArrayBuffer | null = null;
@@ -54,6 +56,8 @@ export class AddUserFormComponent {
 
 
   submitUser(): void {
+    this.newEmployee.role = this.employeeRole?.nativeElement.value;
+    console.log(this.newEmployee.role);
     console.log('Form Data:', this.newEmployee);
 
     if (!this.newEmployee.fullname || !this.newEmployee.email || !this.newEmployee.phone || !this.newEmployee.role) {
@@ -93,10 +97,6 @@ export class AddUserFormComponent {
           alert(errorMessage);
         }
       );
-  }
-
-  onRoleChange(event: any) {
-    this.newEmployee.role = event.target.value;
   }
 
 }
