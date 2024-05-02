@@ -21,6 +21,7 @@ export class ReportsComponent implements OnInit {
   searchTerm: string = '';
   filteredEmployees: Employee[] = [];
   selectedDate: string = ''; // Store the selected date from the date picker
+  isTable1Empty: boolean = true;
 
   constructor(
     private accessLogService: AccessLogService,
@@ -35,10 +36,14 @@ export class ReportsComponent implements OnInit {
     this.employeeService.getEmployee().subscribe(
       employees => {
         this.employeeList = employees;
-        
+        this.isTable1Empty = this.employeeList.length === 0; // Subaybayan kung walang nakapagpapakita sa table1
+
         if (this.employeeList.length > 0) {
           this.selectedEmployee = this.employeeList[0];
           this.fetchLoginSessions(this.selectedEmployee);
+        } else {
+          this.selectedEmployee = null; // Walang napiling empleyado kung walang nakapagpapakita sa table1
+          this.loginSessions = []; // Walang nakapag-log in na sesyon kung walang nakapagpapakita sa table1
         }
       },
       error => {
@@ -56,14 +61,7 @@ export class ReportsComponent implements OnInit {
             time: new Date(log.accessDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }));
   
-          // If selectedDate is empty, show all login sessions
-          if (!this.selectedDate) {
-            console.log('All login sessions:', this.loginSessions);
-            return;
-          }
-  
-          // Filter login sessions to only show sessions for the selected date
-          this.loginSessions = this.loginSessions.filter(session => session.date === this.selectedDate);
+          this.filterEmployeesByDate(); // Filter employees based on selected date
           
           console.log('Updated login sessions:', this.loginSessions);
         },
@@ -71,6 +69,19 @@ export class ReportsComponent implements OnInit {
           console.error('Error fetching access logs:', error);
         }
       );
+  }
+
+  filterEmployeesByDate() {
+    if (this.selectedDate) {
+      this.filteredEmployees = this.employeeList.filter(employee =>
+        employee.accessLogs && employee.accessLogs.some(log =>
+          new Date(log.accessDateTime).toLocaleDateString() === this.selectedDate
+        )
+      );
+    } else {
+      // If no date is selected, show all employees
+      this.filteredEmployees = this.employeeList;
+    }
   }
   
 
@@ -80,15 +91,17 @@ export class ReportsComponent implements OnInit {
   }
 
   onSearchChanged(searchTerm: string) {
-    this.searchTerm = searchTerm;
-    this.filterEmployees();
+    // Filter employees whose names start with the search term
+    if (searchTerm) {
+      this.filteredEmployees = this.employeeList.filter(employee => 
+        employee.fullname.toLowerCase().startsWith(searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredEmployees = [...this.employeeList]; // Reset to all employees if search term is empty
+    }
+  
   }
   
-  filterEmployees() {
-    this.filteredEmployees = this.employeeList.filter((employee: Employee) => 
-      employee.fullname.toLowerCase().startsWith(this.searchTerm.toLowerCase())
-    );
-  }
 
   onDateChanged(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
@@ -101,6 +114,4 @@ export class ReportsComponent implements OnInit {
       this.fetchLoginSessions(this.selectedEmployee);
     }
   }
-  
-
 }
