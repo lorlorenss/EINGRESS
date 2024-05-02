@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/app/interface/employee.interface';
 import { AccessLogService } from 'src/app/services/access-log.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+type LoginSession = {
+  date: string;
+  time: string;
+};
 
 @Component({
   selector: 'app-reports',
@@ -13,9 +17,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class ReportsComponent implements OnInit {
   employeeList: Employee[] = [];
   selectedEmployee: Employee | null = null;
-  loginSessions: { date: string, time: string }[] = [];
+  loginSessions: LoginSession[] = [];
   searchTerm: string = '';
-filteredEmployees: Employee[] = [];
+  filteredEmployees: Employee[] = [];
+  selectedDate: string = ''; // Store the selected date from the date picker
+  isTable1Empty: boolean = true;
 
   constructor(
     private accessLogService: AccessLogService,
@@ -23,7 +29,6 @@ filteredEmployees: Employee[] = [];
   ) {}
 
   ngOnInit(): void {
-    // Load initial employee data and set default selected employee
     this.loadEmployeeInfo();
   }
 
@@ -31,11 +36,14 @@ filteredEmployees: Employee[] = [];
     this.employeeService.getEmployee().subscribe(
       employees => {
         this.employeeList = employees;
-        
-        // Set default selected employee and fetch access logs
+        this.isTable1Empty = this.employeeList.length === 0; // Subaybayan kung walang nakapagpapakita sa table1
+
         if (this.employeeList.length > 0) {
           this.selectedEmployee = this.employeeList[0];
           this.fetchLoginSessions(this.selectedEmployee);
+        } else {
+          this.selectedEmployee = null; // Walang napiling empleyado kung walang nakapagpapakita sa table1
+          this.loginSessions = []; // Walang nakapag-log in na sesyon kung walang nakapagpapakita sa table1
         }
       },
       error => {
@@ -45,7 +53,6 @@ filteredEmployees: Employee[] = [];
   }
 
   fetchLoginSessions(employee: Employee) {
-    // Fetch access logs for the selected employee
     this.accessLogService.getAccessLogsByEmployeeId(employee.id)
       .subscribe(
         accessLogs => {
@@ -53,7 +60,10 @@ filteredEmployees: Employee[] = [];
             date: new Date(log.accessDateTime).toLocaleDateString(),
             time: new Date(log.accessDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }));
-          console.log('Updated login sessions:', this.loginSessions); // Log the updated login sessions
+  
+          this.filterEmployeesByDate(); // Filter employees based on selected date
+          
+          console.log('Updated login sessions:', this.loginSessions);
         },
         error => {
           console.error('Error fetching access logs:', error);
@@ -61,20 +71,47 @@ filteredEmployees: Employee[] = [];
       );
   }
 
+  filterEmployeesByDate() {
+    if (this.selectedDate) {
+      this.filteredEmployees = this.employeeList.filter(employee =>
+        employee.accessLogs && employee.accessLogs.some(log =>
+          new Date(log.accessDateTime).toLocaleDateString() === this.selectedDate
+        )
+      );
+    } else {
+      // If no date is selected, show all employees
+      this.filteredEmployees = this.employeeList;
+    }
+  }
+  
+
   handleEmployeeSelected(employee: Employee) {
     this.selectedEmployee = employee;
     this.fetchLoginSessions(employee);
   }
 
   onSearchChanged(searchTerm: string) {
-    this.searchTerm = searchTerm;
-    this.filterEmployees();
+    // Filter employees whose names start with the search term
+    if (searchTerm) {
+      this.filteredEmployees = this.employeeList.filter(employee => 
+        employee.fullname.toLowerCase().startsWith(searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredEmployees = [...this.employeeList]; // Reset to all employees if search term is empty
+    }
+  
   }
   
-  filterEmployees() {
-    this.filteredEmployees = this.employeeList.filter((employee: Employee) => 
-      employee.fullname.toLowerCase().startsWith(this.searchTerm.toLowerCase())
-    );
+
+  onDateChanged(event: MatDatepickerInputEvent<Date>) {
+    if (event.value) {
+      this.selectedDate = event.value.toLocaleDateString(); // Update selectedDate when the date picker value changes
+    } else {
+      this.selectedDate = ''; // Reset selectedDate if the date picker value is null or undefined
+    }
+    
+    if (this.selectedEmployee) {
+      this.fetchLoginSessions(this.selectedEmployee);
+    }
   }
-  
 }

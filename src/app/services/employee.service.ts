@@ -18,8 +18,8 @@ export class EmployeeService {
   private deletedClickedSource = new Subject<void>();
   deletedClicked$ = this.deletedClickedSource.asObservable();
 
-  private searchedUserClickedSource = new Subject<string>();
-  searchUserClicked$ = this.searchedUserClickedSource.asObservable();
+  private searchedUserTriggerSource = new Subject<string>();
+  searchUserTrigger$ = this.searchedUserTriggerSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -42,9 +42,26 @@ export class EmployeeService {
     return this.http.post<any>(`${this.apiUrl}`, formData);
   }
 
-  updateEmployee(id: number, employee: Employee): Observable<any>{
-    const updateEmployeeUrl = `${this.apiUrl}/${id}`
-    return this.http.put<Employee>(updateEmployeeUrl, employee);
+  updateEmployee(id: number, employee: Employee, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+  
+    // If a file is provided, append it to the FormData
+    if (file) {
+      formData.append('file', file);
+    }
+  
+    // Append the employee object to the FormData
+    formData.append('employee', JSON.stringify(employee));
+  
+    const updateEmployeeUrl = `${this.apiUrl}/${id}`;
+    return this.http.put<Employee>(updateEmployeeUrl, formData); // Use FormData in the PUT request
+  }
+  
+  updateEmployeeWithoutImage(id: number, employee: Employee): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('employee', JSON.stringify(employee));
+    const updateEmployeeUrl = `${this.apiUrl}/${id}`;
+    return this.http.put<Employee>(updateEmployeeUrl, formData); // Send PUT request without image
   }
 
   searchEmployee(searchInputValue: string): Observable<Employee[]>{
@@ -53,13 +70,7 @@ export class EmployeeService {
         const filteredEmployees = employees.filter(
           employee => employee.fullname.toLowerCase().includes(searchInputValue.toLowerCase())
         );
-
-        if(filteredEmployees.length === 0){
-          return [{ id: 0, fullname: 'No matching results found', role: '', lastlogdate: '', email: '', phone: '' }];
-        }
-        else{
-          return filteredEmployees;
-        }
+        return filteredEmployees;
       })
     );
   }
@@ -69,7 +80,7 @@ export class EmployeeService {
   }
 
   triggerSearchUser(searchInputValue: string){
-    this.searchedUserClickedSource.next(searchInputValue);
+    this.searchedUserTriggerSource.next(searchInputValue);
   }
 
   reloadPage(){

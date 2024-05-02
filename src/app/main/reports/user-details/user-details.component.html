@@ -1,6 +1,6 @@
 <div class="main-container">
     <div class="photoholder">
-        <img src="/assets/images/max-smith.png">
+        <img [src]="getProfileImage(selectedEmployee)" alt="Profile Image">
     </div>
     <div class="right-container" *ngIf="selectedEmployee">
         <div class="user-name">{{ selectedEmployee.fullname }}</div>

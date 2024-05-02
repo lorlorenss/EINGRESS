@@ -1,11 +1,12 @@
-import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, mergeMap, of } from 'rxjs';
 import {FileInterceptor} from '@nestjs/platform-express'
 import { diskStorage } from 'multer';
 import {v4 as uuid4} from 'uuid';
 import * as path from 'path';
+import { join } from 'path';
 
 export const storage = {
   storage: diskStorage({
@@ -43,7 +44,7 @@ export class EmployeeController {
       // employee.profileImage = file.path;
   
       // Call the service method to create the employee
-  return this.userService.create({...updatedEmployeeData, profileImage: file.path});
+  return this.userService.create({...updatedEmployeeData, profileImage: file.filename});
 }
 
 
@@ -66,40 +67,56 @@ export class EmployeeController {
             map(() => ({ message: 'User and associated access logs deleted successfully' }))
         );
     }
-
     @Put(':id')
-    updateOne(@Param('id') id: string, @Body() employee: Employee): Observable<any> {
-      return this.userService.updateOne(Number(id), employee);
+    @UseInterceptors(FileInterceptor('file', storage))
+    updateOne(@Param('id') id: string, @Body() payload: { employee: Employee }, @UploadedFile() file): Observable<any> {
+      return this.userService.findOne(Number(id)).pipe(
+        catchError(() => {
+          throw new NotFoundException(`Employee with ID ${id} not found`);
+        }),
+        mergeMap(existingEmployee => {
+          // If a file is provided, use the uploaded file's filename as the profile image
+          // If no file is provided, retain the existing image filename from the database
+          const profileImage = file ? file.filename : existingEmployee.profileImage;
+    
+          // Update the employee data
+          const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)));
+    
+          const updatedEmployee: Employee = {
+            ...updatedEmployeeData,
+            profileImage: profileImage // Assign the file name as the profile image
+          };
+    
+          // Update the employee using the service method
+          return this.userService.updateOne(Number(id), updatedEmployee);
+        })
+      );
     }
+    
+    
 
     @Post('log-access')
     logEmployeeAccess(@Body() accessData: { employeeId: number, accessType: string, roleAtAccess: string }): Promise<void> {
-    const { employeeId, accessType, roleAtAccess } = accessData;
-
-  if (!employeeId || !accessType || !roleAtAccess) {
-    throw new BadRequestException('Invalid access data');
-  }
-
-  return this.userService.logEmployeeAccess(employeeId, accessType, roleAtAccess).toPromise();
-  }
-
+      const { employeeId, accessType, roleAtAccess } = accessData;
+    
+      if (!employeeId || !accessType || !roleAtAccess) {
+        throw new BadRequestException('Invalid access data');
+      }
+    
+      return this.userService.logEmployeeAccess(employeeId, accessType, roleAtAccess).toPromise();
+    }
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file',storage))
     uploadFile(@UploadedFile()file): Observable<Object> {
       console.log(file);
-      return of({imagePath: file.path});
+      return of({imagePath: file.filename});
 
     }
-
-    @Put(':id/rfid')
-  updaterfidtag(@Param('id') id: string, @Body('rfidtag') rfidtag: string): Observable<Employee> {
-    return this.userService.updaterfidtag(Number(id), rfidtag);
-  }
-
-  @Put(':id/fingerprint')
-  updatefingerprint(@Param('id') id: string, @Body('fingerprint') fingerprint: string): Observable<Employee> {
-    return this.userService.updatefingerprint(Number(id), fingerprint);
-  }
     
+    @Get('profile-image/:imagename')
+    findProfileImage(@Param('imagename')imagename, @Res() res):Observable<Object> {
+      return of(res.sendFile(join(process.cwd(), 'uploads/profileimages/'+ imagename)))
+    }
+
 }
