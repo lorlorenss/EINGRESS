@@ -1,10 +1,11 @@
 <div class="table">
-    <div class="table-header">
-      <div class="user-header">User</div>
-      <div class="role-header">Role</div>
-    </div>
-  
-    <div class="table-body">
+  <div class="table-header">
+    <div class="user-header">User</div>
+    <div class="role-header">Role</div>
+  </div>
+
+  <div class="table-body">
+    <ng-container *ngIf="employees.length > 0; else noEmployees">
       <div *ngFor="let employee of employees" 
            class="user" 
            [class.selected]="employee === selectedEmployee"
@@ -18,6 +19,9 @@
         </div>
         <div class="role-content">{{ employee.role }}</div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #noEmployees>
+      <div class="no-employees-message">No users found</div>
+    </ng-template>
   </div>
-  
+</div>
