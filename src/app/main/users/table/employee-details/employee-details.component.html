@@ -10,7 +10,7 @@
     <div [formGroup]="updateEmployeeForm" class="main-container">
         <div class="left-container">
             <div class="photo-section">
-                <img class="photoholder" src="http://localhost:3000/api/employee/profile-image/{{employeeDetails.profileImage}}">
+                <img class="photoholder" [src]="photoSrc || 'http://localhost:3000/api/employee/profile-image/' + employeeDetails.profileImage">
                 <div class="icons pointer">
                     <div class="edit">
                         <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
