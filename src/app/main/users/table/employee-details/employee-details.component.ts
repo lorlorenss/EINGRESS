@@ -17,7 +17,8 @@ export class EmployeeDetailsComponent implements OnChanges {
   photoSrc: string | ArrayBuffer | null = null;
 
   updateEmployeeForm: FormGroup;
-
+  isUpdating: boolean = false;
+  
   constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService)
   {
     this.updateEmployeeForm = this.formBuilder.group({
@@ -60,26 +61,42 @@ export class EmployeeDetailsComponent implements OnChanges {
       const updateEmployee: Employee = this.updateEmployeeForm.value;
       const file: File = this.selectedImage; // Assuming you have selectedFile defined in your component class
   
-      if (!file) {
-        // Handle error if no file is selected
-        console.error('No file selected');
-        return;
-      }
+      this.isUpdating = true; // Set update flag
   
-      this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
-        (response) => {
-          alert('Employee update successful');
-          console.log('Employee update successful', response);
-          this.hideEmployeeDetails();
-          this.employeeService.reloadPage();
-        },
-        (error) => {
-          // Handle error
-          console.error('Error updating employee', error);
-        }
-      );
+      if (file) {
+        // If a file is selected, update employee with image
+        this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
+          (response) => {
+            alert('Employee update successful');
+            console.log('Employee update successful', response);
+            this.hideEmployeeDetails();
+            this.employeeService.reloadPage();
+            this.isUpdating = false; // Reset update flag
+          },
+          (error) => {
+            console.error('Error updating employee', error);
+            this.isUpdating = false; // Reset update flag
+          }
+        );
+      } else {
+        // If no file is selected, update employee without image
+        this.employeeService.updateEmployeeWithoutImage(id, updateEmployee).subscribe(
+          (response) => {
+            alert('Employee update successful');
+            console.log('Employee update successful', response);
+            this.hideEmployeeDetails();
+            this.employeeService.reloadPage();
+            this.isUpdating = false; // Reset update flag
+          },
+          (error) => {
+            console.error('Error updating employee', error);
+            this.isUpdating = false; // Reset update flag
+          }
+        );
+      }
     }
   }
+  
   
 
   onRoleChange(event: Event){

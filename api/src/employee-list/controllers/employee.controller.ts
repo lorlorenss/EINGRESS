@@ -69,25 +69,22 @@ export class EmployeeController {
     }
     @Put(':id')
     @UseInterceptors(FileInterceptor('file', storage))
-    updateOne(@Param('id') id: string, @Body() payload: {employee: Employee}, @UploadedFile() file): Observable<any> {
-      if (!file) {
-        throw new BadRequestException('Image file is required');
-      }
-    
+    updateOne(@Param('id') id: string, @Body() payload: { employee: Employee }, @UploadedFile() file): Observable<any> {
       return this.userService.findOne(Number(id)).pipe(
         catchError(() => {
           throw new NotFoundException(`Employee with ID ${id} not found`);
         }),
-        
         mergeMap(existingEmployee => {
+          // If a file is provided, use the uploaded file's filename as the profile image
+          // If no file is provided, retain the existing image filename from the database
+          const profileImage = file ? file.filename : existingEmployee.profileImage;
+    
           // Update the employee data
-          const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
-
-          console.log('typeof ', updatedEmployeeData)
+          const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)));
     
           const updatedEmployee: Employee = {
             ...updatedEmployeeData,
-            profileImage: file.filename // Assign the file name as the profile image
+            profileImage: profileImage // Assign the file name as the profile image
           };
     
           // Update the employee using the service method
@@ -95,6 +92,7 @@ export class EmployeeController {
         })
       );
     }
+    
     
 
     @Post('log-access')
