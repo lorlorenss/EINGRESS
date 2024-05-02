@@ -30,10 +30,10 @@ export class _dbemployee {
   @Column({nullable: true })
   profileImage: string;
 
-  @Column({ nullable: true })
+  @Column()
   rfidtag: string;
 
-  @Column({ nullable: true })
+  @Column()
   fingerprint: string;
 
   // @Column({ nullable: true })
