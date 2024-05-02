@@ -47,7 +47,7 @@ create(employee: Employee): Observable<Employee> {
     }
 
     findAll(): Observable<Employee[]> {
-        return from(this.userRepository.find());
+        return from(this.userRepository.find({relations:['accessLogs']}));
     }
 
 
@@ -108,38 +108,6 @@ create(employee: Employee): Observable<Employee> {
         );
     }
 
-    updaterfidtag(id: number, rfidtag: string): Observable<Employee> {
-  return from(this.userRepository.findOne({ where: { id } })).pipe(
-    switchMap(employee => {
-      if (!employee) {
-        throw new BadRequestException('Employee not found');
-      }
-
-      employee.rfidtag = rfidtag;
-
-      return from(this.userRepository.save(employee)).pipe(
-        switchMap(() => this.findOne(id))
-      );
-    })
-  );
-}
-
-  
-    updatefingerprint(id: number, fingerprint: string): Observable<Employee> {
-      return from(this.userRepository.findOne({ where: { id } })).pipe(
-        switchMap(employee => {
-          if (!employee) {
-            throw new BadRequestException('Employee not found');
-          }
-  
-          employee.fingerprint = fingerprint;
-  
-          return from(this.userRepository.save(employee)).pipe(
-            switchMap(() => this.findOne(id))
-          );
-        })
-      );
-    }
     
 
 }
