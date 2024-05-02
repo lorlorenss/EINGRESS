@@ -37,6 +37,9 @@ create(employee: Employee): Observable<Employee> {
   
   console.log('EMPLOYEE FINAL VALUE ', employee)
     // Save the employee data
+    if (!employee.lastlogdate) {
+      employee.lastlogdate = '';
+    }
     return from(this.userRepository.save(employee));
    
 }
