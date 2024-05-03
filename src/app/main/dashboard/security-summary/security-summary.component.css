@@ -64,7 +64,7 @@
     text-align: center;
     background-color: var(--background);
     border-radius: 10px;
-    color: var(--error);
+    color: #e69b00;
   }
   
   .count{

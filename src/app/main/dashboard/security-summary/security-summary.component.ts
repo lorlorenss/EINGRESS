@@ -2,6 +2,8 @@ import { Component, NgModule, HostListener } from '@angular/core';
 import { multi } from './data';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { AccessLogService } from 'src/app/services/access-log.service';
+import { EmployeeService } from 'src/app/services/employee.service'; // Import the EmployeeService
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-security-summary',
@@ -12,8 +14,10 @@ export class SecuritySummaryComponent {
   below: any;
   multi: any[] = [];
   currentDate: string = new Date().toLocaleDateString();
-  LoginsToday: number = 0; // Initialize LoginsToday property
-  // options
+  LoginsToday: number = 0; 
+  total: number = 0; 
+  NotOnSite: number = 0;
+
   showDataLabel: boolean = false;
   showXAxis: boolean = true;
   showYAxis: boolean = true;
@@ -29,24 +33,22 @@ export class SecuritySummaryComponent {
   legendTitle: string = 'Legend';
   counter = 1;
 
-  // Chart dimensions
   chartWidth: number =  10;
   chartHeight: number = 10;
 
   colorScheme: Color = {
-    name: 'customScheme', // Provide a name for the color scheme
-    selectable: true, // Whether the color scheme is selectable
-    group: ScaleType.Ordinal, // Specify the group of the color scheme (e.g., 'Ordinal', 'Sequential', 'Diverging')
-    domain: ['#008B38', '#2291F2'], // Array of colors
+    name: 'customScheme', 
+    selectable: true, 
+    group: ScaleType.Ordinal, 
+    domain: ['#008B38', '#2291F2'], 
   };
 
-
-
-  constructor(private accessLogService: AccessLogService) {
+  constructor(private accessLogService: AccessLogService, private employeeService: EmployeeService) {
     Object.assign(this, { multi });
     this.calculateChartDimensions();
     this.onResize(null); // Initialize chart dimensions
     this.fetchLoginsToday(); // Fetch LoginsToday data
+    this.loadEmployeeInfo(); // Fetch total employees data
   }
 
   @HostListener('window:resize', ['$event'])
@@ -55,10 +57,11 @@ export class SecuritySummaryComponent {
   }
 
   calculateChartDimensions() {
-    // Calculate chart dimensions based on container or any other logic
-    this.chartWidth = window.innerWidth * 0.63; // 80% of window width
-    this.chartHeight = window.innerHeight * 0.45; // 60% of window height
+    this.chartWidth = window.innerWidth * 0.63; 
+    this.chartHeight = window.innerHeight * 0.45;
   }
+
+
 
   fetchLoginsToday() {
     // Call the access log service to fetch all access logs
@@ -70,15 +73,58 @@ export class SecuritySummaryComponent {
             const logDate = new Date(log.accessDateTime).toLocaleDateString();
             return logDate === this.currentDate;
           });
-
+  
           // Count the number of logins for the current date
           this.LoginsToday = todayLogs.length;
+          this.calculateNotOnSite(); // Calculate NotOnSite after LoginsToday is fetched
         },
         error => {
           console.error('Error fetching access logs:', error);
         }
       );
   }
+  
+  calculateNotOnSite() {
+    // Combine the observables for total and LoginsToday
+    combineLatest([
+      this.employeeService.getEmployee(),
+      this.accessLogService.getAccessLogs()
+    ]).subscribe(
+      ([employees, accessLogs]) => {
+        this.total = employees.length; // Calculate total employees
+  
+        // Filter access logs for the current date
+        const todayLogs = accessLogs.filter(log => {
+          const logDate = new Date(log.accessDateTime).toLocaleDateString();
+          return logDate === this.currentDate;
+        });
+  
+        // Count the number of logins for the current date
+        this.LoginsToday = todayLogs.length;
+  
+        // Calculate NotOnSite
+        this.NotOnSite = this.total - this.LoginsToday;
+      },
+      error => {
+        console.error('Error fetching data:', error);
+      }
+    );
+  }
+
+
+  loadEmployeeInfo() {
+    this.employeeService.getEmployee().subscribe(
+      employees => {
+        this.total = employees.length; // Calculate total employees
+      },
+      error => {
+        console.error('Error fetching employees:', error);
+      }
+    );
+  }
+
+
+  
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
@@ -92,19 +138,17 @@ export class SecuritySummaryComponent {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
   xAxisTickFormatting(value: any): string {
-    // Format the date according to your needs
     return value;
     const date = new Date(value);
     const dayOfMonth = date.getDate();
-    return dayOfMonth.toString(); // Example: '1', '2', '3', ...
+    return dayOfMonth.toString();
   }
 
   yAxisTickFormatting(value: number): string {
-    // Round down to nearest whole number, then convert to string
     return (Math.round(value / 1) * 1).toString();
   }
 
   customLegend = {
-    // valueFormatting: () => true  // Always return true to enable legend
+
   };
 }
