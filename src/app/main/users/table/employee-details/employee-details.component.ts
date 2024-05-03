@@ -3,6 +3,7 @@ import { Employee } from 'src/app/interface/employee.interface';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-employee-details',
@@ -19,7 +20,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
   
-  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService)
+  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService)
   {
     this.updateEmployeeForm = this.formBuilder.group({
       fullname: [''],
@@ -67,14 +68,18 @@ export class EmployeeDetailsComponent implements OnChanges {
         // If a file is selected, update employee with image
         this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
           (response) => {
-            alert('Employee update successful');
-            console.log('Employee update successful', response);
-            this.hideEmployeeDetails();
-            this.employeeService.reloadPage();
-            this.isUpdating = false; // Reset update flag
+            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
+              if(confirmed){
+                this.hideEmployeeDetails();
+                this.employeeService.reloadPage();
+                this.isUpdating = false; 
+              }
+
+            });
+
           },
           (error) => {
-            console.error('Error updating employee', error);
+            this.dialogService.openAlertDialog('Error updating dialog');
             this.isUpdating = false; // Reset update flag
           }
         );
@@ -82,15 +87,19 @@ export class EmployeeDetailsComponent implements OnChanges {
         // If no file is selected, update employee without image
         this.employeeService.updateEmployeeWithoutImage(id, updateEmployee).subscribe(
           (response) => {
-            alert('Employee update successful');
-            console.log('Employee update successful', response);
-            this.hideEmployeeDetails();
-            this.employeeService.reloadPage();
-            this.isUpdating = false; // Reset update flag
+            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
+              if(confirmed){
+                console.log('Employee update successful', response);
+                this.hideEmployeeDetails();
+                this.employeeService.reloadPage();
+                this.isUpdating = false; 
+              }
+            });
+
           },
           (error) => {
-            console.error('Error updating employee', error);
-            this.isUpdating = false; // Reset update flag
+            this.dialogService.openAlertDialog('Error updating dialog');
+            this.isUpdating = false;
           }
         );
       }
