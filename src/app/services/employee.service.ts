@@ -42,9 +42,26 @@ export class EmployeeService {
     return this.http.post<any>(`${this.apiUrl}`, formData);
   }
 
-  updateEmployee(id: number, employee: Employee): Observable<any>{
-    const updateEmployeeUrl = `${this.apiUrl}/${id}`
-    return this.http.put<Employee>(updateEmployeeUrl, employee);
+  updateEmployee(id: number, employee: Employee, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+  
+    // If a file is provided, append it to the FormData
+    if (file) {
+      formData.append('file', file);
+    }
+  
+    // Append the employee object to the FormData
+    formData.append('employee', JSON.stringify(employee));
+  
+    const updateEmployeeUrl = `${this.apiUrl}/${id}`;
+    return this.http.put<Employee>(updateEmployeeUrl, formData); // Use FormData in the PUT request
+  }
+  
+  updateEmployeeWithoutImage(id: number, employee: Employee): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('employee', JSON.stringify(employee));
+    const updateEmployeeUrl = `${this.apiUrl}/${id}`;
+    return this.http.put<Employee>(updateEmployeeUrl, formData); // Send PUT request without image
   }
 
   searchEmployee(searchInputValue: string): Observable<Employee[]>{
