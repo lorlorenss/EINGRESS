@@ -119,4 +119,10 @@ export class EmployeeController {
       return of(res.sendFile(join(process.cwd(), 'uploads/profileimages/'+ imagename)))
     }
 
+    @Get('count')
+    countEmployees(): Observable<number> {
+      return this.userService.countEmployees();
+    }
+    
+
 }
