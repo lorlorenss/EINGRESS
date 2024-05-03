@@ -54,7 +54,6 @@ export class AddUserFormComponent {
     }
   }
 
-
   submitUser(): void {
     this.newEmployee.role = this.employeeRole?.nativeElement.value;
     console.log(this.newEmployee.role);
@@ -66,37 +65,62 @@ export class AddUserFormComponent {
     }
 
     if (!this.selectedImage) {
-      this.dialogService.openAlertDialog('Please select an image');
-      return;
-    }
-  
-    // Call service to add new employee
-    this.employeeService.addEmployee(this.newEmployee, this.selectedImage)
-      .subscribe(
-        response => {
-          this.dialogService.openSuccessDialog('Employee Created Successfully').subscribe(confirmed => {
-            if(confirmed){
-              this.employeeService.reloadPage();
+      // Call service to add new employee without image
+      this.employeeService.addEmployeeWithoutImage(this.newEmployee)
+        .subscribe(
+          response => {
+            this.dialogService.openSuccessDialog('Employee Created Successfully').subscribe(confirmed => {
+              if(confirmed){
+                this.employeeService.reloadPage();
+              }
+            });
+            // Optionally reset the form
+            // this.resetForm();
+          },
+          error => {
+            console.error('Error adding employee', error);
+            let errorMessage = 'Error adding employee. Please try again.';
+    
+            if (error.status === 400) {
+              errorMessage = 'Bad request. Please check your input data.';
+            } else if (error.status === 500) {
+              errorMessage = 'Internal server error. Please try again later.';
+            } else if (error.error && error.error.message) {
+              errorMessage = error.error.message;
             }
-          });
-          // Optionally reset the form
-          // this.resetForm();
-        },
-        error => {
-          console.error('Error adding employee', error);
-          let errorMessage = 'Error adding employee. Please try again.';
-  
-          if (error.status === 400) {
-            errorMessage = 'Bad request. Please check your input data.';
-          } else if (error.status === 500) {
-            errorMessage = 'Internal server error. Please try again later.';
-          } else if (error.error && error.error.message) {
-            errorMessage = error.error.message;
+    
+            alert(errorMessage);
           }
-  
-          alert(errorMessage);
-        }
-      );
+        );
+    } else {
+      // Call service to add new employee with uploaded image
+      this.employeeService.addEmployee(this.newEmployee, this.selectedImage)
+        .subscribe(
+          response => {
+            this.dialogService.openSuccessDialog('Employee Created Successfully').subscribe(confirmed => {
+              if(confirmed){
+                this.employeeService.reloadPage();
+              }
+            });
+            // Optionally reset the form
+            // this.resetForm();
+          },
+          error => {
+            console.error('Error adding employee', error);
+            let errorMessage = 'Error adding employee. Please try again.';
+    
+            if (error.status === 400) {
+              errorMessage = 'Bad request. Please check your input data.';
+            } else if (error.status === 500) {
+              errorMessage = 'Internal server error. Please try again later.';
+            } else if (error.error && error.error.message) {
+              errorMessage = error.error.message;
+            }
+    
+            alert(errorMessage);
+          }
+        );
+    }
   }
 
 }
