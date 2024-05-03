@@ -74,7 +74,7 @@ export class AddUserFormComponent {
     this.employeeService.addEmployee(this.newEmployee, this.selectedImage)
       .subscribe(
         response => {
-          this.dialogService.openSuccessDialog('Employee Created Successfully').subscribe(confirmed => {
+          this.dialogService.openSuccessDialog('Employee created successfully').subscribe(confirmed => {
             if(confirmed){
               this.employeeService.reloadPage();
             }
