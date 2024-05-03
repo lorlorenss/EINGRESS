@@ -1,6 +1,7 @@
 import { Component, NgModule, HostListener } from '@angular/core';
 import { multi } from './data';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { AccessLogService } from 'src/app/services/access-log.service';
 
 @Component({
   selector: 'app-security-summary',
@@ -10,7 +11,8 @@ import { Color, ScaleType } from '@swimlane/ngx-charts';
 export class SecuritySummaryComponent {
   below: any;
   multi: any[] = [];
-
+  currentDate: string = new Date().toLocaleDateString();
+  LoginsToday: number = 0; // Initialize LoginsToday property
   // options
   showDataLabel: boolean = false;
   showXAxis: boolean = true;
@@ -38,10 +40,13 @@ export class SecuritySummaryComponent {
     domain: ['#008B38', '#2291F2'], // Array of colors
   };
 
-  constructor() {
+
+
+  constructor(private accessLogService: AccessLogService) {
     Object.assign(this, { multi });
     this.calculateChartDimensions();
     this.onResize(null); // Initialize chart dimensions
+    this.fetchLoginsToday(); // Fetch LoginsToday data
   }
 
   @HostListener('window:resize', ['$event'])
@@ -55,7 +60,25 @@ export class SecuritySummaryComponent {
     this.chartHeight = window.innerHeight * 0.45; // 60% of window height
   }
 
-  
+  fetchLoginsToday() {
+    // Call the access log service to fetch all access logs
+    this.accessLogService.getAccessLogs()
+      .subscribe(
+        accessLogs => {
+          // Filter access logs for the current date
+          const todayLogs = accessLogs.filter(log => {
+            const logDate = new Date(log.accessDateTime).toLocaleDateString();
+            return logDate === this.currentDate;
+          });
+
+          // Count the number of logins for the current date
+          this.LoginsToday = todayLogs.length;
+        },
+        error => {
+          console.error('Error fetching access logs:', error);
+        }
+      );
+  }
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
