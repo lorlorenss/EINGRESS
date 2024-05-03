@@ -105,9 +105,9 @@ export class ReportsComponent implements OnInit {
 
   onDateChanged(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      this.selectedDate = event.value.toLocaleDateString(); // Update selectedDate when the date picker value changes
+      this.selectedDate = event.value.toLocaleDateString();
     } else {
-      this.selectedDate = ''; // Reset selectedDate if the date picker value is null or undefined
+      this.selectedDate = '';
     }
     
     if (this.selectedEmployee) {
