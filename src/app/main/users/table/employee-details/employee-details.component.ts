@@ -4,6 +4,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
+import { Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-details',
@@ -23,10 +24,10 @@ export class EmployeeDetailsComponent implements OnChanges {
   constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService)
   {
     this.updateEmployeeForm = this.formBuilder.group({
-      fullname: [''],
-      email: [''],
-      role: [''],
-      phone: [''],
+      fullname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      role: ['', Validators.required],
+      phone: ['', Validators.required],
       
     });
   }
@@ -59,55 +60,55 @@ export class EmployeeDetailsComponent implements OnChanges {
     const id = this.employeeDetails?.id;
   
     if (id) {
-      const updateEmployee: Employee = this.updateEmployeeForm.value;
-      const file: File = this.selectedImage; // Assuming you have selectedFile defined in your component class
+      const emailControl = this.updateEmployeeForm.get('email');
+      if(emailControl && emailControl.invalid){
+        this.dialogService.openAlertDialog('Invalid email please try again');
+        return
+      }
+      else{
+
+        const updateEmployee: Employee = this.updateEmployeeForm.value;
+        const file: File = this.selectedImage; 
   
-      this.isUpdating = true; // Set update flag
+        this.isUpdating = true; // Set update flag
+    
+        if (file) {
+          this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
+            (response) => {
+              this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
+                if(confirmed){
+                  this.isUpdating = false; 
+                }
   
-      if (file) {
-        // If a file is selected, update employee with image
-        this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
-          (response) => {
-            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
-              if(confirmed){
-                this.hideEmployeeDetails();
-                this.employeeService.reloadPage();
-                this.isUpdating = false; 
-              }
-
-            });
-
-          },
-          (error) => {
-            this.dialogService.openAlertDialog('Error updating dialog');
-            this.isUpdating = false; // Reset update flag
-          }
-        );
-      } else {
-        // If no file is selected, update employee without image
-        this.employeeService.updateEmployeeWithoutImage(id, updateEmployee).subscribe(
-          (response) => {
-            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
-              if(confirmed){
-                console.log('Employee update successful', response);
-                this.hideEmployeeDetails();
-                this.employeeService.reloadPage();
-                this.isUpdating = false; 
-              }
-            });
-
-          },
-          (error) => {
-            this.dialogService.openAlertDialog('Error updating dialog');
-            this.isUpdating = false;
-          }
-        );
+              });
+  
+            },
+            (error) => {
+              this.dialogService.openAlertDialog('Error updating dialog');
+              this.isUpdating = false; // Reset update flag
+            }
+          );
+        } else {
+          this.employeeService.updateEmployeeWithoutImage(id, updateEmployee).subscribe(
+            (response) => {
+              this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
+                if(confirmed){
+                  console.log('Employee update successful', response);
+                  this.isUpdating = false; 
+                }
+              });
+  
+            },
+            (error) => {
+              this.dialogService.openAlertDialog('Error updating dialog');
+              this.isUpdating = false;
+            }
+          );
+        }
       }
     }
   }
   
-  
-
   onRoleChange(event: Event){
     const target = event.target as HTMLInputElement;
     const roleValue = target.getAttribute('value');
@@ -116,7 +117,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   }
   
   showEmployeeDetails(employee: Employee){
-    this.updateEmployeeForm.setValue({
+    this.updateEmployeeForm.patchValue({
       fullname: employee.fullname,
       email: employee.email,
       role: employee.role,
@@ -127,5 +128,6 @@ export class EmployeeDetailsComponent implements OnChanges {
 
   hideEmployeeDetails(){
     this.employeeDetails = undefined;
+    this.employeeService.reloadPage();
   }
 }

@@ -33,6 +33,22 @@ input[type="checkbox"] {
     overflow-y: auto;
 }
 
+.user-header{
+    grid-column: 2 / 3;
+}
+
+.role-header{
+    grid-column: 3 / 4;
+}
+
+.registered-date-header{
+    grid-column: 4 / 5;
+}
+
+.last-login-header{
+    grid-column: 5 / 6;
+}
+
 @media screen and (max-width: 1000px) {
 .table{
     padding: 0;

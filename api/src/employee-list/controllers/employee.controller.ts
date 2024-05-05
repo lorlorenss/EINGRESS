@@ -28,24 +28,49 @@ export class EmployeeController {
     // create(@Body() employee: Employee): Observable<Employee | Object> {
     //     return this.userService.create(employee);
     // }
-    @Post()
-    @UseInterceptors(FileInterceptor('file', storage))
-    create(@Body() payload: {employee: Employee}, @UploadedFile() file): Observable<Employee | Object> {
-      if (!file) {
-        throw new BadRequestException('Image file is required');
-      }
+//     @Post()
+//     @UseInterceptors(FileInterceptor('file', storage))
+//     create(@Body() payload: {employee: Employee}, @UploadedFile() file): Observable<Employee | Object> {
+//       if (!file) {
+//         throw new BadRequestException('Image file is required');
+//       }
 
-      const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
+//       const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
 
-      console.log('typeof ', updatedEmployeeData)
+//       console.log('typeof ', updatedEmployeeData)
 
   
-      // Assign the file path to the employee object
-      // employee.profileImage = file.path;
+//       // Assign the file path to the employee object
+//       // employee.profileImage = file.path;
   
-      // Call the service method to create the employee
-  return this.userService.create({...updatedEmployeeData, profileImage: file.filename});
+//       // Call the service method to create the employee
+//   return this.userService.create({...updatedEmployeeData, profileImage: file.filename});
+// }
+
+@Post()
+@UseInterceptors(FileInterceptor('file', storage))
+create(@Body() payload: { employee: Employee }, @UploadedFile() file): Observable<Employee | Object> {
+  // If no file is provided, handle the case accordingly
+  if (!file) {
+    // Set a specific file path when no file is uploaded
+    const specificFilePath = 'max-smith.png';
+    const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
+    console.log('typeof ', updatedEmployeeData)   
+    return this.userService.create({...updatedEmployeeData, profileImage: specificFilePath });
+
+  }
+
+  // If a file is provided, update the employee data with the file path
+  // You can also handle any additional modifications to the employee data here
+  const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
+  console.log('typeof ', updatedEmployeeData)   
+        // Assign the file path to the employee object
+        // employee.profileImage = file.path;
+    
+        // Call the service method to create the employee
+    return this.userService.create({...updatedEmployeeData, profileImage: file.filename});
 }
+
 
 
     @Get(':id') // Route for findOne
@@ -118,5 +143,11 @@ export class EmployeeController {
     findProfileImage(@Param('imagename')imagename, @Res() res):Observable<Object> {
       return of(res.sendFile(join(process.cwd(), 'uploads/profileimages/'+ imagename)))
     }
+
+    @Get('count')
+    countEmployees(): Observable<number> {
+      return this.userService.countEmployees();
+    }
+    
 
 }
