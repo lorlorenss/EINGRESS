@@ -17,7 +17,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   employeeDetails!: Employee | undefined;
   selectedImage!: File ;
   photoSrc: string | ArrayBuffer | null = null;
-  editMode: null | boolean = false;
+  editMode: boolean = false;
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
   
@@ -28,6 +28,7 @@ export class EmployeeDetailsComponent implements OnChanges {
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       phone: ['', Validators.required],
+      clearForm: ['']
     });
     this.updateEmployeeForm.disable();
   }
@@ -62,14 +63,14 @@ export class EmployeeDetailsComponent implements OnChanges {
 
     if (id) {
       const emailControl = this.updateEmployeeForm.get('email');
+
+      if(this.updateEmployeeForm.invalid && emailControl?.value === '' ){
+        this.dialogService.openAlertDialog('Please fill in all credentials');
+        return
+      }
       
       if(emailControl && emailControl.invalid){
         this.dialogService.openAlertDialog('Invalid email please try again');
-        return
-      }
-
-      if(this.updateEmployeeForm.invalid){
-        this.dialogService.openAlertDialog('Please fill in all credentials');
         return
       }
 

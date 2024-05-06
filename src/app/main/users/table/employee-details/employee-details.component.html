@@ -50,9 +50,9 @@
                         </div>
                 </div>
                 <div class="dismiss-container">
-                    <div (click)="onClear()" class="dismiss-user pointer">
+                    <button (click)="onClear()" class="dismiss-user pointer" [disabled]="!editMode">
                         Clear
-                    </div>
+                    </button>
                 </div>
 
             </div>
