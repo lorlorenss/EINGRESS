@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, ElementRef,
 import { Employee } from 'src/app/interface/employee.interface';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
 import { Validator } from '@angular/forms';
 
@@ -17,7 +17,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   employeeDetails!: Employee | undefined;
   selectedImage!: File ;
   photoSrc: string | ArrayBuffer | null = null;
-
+  editMode: null | boolean = false;
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
   
@@ -28,8 +28,8 @@ export class EmployeeDetailsComponent implements OnChanges {
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       phone: ['', Validators.required],
-      
     });
+    this.updateEmployeeForm.disable();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,8 +59,10 @@ export class EmployeeDetailsComponent implements OnChanges {
   updateEmployee(): void {
     const id = this.employeeDetails?.id;
   
+
     if (id) {
       const emailControl = this.updateEmployeeForm.get('email');
+      
       if(emailControl && emailControl.invalid){
         this.dialogService.openAlertDialog('Invalid email please try again');
         return
@@ -110,6 +112,20 @@ export class EmployeeDetailsComponent implements OnChanges {
         );
       }
     }
+  }
+
+  onClear(){
+    Object.keys(this.updateEmployeeForm.controls).forEach(controlName => {
+      const control = this.updateEmployeeForm.get(controlName);
+      if(control instanceof FormControl){
+        control.setValue('');
+      }
+    });
+  }
+
+  enableEdit(){
+    this.editMode = true;
+    this.updateEmployeeForm.enable();
   }
   
   onRoleChange(event: Event){

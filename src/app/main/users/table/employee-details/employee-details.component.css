@@ -360,9 +360,27 @@ span {
 }
 
 .submit-container{
-    
     padding: 20px;
 }
+
+.edit-user{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: var(--secondary);
+    width: 90px;
+    height: 40px;
+    grid-row: 5 / 6;
+    margin-top: 40px;
+}
+
+.edit-user:hover{
+    color: white;
+    background-color: var(--secondary);
+}
+
 .submit-user{
     padding: 20px;
     display: flex;
