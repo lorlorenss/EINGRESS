@@ -42,14 +42,19 @@ export class EmployeeService {
     return this.http.post<any>(`${this.apiUrl}`, formData);
   }
 
+  addEmployeeWithoutImage( employee: Employee): Observable<any> {
+    const formData: FormData = new FormData();
+    console.log(employee);
+    formData.append('employee', JSON.stringify(employee)); // Convert employee object to JSON string
+    return this.http.post<any>(`${this.apiUrl}`, formData);// Send PUT request without image
+  }
+
   updateEmployee(id: number, employee: Employee, file: File): Observable<any> {
     const formData: FormData = new FormData();
-  
     // If a file is provided, append it to the FormData
     if (file) {
       formData.append('file', file);
     }
-  
     // Append the employee object to the FormData
     formData.append('employee', JSON.stringify(employee));
   

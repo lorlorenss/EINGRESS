@@ -104,13 +104,16 @@ create(employee: Employee): Observable<Employee> {
       );
   }
 
+  
     updateOne(id: number, employee: Employee): Observable<Employee> {
         return from(this.userRepository.update(id, employee)).pipe(
             switchMap(() => this.findOne(id))
         );
     }
 
-    
+    countEmployees(): Observable<number> {
+      return from(this.userRepository.count());
+  }
 
 }
 
