@@ -65,46 +65,49 @@ export class EmployeeDetailsComponent implements OnChanges {
         this.dialogService.openAlertDialog('Invalid email please try again');
         return
       }
-      else{
 
-        const updateEmployee: Employee = this.updateEmployeeForm.value;
-        const file: File = this.selectedImage; 
-  
-        this.isUpdating = true; // Set update flag
+      if(this.updateEmployeeForm.invalid){
+        this.dialogService.openAlertDialog('Please fill in all credentials');
+        return
+      }
+
+      const updateEmployee: Employee = this.updateEmployeeForm.value;
+      const file: File = this.selectedImage; 
+
+      this.isUpdating = true; // Set update flag
     
-        if (file) {
-          this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
-            (response) => {
-              this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
-                if(confirmed){
-                  this.isUpdating = false; 
-                }
-  
-              });
-  
-            },
-            (error) => {
-              this.dialogService.openAlertDialog('Error updating dialog');
-              this.isUpdating = false; // Reset update flag
-            }
-          );
-        } else {
-          this.employeeService.updateEmployeeWithoutImage(id, updateEmployee).subscribe(
-            (response) => {
-              this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
-                if(confirmed){
-                  console.log('Employee update successful', response);
-                  this.isUpdating = false; 
-                }
-              });
-  
-            },
-            (error) => {
-              this.dialogService.openAlertDialog('Error updating dialog');
-              this.isUpdating = false;
-            }
-          );
-        }
+      if (file) {
+        this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
+          (response) => {
+            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
+              if(confirmed){
+                this.isUpdating = false; 
+              }
+
+            });
+
+          },
+          (error) => {
+            this.dialogService.openAlertDialog('Error updating dialog');
+            this.isUpdating = false; // Reset update flag
+          }
+        );
+      } else {
+        this.employeeService.updateEmployeeWithoutImage(id, updateEmployee).subscribe(
+          (response) => {
+            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
+              if(confirmed){
+                console.log('Employee update successful', response);
+                this.isUpdating = false; 
+              }
+            });
+
+          },
+          (error) => {
+            this.dialogService.openAlertDialog('Error updating dialog');
+            this.isUpdating = false;
+          }
+        );
       }
     }
   }
