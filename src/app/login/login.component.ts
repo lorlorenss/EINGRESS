@@ -29,6 +29,7 @@ export class LoginComponent {
 
   submitCredentials() {
     if(this.form.invalid){
+      this.dialogService.openAlertDialog('Please fill in all credentials');
       return;
     }
 
