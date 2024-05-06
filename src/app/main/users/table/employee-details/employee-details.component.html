@@ -132,8 +132,8 @@
                     </div>
                     </div>
                 </div>
-                <div (click)="enableEdit()" class="edit-user pointer" *ngIf="!editMode">Edit</div>
-                <div (click)="updateEmployee()" class="submit-user pointer" *ngIf="editMode">Update</div>
+                <button (click)="enableEdit()" class="edit-user pointer" *ngIf="!editMode">Edit</button>
+                <button (click)="updateEmployee()" class="submit-user pointer" *ngIf="editMode">Update</button>
             </div>
         </form>
     </div>
