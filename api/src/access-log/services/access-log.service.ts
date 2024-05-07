@@ -55,8 +55,7 @@ export class AccessLogService {
         lastlogdate: '',
         profileImage: '',
         accessLogs: [],
-        rfidtag: '',
-        fingerprint: ''
+        rfidtag: ''
       }, // Set employee ID
       accessDateTime: new Date(),
       accessType,

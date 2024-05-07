@@ -23,7 +23,8 @@ export const storage = {
 @Controller('employee')
 export class EmployeeController {
     constructor(private userService: EmployeeService) {}
-
+    
+    
     // @Post()
     // create(@Body() employee: Employee): Observable<Employee | Object> {
     //     return this.userService.create(employee);
@@ -47,23 +48,36 @@ export class EmployeeController {
 //   return this.userService.create({...updatedEmployeeData, profileImage: file.filename});
 // }
 
+// @Post()
+// @UseInterceptors(FileInterceptor('file', storage))
+// create(@Body() payload: { employee: Employee }, @UploadedFile() file): Observable<Employee | Object> {
+//   // If no file is provided, handle the case accordingly
+//   if (!file) {
+//     // Set a specific file path when no file is uploaded
+//     const specificFilePath = 'max-smith.png';
+//     const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
+//     console.log('typeof ', updatedEmployeeData)   
+//     return this.userService.create({...updatedEmployeeData, profileImage: specificFilePath });
+
+//   }
 @Post()
 @UseInterceptors(FileInterceptor('file', storage))
-create(@Body() payload: { employee: Employee }, @UploadedFile() file): Observable<Employee | Object> {
+create(@Body()  employee: Employee , @UploadedFile() file): Observable<Employee | Object> {
   // If no file is provided, handle the case accordingly
   if (!file) {
     // Set a specific file path when no file is uploaded
     const specificFilePath = 'max-smith.png';
-    const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
-    console.log('typeof ', updatedEmployeeData)   
+    const updatedEmployeeData = (employee)
+    // console.log('typeof ', updatedEmployeeData)   
     return this.userService.create({...updatedEmployeeData, profileImage: specificFilePath });
 
   }
 
   // If a file is provided, update the employee data with the file path
   // You can also handle any additional modifications to the employee data here
-  const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
-  console.log('typeof ', updatedEmployeeData)   
+  // const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
+  const updatedEmployeeData = (employee)
+  // console.log('typeof ', updatedEmployeeData)   
         // Assign the file path to the employee object
         // employee.profileImage = file.path;
     
@@ -148,6 +162,28 @@ create(@Body() payload: { employee: Employee }, @UploadedFile() file): Observabl
     countEmployees(): Observable<number> {
       return this.userService.countEmployees();
     }
-    
 
+    // @Post('rfid')
+    // handleRFID(@Body() data: { rfidtag: string }): Observable<any> {
+    //   // Process the received RFID code here
+    //   const { rfidtag } = data;
+    
+    //   // Log the RFID tag value without the string prefix
+    //   console.log(rfidtag);
+    
+    //   // Perform any necessary operations with the RFID code
+    //   // Example: Query the database using the RFID code
+    //   return this.userService.findByRFIDTag(rfidtag);
+    // }
+    @Post('rfid')
+  async receiveRfidData(@Body() body: { rfid: string }) {
+    try {
+      const { rfid } = body;
+      // Process the RFID data, e.g., save it to the database
+      await this.userService.processRfidData(rfid);
+      return { success: true, message: 'RFID data received successfully' };
+    } catch (error) {
+      return { success: false, message: 'Failed to process RFID data' };
+    }
+  }
 }

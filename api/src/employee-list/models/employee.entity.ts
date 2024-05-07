@@ -30,11 +30,8 @@ export class _dbemployee {
   @Column({nullable: true })
   profileImage: string;
 
-  @Column()
-  rfidtag: string;
-
-  @Column()
-  fingerprint: string;
+  @Column({ nullable: true })
+  rfidtag: string; // Add property for RFID code
 
   // @Column({ nullable: true })
   // profileImagePath?: string;
