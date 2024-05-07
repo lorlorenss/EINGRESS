@@ -6,13 +6,15 @@
     padding: 20px;
 }
 
-.photoholder{
-    border-radius: 100px;
+.photoholder {
+    border-radius: 50%;
     height: 150px;
     width: 150px;
     perspective: 1000px;
     background-color: var(--background);
+    border: 5px solid var(--secondary); /* Add border with 10px thickness and gray color */
 }
+
 
 .photoholder img{
     border-radius: 50%;
@@ -31,7 +33,7 @@
 }
 
 .user-name{
-    font-size: 32px;
+    font-size: 2rem;
     color: var(--secondary);
 }
 
@@ -41,8 +43,8 @@
     margin: 20px;
     display: flex;
     justify-content: center;
-    color: white;
-    background-color: var(--secondary);
+    color: rgb(88, 88, 88);
     border-radius: 5px;
     padding: 5px;
+
 }

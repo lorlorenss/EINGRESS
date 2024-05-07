@@ -1,14 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { _dbaccesslog } from './../../access-log/models/access-log.entity';
-import { Observable, from, map } from 'rxjs';
+import { Observable, from, map, switchMap } from 'rxjs';
+import { _dbemployee } from 'src/employee-list/models/employee.entity';
 
 @Injectable()
 export class AccessLogService {
   constructor(
     @InjectRepository(_dbaccesslog)
     private readonly accessLogRepository: Repository<_dbaccesslog>,
+    @InjectRepository(_dbemployee)
+    private readonly employeeRepository: Repository<_dbemployee>,
   ) {}
 
   findAll(): Promise<_dbaccesslog[]> {
@@ -41,33 +44,59 @@ export class AccessLogService {
       return this.accessLogRepository.remove(accessLog);
     });
   }
+  
+  logAccess(rfidTag: string, accessType: string, roleAtAccess: string): Observable<void> {
+    // Find the employee by RFID tag
+    return from(this.employeeRepository.findOne({ where: { rfidtag: rfidTag } })).pipe(
+      switchMap(employee => {
+        if (!employee) {
+          throw new BadRequestException('Employee not found');
+        }
 
-  logAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<void> {
-    // Create a new access log entry
-    const accessLog: _dbaccesslog = {
-      employee: {
-        id: employeeId,
-        fullname: '',
-        phone: '',
-        email: '',
-        role: '',
-        regdate: undefined,
-        lastlogdate: '',
-        profileImage: '',
-        accessLogs: [],
-        rfidtag: ''
-      }, // Set employee ID
-      accessDateTime: new Date(),
-      accessType,
-      roleAtAccess,
-      id: 0,
-    };
+        // Create a new access log entry
+        const accessLog: _dbaccesslog = {
+          employee,
+          accessDateTime: new Date(),
+          accessType,
+          roleAtAccess,
+          id: 0,
+        };
 
-    // Save the access log
-    return from(this.accessLogRepository.save(accessLog)).pipe(
-      map(() => {})
+        // Save the access log
+        return from(this.accessLogRepository.save(accessLog)).pipe(
+          map(() => {})
+        );
+      })
     );
   }
+
+  // logAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<void> {
+  //   // Create a new access log entry
+  //   const accessLog: _dbaccesslog = {
+  //     employee: {
+  //       id: employeeId,
+  //       fullname: '',
+  //       phone: '',
+  //       email: '',
+  //       role: '',
+  //       regdate: undefined,
+  //       lastlogdate: '',
+  //       profileImage: '',
+  //       accessLogs: [],
+  //       rfidtag: '',
+  //       fingerprint: ''
+  //     }, // Set employee ID
+  //     accessDateTime: new Date(),
+  //     accessType,
+  //     roleAtAccess,
+  //     id: 0,
+  //   };
+
+  //   // Save the access log
+  //   return from(this.accessLogRepository.save(accessLog)).pipe(
+  //     map(() => {})
+  //   );
+  // }
 
   // AccessLogService
 
