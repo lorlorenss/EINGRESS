@@ -14,6 +14,7 @@ export class SecuritySummaryComponent {
   below: any;
   multi: any[] = [];
   currentDate: string = new Date().toLocaleDateString();
+  // currentDate: string = '5/3/2024';
   LoginsToday: number = 0; 
   total: number = 0; 
   NotOnSite: number = 0;
@@ -64,25 +65,33 @@ export class SecuritySummaryComponent {
 
 
   fetchLoginsToday() {
-    // Call the access log service to fetch all access logs
-    this.accessLogService.getAccessLogs()
-      .subscribe(
-        accessLogs => {
-          // Filter access logs for the current date
-          const todayLogs = accessLogs.filter(log => {
-            const logDate = new Date(log.accessDateTime).toLocaleDateString();
-            return logDate === this.currentDate;
-          });
+    // Fetch employees and access logs in parallel
+    combineLatest([
+      this.employeeService.getEmployee(),
+      this.accessLogService.getAccessLogs()
+    ]).subscribe(
+      ([employees, accessLogs]) => {
+        // Calculate total employees
+        this.total = employees.length;
   
-          // Count the number of logins for the current date
-          this.LoginsToday = todayLogs.length;
-          this.calculateNotOnSite(); // Calculate NotOnSite after LoginsToday is fetched
-        },
-        error => {
-          console.error('Error fetching access logs:', error);
-        }
-      );
+        // Filter employees whose last login date matches the current date
+        const loggedTodayEmployees = employees.filter(employee => {
+          // Check if the employee has a last login date and it matches the current date
+          return employee.lastlogdate && new Date(employee.lastlogdate).toLocaleDateString() === this.currentDate;
+        });
+  
+        // Count the number of employees who logged in today
+        this.LoginsToday = loggedTodayEmployees.length;
+        
+        // Calculate NotOnSite
+        this.NotOnSite = this.total - this.LoginsToday;
+      },
+      error => {
+        console.error('Error fetching data:', error);
+      }
+    );
   }
+  
   
   calculateNotOnSite() {
     // Combine the observables for total and LoginsToday
