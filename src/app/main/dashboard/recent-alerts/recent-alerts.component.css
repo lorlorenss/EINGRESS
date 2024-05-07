@@ -14,7 +14,9 @@
     align-items: center;
     width: 100%;
     position: relative;
-    margin-bottom: 5px; /* Add margin between each employee */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
 }
 
 .line {
