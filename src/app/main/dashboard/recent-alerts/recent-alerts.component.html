@@ -1,9 +1,9 @@
 <div class="main-container">
-    <div class="alerts-holder" *ngFor="let alert of recentAlerts">
+  <div class="alerts-holder" *ngFor="let alert of recentAlerts">
+      <div class="line"></div> <!-- Line -->
       <div class="color-holder login"></div>
       <div class="name-holder">
-        <p>{{ alert.message }}</p>
+          <p>{{ alert.message }}</p>
       </div>
-    </div>
   </div>
-  
+</div>
