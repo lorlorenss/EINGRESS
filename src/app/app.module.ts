@@ -16,7 +16,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserService } from './services/user.service';
 import { SecuritySummaryComponent } from './main/dashboard/security-summary/security-summary.component';
 import { SearchfieldComponent } from './main/users/searchfield/searchfield.component';
-import { ImportBtnComponent } from './main/users/import-btn/import-btn.component';
 import { AddUserBtnComponent } from './main/users/add-user-btn/add-user-btn.component';
 import { DeleteBtnComponent } from './main/users/delete-btn/delete-btn.component';
 import { CheckboxComponent } from './main/users/checkbox/checkbox.component';
@@ -62,7 +61,6 @@ import { SuccessDialogComponent } from './dialogs/success-dialog/success-dialog.
     UsersComponent,
     SecuritySummaryComponent,
     SearchfieldComponent,
-    ImportBtnComponent,
     AddUserBtnComponent,
     DeleteBtnComponent,
     CheckboxComponent,
