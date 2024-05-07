@@ -21,6 +21,7 @@ export class AdminLoginService {
         const newUser = new _dbadmin();
         newUser.username = user.username;
         newUser.password = passwordHash;
+        newUser.role = user.role;
 
         return from(this.userRepository.save(newUser)).pipe(
           map((user: User) => {
