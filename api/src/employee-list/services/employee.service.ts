@@ -46,6 +46,7 @@ create(employee: Employee): Observable<Employee> {
         map(employee => employee ? employee.id : null),
       );
     }
+    
     logEmployeeAccess(rfidTag: string, accessType: string, roleAtAccess: string): Observable<any> {
       // Find the employee by RFID tag
       return from(this.userRepository.findOne({ where: { rfidtag: rfidTag } })).pipe(
