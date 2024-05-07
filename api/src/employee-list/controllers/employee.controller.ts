@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
-import { Observable, catchError, map, mergeMap, of } from 'rxjs';
+import { Observable, catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import {FileInterceptor} from '@nestjs/platform-express'
 import { diskStorage } from 'multer';
 import {v4 as uuid4} from 'uuid';
@@ -120,16 +120,44 @@ create(@Body() payload: { employee: Employee }, @UploadedFile() file): Observabl
     
     
 
-    @Post('log-access')
-    logEmployeeAccess(@Body() accessData: { employeeId: number, accessType: string, roleAtAccess: string }): Promise<void> {
-      const { employeeId, accessType, roleAtAccess } = accessData;
+    @Post('log-access/:rfidtag')
+    logEmployeeAccess(@Param('rfidtag') rfidtag: string, @Body() accessData: { accessType: string, roleAtAccess: string }): Promise<void> {
+      const { accessType, roleAtAccess } = accessData;
     
-      if (!employeeId || !accessType || !roleAtAccess) {
+      if (!rfidtag || !accessType || !roleAtAccess) {
         throw new BadRequestException('Invalid access data');
       }
     
-      return this.userService.logEmployeeAccess(employeeId, accessType, roleAtAccess).toPromise();
+      return this.userService.logEmployeeAccess(rfidtag, accessType, roleAtAccess).toPromise();
     }
+    
+    // @Post('log-access/:rfidtag')
+    // logEmployeeAccess(@Param('rfidtag') rfidtag: string, @Body() accessData: { accessType: string, roleAtAccess: string }): Promise<void> {
+    //   const { accessType, roleAtAccess } = accessData;
+    
+    //   if (!rfidtag || !accessType || !roleAtAccess) {
+    //     throw new BadRequestException('Invalid access data');
+    //   }
+    
+    //   // Find the employee by rfidtag
+    //   return this.userService.findByRfidTag(rfidtag).pipe(
+    //     switchMap(employeeId => {
+    //       // Check if an employee with the given RFID tag exists
+    //       if (!employeeId) {
+    //         throw new NotFoundException('Employee not found');
+    //       }
+          
+    //       // Convert employeeId to string before logging the access
+    //       const employeeIdString = employeeId.toString();
+          
+    //       // Log the employee's access using their ID
+    //       return this.userService.logEmployeeAccess(employeeIdString, accessType, roleAtAccess).toPromise();
+    //     })
+    //   ).toPromise();
+    // }
+    
+
+    
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file',storage))
