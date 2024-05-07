@@ -52,45 +52,84 @@ create(employee: Employee): Observable<Employee> {
         return from(this.userRepository.find({relations:['accessLogs']}));
     }
 
-
-    logEmployeeAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<any> {
-        // Find the employee by ID
-        return from(this.userRepository.findOne({ where: { id: employeeId } })).pipe(
+    findByRfidTag(rfidtag: string): Observable<number | null> {
+      return from(this.userRepository.findOne({ where: { rfidtag }, select: ['id'] })).pipe(
+        map(employee => employee ? employee.id : null),
+      );
+    }
+    logEmployeeAccess(rfidTag: string, accessType: string, roleAtAccess: string): Observable<any> {
+      // Find the employee by RFID tag
+      return from(this.userRepository.findOne({ where: { rfidtag: rfidTag } })).pipe(
           switchMap(employee => {
-            if (!employee) {
-              throw new BadRequestException('Employee not found');
-            }
-      
-            // // Update the last login date for the employee
-            // const dateOnly = this.getOnlyDate(new Date().toISOString());
-            // employee.lastlogdate = dateOnly;
-
-             //last logdate has time and date
-             const currentDate = new Date();
+              if (!employee) {
+                  throw new BadRequestException('Employee not found');
+              }
+  
+              // Update the last login date for the employee
+              const currentDate = new Date();
               const options: Intl.DateTimeFormatOptions = {
-                year: 'numeric', 
-                month: '2-digit', 
-                day: '2-digit',
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit',
-                hour12: false, // Use 24-hour format
-                timeZone: 'Asia/Manila' // Set the time zone to Philippine time
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  hour12: false, // Use 24-hour format
+                  timeZone: 'Asia/Manila' // Set the time zone to Philippine time
               };
               const dateAndTimeInPhilippineTime = currentDate.toLocaleString('en-PH', options);
               employee.lastlogdate = dateAndTimeInPhilippineTime;
+  
+              // Save the updated employee
+              return from(this.userRepository.save(employee)).pipe(
+                  switchMap(() => {
+                      // Log the access in AccessLogService
+                      return this.accessLogService.logAccess(rfidTag, accessType, roleAtAccess);
+                  })
+              );
+          })
+      );
+  }
+  
+
+    // logEmployeeAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<any> {
+    //     // Find the employee by ID
+    //     return from(this.userRepository.findOne({ where: { id: employeeId } })).pipe(
+    //       switchMap(employee => {
+    //         if (!employee) {
+    //           throw new BadRequestException('Employee not found');
+    //         }
+      
+    //         // // Update the last login date for the employee
+    //         // const dateOnly = this.getOnlyDate(new Date().toISOString());
+    //         // employee.lastlogdate = dateOnly;
+
+    //          //last logdate has time and date
+    //          const currentDate = new Date();
+    //           const options: Intl.DateTimeFormatOptions = {
+    //             year: 'numeric', 
+    //             month: '2-digit', 
+    //             day: '2-digit',
+    //             hour: '2-digit', 
+    //             minute: '2-digit', 
+    //             second: '2-digit',
+    //             hour12: false, // Use 24-hour format
+    //             timeZone: 'Asia/Manila' // Set the time zone to Philippine time
+    //           };
+    //           const dateAndTimeInPhilippineTime = currentDate.toLocaleString('en-PH', options);
+    //           employee.lastlogdate = dateAndTimeInPhilippineTime;
 
       
-            // Save the updated employee
-            return from(this.userRepository.save(employee)).pipe(
-              switchMap(() => {
-                // Log the access in AccessLogService
-                return this.accessLogService.logAccess(employeeId, accessType, roleAtAccess);
-              })
-            );
-          })
-        );
-      }
+    //         // Save the updated employee
+    //         return from(this.userRepository.save(employee)).pipe(
+    //           switchMap(() => {
+    //             // Log the access in AccessLogService
+    //             return this.accessLogService.logAccess(rfi, accessType, roleAtAccess);
+    //           })
+    //         );
+    //       })
+    //     );
+    //   }
       
       getOnlyDate(datetime: string): string {
         const date = new Date(datetime);
