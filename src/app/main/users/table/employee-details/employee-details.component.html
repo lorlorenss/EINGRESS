@@ -43,10 +43,6 @@
                                 <span>RFID</span>
                                 <input type="text" placeholder="ABC19021DC" disabled>
                             </div>
-                            <div class="rfid-confirmation">
-                                <div class="dismiss-rfid pointer">Clear</div>
-                                <div class="submit-rfid pointer">Submit</div>
-                            </div>
                         </div>
                 </div>
                 <div class="dismiss-container">
@@ -124,12 +120,8 @@
                         </div>
                         <div class="details-holder">
                             <span>Fingerprint ID</span>
-                            <input type="text" placeholder="135135115161">
+                            <input type="text" placeholder="135135115161" disabled>
                         </div>
-                        <div class="fingerprint-confirmation">
-                        <div class="dismiss-fingerprint pointer">Clear</div>
-                        <div class="submit-fingerprint pointer">Submit</div>
-                    </div>
                     </div>
                 </div>
                 <button (click)="enableEdit()" class="edit-user pointer" *ngIf="!editMode">Edit</button>

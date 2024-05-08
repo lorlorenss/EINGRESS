@@ -106,7 +106,7 @@ export var multi = [
           },
           {
             "name": "Not on Site",
-            "value": 90
+            "value": 68
           }
         ]
       },
@@ -246,7 +246,7 @@ export var multi = [
             },
             {
               "name": "Not on Site",
-              "value": 90
+              "value": 52
             }
           ]
         },
@@ -386,7 +386,7 @@ export var multi = [
               },
               {
                 "name": "Not on Site",
-                "value": 90
+                "value": 51
               }
             ]
           },

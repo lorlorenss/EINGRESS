@@ -164,15 +164,17 @@ span {
 }
 
 .rfid-content {
-    width: 100%;
-    height: 300px;
     background-color: var(--background);
-    border-radius: 20px;
-    padding:10px;
-    overflow-y: auto;
+    height: 300px;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;  
 }
 
 .rfid-icon{
