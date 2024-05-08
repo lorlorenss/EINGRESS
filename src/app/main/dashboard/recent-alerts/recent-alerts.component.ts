@@ -13,7 +13,7 @@ import { Employee } from 'src/app/interface/employee.interface'; // Import the E
 export class RecentAlertsComponent implements OnInit {
   recentAlerts: { type: string, message: string }[] = [];
   matchedEmployees: Employee[] = [];
-  maxEmployeesDisplayed: number = 6;
+  maxEmployeesDisplayed: number = 4;
 
   constructor(private employeeService: EmployeeService, private accessLogService: AccessLogService) { }
 
