@@ -28,7 +28,6 @@ export class EmployeeDetailsComponent implements OnChanges {
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       phone: ['', Validators.required],
-      clearForm: ['']
     });
     this.updateEmployeeForm.disable();
   }
