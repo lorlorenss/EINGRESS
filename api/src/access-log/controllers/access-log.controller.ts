@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException, Query, BadRequestException } from '@nestjs/common';
 import { AccessLogService } from '../services/access-log.service';
 import { _dbaccesslog } from './../../access-log/models/access-log.entity'; // Adjust the import path if necessary
 
@@ -64,4 +64,13 @@ export class AccessLogController {
   delete(@Param('id') id: number): Promise<void> {
     return this.accessLogService.delete(id);
   }
+
+  // @Post('log-access')
+  // logAccess(@Body('rfidTag') rfidTag: string): Promise<void> {
+  //   if (!rfidTag) {
+  //     throw new BadRequestException('RFID tag is required');
+  //   }
+    
+  //   return this.accessLogService.logAccess(rfidTag).toPromise();
+  // }
 }
