@@ -73,7 +73,7 @@
     color: black;
   }
   
-  .activity{
+  .activity {
     grid-column: 1 / 4;
     grid-row: 2 / 9;
     height: 100%;
@@ -81,11 +81,14 @@
   
   .activity-content {
     padding-top: 20px;
-    width: 100%;
+    width: 80%; /* Set the width to a specific percentage */
+    max-width: 800px; /* Set a maximum width in pixels */
     height: 100%;
     display: grid;
-    grid-template-columns: 20px 1fr; /* First column 20px, second column fills the remaining width */
+    grid-template-columns: auto 1fr; /* First column auto, second column fills the remaining width */
     grid-template-rows: repeat(8, 1fr) 10px 50px; /* 9 rows with equal height, 9th row with 10px height, 10th row returns to 1fr */
     gap: 10px; /* Gap between grid items */
   }
+  
+  
   
