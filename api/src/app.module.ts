@@ -8,7 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { AdminLoginModule } from './admin-login/admin-login.module';
 import { EmployeeListModule } from './employee-list/employee-list.module';
 import { AccessLogModule } from './access-log/access-log.module';
-import { LogTotalModule } from './log-total/log-total.module';
+import { LoginTotalModule } from './login-total/login-total.module';
 
 
 @Module({
@@ -33,7 +33,7 @@ import { LogTotalModule } from './log-total/log-total.module';
     AuthModule,
     EmployeeListModule,
     AccessLogModule,
-    LogTotalModule,
+    LoginTotalModule,
   ],
   controllers: [AppController],
   providers: [AppService],
