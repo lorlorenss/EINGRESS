@@ -1,20 +1,18 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { _dbaccesslog } from '../../access-log/models/access-log.entity'; // Import the AccessLog entity
 
 @Entity()
 export class _dblogstotal {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
-  date?: string;  
+  @Column({ unique: true,type: 'date', default: () => 'CURRENT_DATE' })
+  date?: Date;  
+
 
   @Column()
   loginstoday?: string;
   
   @Column()
   notlogin?: string;   
-
-
   
 }

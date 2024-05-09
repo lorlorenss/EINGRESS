@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { _dblogstotal } from '../models/logs-total.entity';
-import { _dbaccesslog } from 'src/access-log/models/access-log.entity';
 import { LoginTotalService } from '../services/login-total.service';
 import { totalLogs } from '../models/logs-total.interface';
 import { Observable } from 'rxjs';
@@ -9,11 +8,36 @@ import { Observable } from 'rxjs';
 export class LoginTotalController {
   constructor(private readonly totalLogsService: LoginTotalService) {}
     
-      @Post()
-      create(@Body() accessLogData: totalLogs): Observable<totalLogs> {
-        // Since create returns a plain entity, no need for await
-      return this.totalLogsService.create(accessLogData);
+        // Endpoint to get today's login statistics
+      @Get('today')
+      getTodayLoginStatistics(): Observable<totalLogs> {
+          return this.totalLogsService.getTodayLoginStatistics();
       }
+
+      // Endpoint to update today's login statistics
+      @Put('today')
+      updateTodayLoginStatistics(@Body() loginData: totalLogs): Observable<any> {
+          const { loginstoday, notlogin } = loginData;
+          return this.totalLogsService.updateTodayLoginStatistics(loginstoday, notlogin);
+      }
+
+      // @Post('default-entry')
+      // createDefaultEntry(): Observable<totalLogs> {
+      //   return this.totalLogsService.createDefaultEntry();
+      // }
+
+      // @Post()
+      // create(@Body() accessLogData: totalLogs): Observable<totalLogs> {
+      //     //  const { loginstoday, notlogin } = loginData;
+      //   // Since create returns a plain entity, no need for await
+      // return this.totalLogsService.create(accessLogData);
+      // }
+       // Endpoint to create a new entry with specified loginstoday and notlogin
+  @Post('default-entry')
+  create(@Body() body: { loginstoday: string; notlogin: string }): Observable<totalLogs> {
+    const { loginstoday, notlogin } = body;
+    return this.totalLogsService.create(loginstoday, notlogin);
+  }
 
       @Get(':id')
       findOne(@Param()params):Observable<totalLogs> {
