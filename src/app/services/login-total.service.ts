@@ -29,4 +29,9 @@ import { totalLogs } from '../interface/logs-total.interface';
         const loginData: totalLogs = { loginstoday, notlogin };
         return this.http.post(`${this.apiUrl}/default-entry`, loginData);
     }
+
+     // Method to get all entries for the current month
+    getLogsForCurrentMonth(): Observable<totalLogs[]> {
+    return this.http.get<totalLogs[]>(`${this.apiUrl}/current-month`);
+     }
   }

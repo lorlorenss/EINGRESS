@@ -4,7 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { totalLogs } from '../models/logs-total.interface';
 import { Observable, from } from 'rxjs';
-
+import { startOfMonth, endOfMonth } from 'date-fns';
+import { Between } from 'typeorm';
 @Injectable()
 export class LoginTotalService {
     constructor(
@@ -25,20 +26,14 @@ export class LoginTotalService {
       }
     
 
-      //   createDefaultEntry(): Observable<totalLogs> {
-      //     const currentDate = new Date();
-      //     currentDate.setHours(0, 0, 0, 0); // Set time to midnight to compare only dates
-          
-      //     const defaultEntry: _dblogstotal = {
-      //       date: currentDate,
-      //       loginstoday: '0',
-      //       notlogin: '0',
-      //       id: 0
-      //     };
-  
-      //     return from(this.totalLogsRepository.save(defaultEntry));
-      // }
-  
+      // Inside your service class
+      getLogsForCurrentMonth(): Observable<totalLogs[]> {
+          const currentDate = new Date();
+          const startOfCurrentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+          const endOfCurrentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+          return from(this.totalLogsRepository.find({ where: { date: Between(startOfCurrentMonth, endOfCurrentMonth) } }));
+      }
+      
       create(loginstoday: string, notlogin: string): Observable<totalLogs> {
         const currentDate = new Date().toLocaleDateString();
         const newEntry: DeepPartial<_dblogstotal> = {
@@ -49,10 +44,9 @@ export class LoginTotalService {
         return from(this.totalLogsRepository.save(newEntry));
       }
       
-
-      // create(totalLogdata: totalLogs): Observable<totalLogs>{
-      //   return from(this.totalLogsRepository.save(totalLogdata));
-      // }
+      createPostman(totalLogdata: totalLogs): Observable<totalLogs>{
+            return from(this.totalLogsRepository.save(totalLogdata));
+            }
 
       findOne(id:number): Observable<totalLogs>{
         return from(this.totalLogsRepository.findOne({where: {id}}));
@@ -69,5 +63,3 @@ export class LoginTotalService {
       }
       
 }
-
-  

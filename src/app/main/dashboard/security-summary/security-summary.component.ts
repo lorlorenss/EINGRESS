@@ -5,6 +5,8 @@ import { AccessLogService } from 'src/app/services/access-log.service';
 import { EmployeeService } from 'src/app/services/employee.service'; // Import the EmployeeService
 import { combineLatest, interval, switchMap } from 'rxjs';
 import { LoginTotalService } from 'src/app/services/login-total.service';
+import { totalLogs } from 'src/app/interface/logs-total.interface';
+
 
 @Component({
   selector: 'app-security-summary',
@@ -13,6 +15,7 @@ import { LoginTotalService } from 'src/app/services/login-total.service';
 })
 export class SecuritySummaryComponent {
   below: any;
+  single: any[] = []; // Data array for the chart
   multi: any[] = [];
   currentDate: string = new Date().toLocaleDateString();
   // currentDate: string = '5/3/2024';
@@ -47,7 +50,7 @@ export class SecuritySummaryComponent {
 
   constructor(private accessLogService: AccessLogService, private employeeService: EmployeeService, private logintotalService: LoginTotalService) {
     Object.assign(this, { multi });
-
+    this.fetchDataForCurrentMonth();
     // Set the xAxisLabel dynamically to the current month
     const currentDate = new Date();
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -63,6 +66,54 @@ export class SecuritySummaryComponent {
   onResize(event: any) {
     this.calculateChartDimensions();
   }
+//CODE
+  fetchDataForCurrentMonth() {
+    this.logintotalService.getLogsForCurrentMonth().subscribe(
+      (data: totalLogs[]) => {
+        // Process the data received from the backend
+        this.processDataForChart(data);
+      },
+      (error) => {
+        console.error('Error fetching data for the current month:', error);
+      }
+    );
+  }
+
+  processDataForChart(data: totalLogs[]) {
+    // Initialize multi array to hold chart data
+    this.multi = [];
+
+    // Loop through each data entry
+     // Loop through each data entry
+     data.forEach((entry) => {
+      // Check if entry.date is defined
+      if (entry.date) {
+        // Extract the day of the month from the date
+        const dayOfMonth = new Date(entry.date).getDate();
+    
+        // Push an object with the day of the month and series data to the multi array
+        this.multi.push({ 
+          'name': dayOfMonth, 
+          'series': [
+            { 'name': 'Login', 'value': Number(entry.loginstoday) },
+            { 'name': 'Not on Site', 'value': Number(entry.notlogin) }
+          ]
+        });
+      }
+    });
+    console.log('Multi Array:', this.multi);
+    // Sort the multi array based on date (optional)
+    // this.multi.sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+
+    
+    // Call a method to update the chart with the new data
+    this.updateChart();
+  }
+
+  updateChart() {
+  }
+
+
 
   calculateChartDimensions() {
     this.chartWidth = window.innerWidth * 0.63; 

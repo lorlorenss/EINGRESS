@@ -1,6 +1,6 @@
 export interface totalLogs {
   id?: number;
-  date?: string;  
+  date?: Date;  
   loginstoday?: string;
   notlogin?: string;   
 }

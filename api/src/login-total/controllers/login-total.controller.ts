@@ -21,23 +21,23 @@ export class LoginTotalController {
           return this.totalLogsService.updateTodayLoginStatistics(loginstoday, notlogin);
       }
 
-      // @Post('default-entry')
-      // createDefaultEntry(): Observable<totalLogs> {
-      //   return this.totalLogsService.createDefaultEntry();
-      // }
+      @Get('current-month')
+        getLogsForCurrentMonth(): Observable<totalLogs[]> {
+            return this.totalLogsService.getLogsForCurrentMonth();
+        }
 
-      // @Post()
-      // create(@Body() accessLogData: totalLogs): Observable<totalLogs> {
-      //     //  const { loginstoday, notlogin } = loginData;
-      //   // Since create returns a plain entity, no need for await
-      // return this.totalLogsService.create(accessLogData);
-      // }
-       // Endpoint to create a new entry with specified loginstoday and notlogin
-  @Post('default-entry')
-  create(@Body() body: { loginstoday: string; notlogin: string }): Observable<totalLogs> {
-    const { loginstoday, notlogin } = body;
-    return this.totalLogsService.create(loginstoday, notlogin);
-  }
+      @Post()
+      createPostman(@Body() accessLogData: totalLogs): Observable<totalLogs> {
+          //  const { loginstoday, notlogin } = loginData;
+        // Since create returns a plain entity, no need for await
+      return this.totalLogsService.createPostman(accessLogData);
+      }
+      
+      @Post('default-entry')
+      create(@Body() body: { loginstoday: string; notlogin: string }): Observable<totalLogs> {
+        const { loginstoday, notlogin } = body;
+        return this.totalLogsService.create(loginstoday, notlogin);
+      }
 
       @Get(':id')
       findOne(@Param()params):Observable<totalLogs> {
