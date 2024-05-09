@@ -3,7 +3,8 @@ import { multi } from './data';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { AccessLogService } from 'src/app/services/access-log.service';
 import { EmployeeService } from 'src/app/services/employee.service'; // Import the EmployeeService
-import { combineLatest } from 'rxjs';
+import { combineLatest, interval, switchMap } from 'rxjs';
+import { LoginTotalService } from 'src/app/services/login-total.service';
 
 @Component({
   selector: 'app-security-summary',
@@ -44,7 +45,7 @@ export class SecuritySummaryComponent {
     domain: ['#008B38', '#2291F2'], 
   };
 
-  constructor(private accessLogService: AccessLogService, private employeeService: EmployeeService) {
+  constructor(private accessLogService: AccessLogService, private employeeService: EmployeeService, private logintotalService: LoginTotalService) {
     Object.assign(this, { multi });
 
     // Set the xAxisLabel dynamically to the current month
@@ -68,6 +69,7 @@ export class SecuritySummaryComponent {
     this.chartHeight = window.innerHeight * 0.45;
   }
 
+ 
   fetchLoginsToday() {
     // Fetch employees and access logs in parallel
     combineLatest([
@@ -92,12 +94,82 @@ export class SecuritySummaryComponent {
         
         // Calculate NotOnSite
         this.NotOnSite = this.total - this.LoginsToday;
-      },
-      error => {
-        console.error('Error fetching data:', error);
+
+  // Check if today's login statistics exist in the database
+  this.logintotalService.getTodayLoginStatistics().subscribe(
+    (todayLoginStats) => {
+      if (!todayLoginStats) {
+        // Today's login statistics don't exist, so create a default entry
+        this.logintotalService.createDefaultEntry(this.LoginsToday.toString(), this.NotOnSite.toString()).subscribe(
+          () => {
+            console.log('Default entry created successfully.');
+            // After creating the default entry, update the login statistics in the backend
+            this.updateLoginStatisticsInBackend();
+          },
+          error => {
+            console.error('Error creating default entry:', error);
+          }
+        );
+      } else {
+        // Today's login statistics already exist, update them in the backend
+        this.updateLoginStatisticsInBackend();
       }
-    );
-  }
+    },
+    error => {
+      console.error('Error fetching today\'s login statistics:', error);
+    }
+  );
+},
+error => {
+  console.error('Error fetching employees:', error);
+}
+);
+}
+
+updateLoginStatisticsInBackend() {
+// Update the login statistics in the backend
+this.logintotalService.updateTodayLoginStatistics(this.LoginsToday.toString(), this.NotOnSite.toString()).subscribe(
+() => {
+  console.log('Login statistics updated successfully.');
+},
+error => {
+  console.error('Error updating login statistics:', error);
+}
+);
+}
+
+  // updateLoginStatisticsInBackend() {
+  //   // Calculate LoginsToday and NotOnSite
+  //   const totalEmployees$ = this.employeeService.getEmployee();
+    
+  //   const today = new Date().toLocaleDateString();
+  
+  //   totalEmployees$.subscribe(
+  //     employees => {
+  //       const totalEmployees = employees.length;
+  //       const loggedTodayEmployees = employees.filter(employee => {
+  //         return employee.lastlogdate && new Date(employee.lastlogdate).toLocaleDateString() === today;
+  //       });
+        
+  //       const LoginsToday = loggedTodayEmployees.length;
+  //       const NotOnSite = totalEmployees - LoginsToday;
+  
+  //       // Update the login statistics in the backend
+  //       this.logintotalService.updateTodayLoginStatistics(LoginsToday.toString(), NotOnSite.toString()).subscribe(
+  //         () => {
+  //           console.log('Login statistics updated successfully.');
+  //         },
+  //         error => {
+  //           console.error('Error updating login statistics:', error);
+  //         }
+  //       );
+  //     },
+  //     error => {
+  //       console.error('Error fetching employees:', error);
+  //     }
+  //   );
+  // }
+  
 
   loadEmployeeInfo() {
     this.employeeService.getEmployee().subscribe(
@@ -140,4 +212,6 @@ export class SecuritySummaryComponent {
   customLegend = {
 
   };
+
+  
 }
