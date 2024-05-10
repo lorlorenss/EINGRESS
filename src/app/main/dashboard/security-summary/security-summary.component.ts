@@ -82,33 +82,77 @@ export class SecuritySummaryComponent {
   processDataForChart(data: totalLogs[]) {
     // Initialize multi array to hold chart data
     this.multi = [];
-
-    // Loop through each data entry
-     // Loop through each data entry
-     data.forEach((entry) => {
-      // Check if entry.date is defined
-      if (entry.date) {
-        // Extract the day of the month from the date
-        const dayOfMonth = new Date(entry.date).getDate();
-    
-        // Push an object with the day of the month and series data to the multi array
-        this.multi.push({ 
-          'name': dayOfMonth, 
+  
+    // Get the total number of days in the current month
+    const currentDate = new Date();
+    const totalDays = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+  
+    // Loop through each day of the month
+    for (let day = 1; day <= totalDays; day++) {
+      // Check if there is data available for the current day
+      const entry = data.find(item => {
+        return item.date && new Date(item.date).getDate() === day;
+      });
+  
+      // If data is available, push it to the multi array
+      if (entry) {
+        const dayOfMonth = new Date(entry.date!).getDate(); // Add "!" to assert that entry.date is defined
+        this.multi.push({
+          'name': dayOfMonth,
           'series': [
             { 'name': 'Login', 'value': Number(entry.loginstoday) },
             { 'name': 'Not on Site', 'value': Number(entry.notlogin) }
           ]
         });
+      } else {
+        // If no data is available, push an object with 0 values for both "Login" and "Not on Site"
+        this.multi.push({
+          'name': day,
+          'series': [
+            { 'name': 'Login', 'value': 0 },
+            { 'name': 'Not on Site', 'value': 0 }
+          ]
+        });
       }
-    });
+    }
+  
     console.log('Multi Array:', this.multi);
-    // Sort the multi array based on date (optional)
-    // this.multi.sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
-
-    
     // Call a method to update the chart with the new data
     this.updateChart();
   }
+  
+  
+
+  // processDataForChart(data: totalLogs[]) {
+  //   // Initialize multi array to hold chart data
+  //   this.multi = [];
+
+  //   // Loop through each data entry
+  //    // Loop through each data entry
+  //    data.forEach((entry) => {
+  //     // Check if entry.date is defined
+  //     if (entry.date) {
+  //       // Extract the day of the month from the date
+  //       const dayOfMonth = new Date(entry.date).getDate();
+    
+  //       // Push an object with the day of the month and series data to the multi array
+  //       this.multi.push({ 
+  //         'name': dayOfMonth, 
+  //         'series': [
+  //           { 'name': 'Login', 'value': Number(entry.loginstoday) },
+  //           { 'name': 'Not on Site', 'value': Number(entry.notlogin) }
+  //         ]
+  //       });
+  //     }
+  //   });
+  //   console.log('Multi Array:', this.multi);
+  //   // Sort the multi array based on date (optional)
+  //   // this.multi.sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+
+    
+  //   // Call a method to update the chart with the new data
+  //   this.updateChart();
+  // }
 
   updateChart() {
   }
