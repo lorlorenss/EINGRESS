@@ -23,6 +23,7 @@ export class AddUserFormComponent {
     email: '',
     phone: '',
     role: '',
+    rfidtag: '',
     profileImage: '' // Change the type to match the backend
   };
 

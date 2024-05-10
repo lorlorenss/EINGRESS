@@ -8,6 +8,7 @@ export interface Employee {
   regdate?: Date;
   lastlogdate?: string; // Make lastlogdate optional to align with the backend
   profileImage?: string;
+  rfidtag?: string;
   selected?: boolean;
   accessLogs?: AccessLog[]; // Add accessLogs property
 }
