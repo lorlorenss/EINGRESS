@@ -31,7 +31,7 @@
     background-color: var(--background);
     border-radius: 10px;
     color: var(--success);
-    padding: 0;
+    padding: 20px;
   }
   
   .not-on-site {
@@ -41,7 +41,6 @@
     grid-row: 1 / 2;
     align-items: center;
     font-family: Poppins;
-
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -49,6 +48,7 @@
     background-color: var(--background);
     border-radius: 10px;
     color: var(--secondary);
+    padding: 20px;
   }
   
   .total {
@@ -65,12 +65,13 @@
     background-color: var(--background);
     border-radius: 10px;
     color: #e69b00;
+    padding: 20px;
   }
   
   .count{
-    margin-top: 20px;
-    font-size: 2rem;
+    font-size: 3.5rem;
     color: black;
+    height: 60px;
   }
   
   .activity {
