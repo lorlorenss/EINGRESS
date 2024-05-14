@@ -36,16 +36,9 @@
                             <div class="icon-holder ">
                                 <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="fingerprint icon">
                             </div>
-                            <div class="begin-scan pointer">
-                                Begin scan
-                            </div>
                             <div class="details-holder">
                                 <span>RFID</span>
-                                <input type="text" placeholder="ABC19021DC" disabled>
-                            </div>
-                            <div class="rfid-confirmation">
-                                <div class="dismiss-rfid pointer">Clear</div>
-                                <div class="submit-rfid pointer">Submit</div>
+                                <input formControlName="rfidtag" type="text" placeholder="ABC19021DC" [disabled]="!editMode">
                             </div>
                         </div>
                 </div>
@@ -119,17 +112,10 @@
                         <div class="icon-holder">
                         <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
                     </div>
-                        <div class="begin-scan pointer">
-                            Begin scan
-                        </div>
                         <div class="details-holder">
                             <span>Fingerprint ID</span>
-                            <input type="text" placeholder="135135115161">
+                            <input type="text" placeholder="135135115161" disabled>
                         </div>
-                        <div class="fingerprint-confirmation">
-                        <div class="dismiss-fingerprint pointer">Clear</div>
-                        <div class="submit-fingerprint pointer">Submit</div>
-                    </div>
                     </div>
                 </div>
                 <button (click)="enableEdit()" class="edit-user pointer" *ngIf="!editMode">Edit</button>

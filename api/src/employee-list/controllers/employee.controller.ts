@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post , Delete, Put, NotFoundException, BadRequestException, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee.interface';
-import { Observable, catchError, map, mergeMap, of } from 'rxjs';
+import { Observable, catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import {FileInterceptor} from '@nestjs/platform-express'
 import { diskStorage } from 'multer';
 import {v4 as uuid4} from 'uuid';
@@ -24,28 +24,7 @@ export const storage = {
 export class EmployeeController {
     constructor(private userService: EmployeeService) {}
 
-    // @Post()
-    // create(@Body() employee: Employee): Observable<Employee | Object> {
-    //     return this.userService.create(employee);
-    // }
-//     @Post()
-//     @UseInterceptors(FileInterceptor('file', storage))
-//     create(@Body() payload: {employee: Employee}, @UploadedFile() file): Observable<Employee | Object> {
-//       if (!file) {
-//         throw new BadRequestException('Image file is required');
-//       }
 
-//       const updatedEmployeeData = JSON.parse(JSON.parse(JSON.stringify(payload.employee)))
-
-//       console.log('typeof ', updatedEmployeeData)
-
-  
-//       // Assign the file path to the employee object
-//       // employee.profileImage = file.path;
-  
-//       // Call the service method to create the employee
-//   return this.userService.create({...updatedEmployeeData, profileImage: file.filename});
-// }
 
 @Post()
 @UseInterceptors(FileInterceptor('file', storage))
@@ -118,19 +97,18 @@ create(@Body() payload: { employee: Employee }, @UploadedFile() file): Observabl
       );
     }
     
-    
+  
 
-    @Post('log-access')
-    logEmployeeAccess(@Body() accessData: { employeeId: number, accessType: string, roleAtAccess: string }): Promise<void> {
-      const { employeeId, accessType, roleAtAccess } = accessData;
-    
-      if (!employeeId || !accessType || !roleAtAccess) {
-        throw new BadRequestException('Invalid access data');
-      }
-    
-      return this.userService.logEmployeeAccess(employeeId, accessType, roleAtAccess).toPromise();
+  @Post('log-access')
+  logAccess(@Body('rfidTag') rfidTag: string): Promise<void> {
+    if (!rfidTag) {
+      throw new BadRequestException('RFID tag is required');
     }
-
+    
+    return this.userService.logEmployeeAccess(rfidTag).toPromise();
+  }
+    
+ 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file',storage))
     uploadFile(@UploadedFile()file): Observable<Object> {

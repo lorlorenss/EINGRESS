@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Observable, from, map, switchMap,mergeMap } from 'rxjs';
+import { Observable, from, map, switchMap,mergeMap, throwError, catchError } from 'rxjs';
 import { Employee } from '../models/employee.interface';
 import { _dbemployee } from '../models/employee.entity';
 import { _dbaccesslog } from '../../access-log/models/access-log.entity';  // Update this import path
@@ -52,29 +52,92 @@ create(employee: Employee): Observable<Employee> {
         return from(this.userRepository.find({relations:['accessLogs']}));
     }
 
+    findByRfidTag(rfidtag: string): Observable<number | null> {
+      return from(this.userRepository.findOne({ where: { rfidtag }, select: ['id'] })).pipe(
+        map(employee => employee ? employee.id : null),
+      );
+    }
+    
+    logEmployeeAccess(rfidTag: string): Observable<any> {
+        return from(this.userRepository.findOne({ where: { rfidtag: rfidTag } })).pipe(
+            switchMap(employee => {
+                if (!employee) {
+                    throw new BadRequestException('Employee not found');
+                }
 
-    logEmployeeAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<any> {
-        // Find the employee by ID
-        return from(this.userRepository.findOne({ where: { id: employeeId } })).pipe(
-          switchMap(employee => {
-            if (!employee) {
-              throw new BadRequestException('Employee not found');
-            }
-      
-            // Update the last login date for the employee
-            const dateOnly = this.getOnlyDate(new Date().toISOString());
-            employee.lastlogdate = dateOnly;
-      
-            // Save the updated employee
-            return from(this.userRepository.save(employee)).pipe(
-              switchMap(() => {
-                // Log the access in AccessLogService
-                return this.accessLogService.logAccess(employeeId, accessType, roleAtAccess);
-              })
-            );
-          })
+                // Update the last login date for the employee
+                const currentDate = new Date();
+                const options: Intl.DateTimeFormatOptions = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false, // Use 24-hour format
+                    timeZone: 'Asia/Manila' // Set the time zone to Philippine time
+                };
+                const dateAndTimeInPhilippineTime = currentDate.toLocaleString('en-PH', options);
+                employee.lastlogdate = dateAndTimeInPhilippineTime;
+
+                // Save the updated employee
+                return from(this.userRepository.save(employee)).pipe(
+                    switchMap(() => {
+                        // Log the access in AccessLogService
+                        return this.accessLogService.logAccess(rfidTag);
+                    })
+                );
+            }),
+            catchError(error => {
+                if (error instanceof BadRequestException) {
+                    // Handle employee not found error here
+                    console.error('Employee not found:', error.message);
+                }
+                // Propagate the error
+                return throwError(error);
+            })
         );
-      }
+    }
+  
+
+    // logEmployeeAccess(employeeId: number, accessType: string, roleAtAccess: string): Observable<any> {
+    //     // Find the employee by ID
+    //     return from(this.userRepository.findOne({ where: { id: employeeId } })).pipe(
+    //       switchMap(employee => {
+    //         if (!employee) {
+    //           throw new BadRequestException('Employee not found');
+    //         }
+      
+    //         // // Update the last login date for the employee
+    //         // const dateOnly = this.getOnlyDate(new Date().toISOString());
+    //         // employee.lastlogdate = dateOnly;
+
+    //          //last logdate has time and date
+    //          const currentDate = new Date();
+    //           const options: Intl.DateTimeFormatOptions = {
+    //             year: 'numeric', 
+    //             month: '2-digit', 
+    //             day: '2-digit',
+    //             hour: '2-digit', 
+    //             minute: '2-digit', 
+    //             second: '2-digit',
+    //             hour12: false, // Use 24-hour format
+    //             timeZone: 'Asia/Manila' // Set the time zone to Philippine time
+    //           };
+    //           const dateAndTimeInPhilippineTime = currentDate.toLocaleString('en-PH', options);
+    //           employee.lastlogdate = dateAndTimeInPhilippineTime;
+
+      
+    //         // Save the updated employee
+    //         return from(this.userRepository.save(employee)).pipe(
+    //           switchMap(() => {
+    //             // Log the access in AccessLogService
+    //             return this.accessLogService.logAccess(rfi, accessType, roleAtAccess);
+    //           })
+    //         );
+    //       })
+    //     );
+    //   }
       
       getOnlyDate(datetime: string): string {
         const date = new Date(datetime);

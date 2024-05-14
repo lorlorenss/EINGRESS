@@ -38,22 +38,15 @@
                             <div class="icon-holder ">
                                 <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="fingerprint icon">
                             </div>
-                            <div class="begin-scan pointer">
-                                Begin scan
-                            </div>
                             <div class="details-holder">
                                 <span>RFID</span>
-                                <input type="text" placeholder="ABC19021DC" disabled>
-                            </div>
-                            <div class="rfid-confirmation">
-                                <div class="dismiss-rfid pointer">Dismiss</div>
-                                <div class="submit-rfid pointer">Submit</div>
+                                <input type="text" placeholder="ABC19021DC" [(ngModel)]="newEmployee.rfidtag">
                             </div>
                         </div>
                 </div>
                 <div class="dismiss-container">
                     <div class="dismiss-user pointer">
-                        Dismiss
+                        Clear
                     </div>
                 </div>
     
@@ -122,17 +115,10 @@
                         <div class="icon-holder">
                         <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
                     </div>
-                        <div class="begin-scan pointer">
-                            Begin scan
-                        </div>
                         <div class="details-holder">
                             <span>Fingerprint ID</span>
                             <input type="text" placeholder="135135115161" disabled>
                         </div>
-                        <div class="fingerprint-confirmation">
-                        <div class="dismiss-fingerprint pointer">Dismiss</div>
-                        <div class="submit-fingerprint pointer">Submit</div>
-                    </div>
                     </div>
                 </div>
                 <div class="submit-user pointer" (click)="submitUser()">Submit</div>
