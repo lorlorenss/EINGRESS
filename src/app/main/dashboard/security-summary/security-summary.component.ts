@@ -3,7 +3,10 @@ import { multi } from './data';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { AccessLogService } from 'src/app/services/access-log.service';
 import { EmployeeService } from 'src/app/services/employee.service'; // Import the EmployeeService
-import { combineLatest } from 'rxjs';
+import { combineLatest, interval, switchMap } from 'rxjs';
+import { LoginTotalService } from 'src/app/services/login-total.service';
+import { totalLogs } from 'src/app/interface/logs-total.interface';
+
 
 @Component({
   selector: 'app-security-summary',
@@ -12,6 +15,7 @@ import { combineLatest } from 'rxjs';
 })
 export class SecuritySummaryComponent {
   below: any;
+  single: any[] = []; // Data array for the chart
   multi: any[] = [];
   currentDate: string = new Date().toLocaleDateString();
   // currentDate: string = '5/3/2024';
@@ -44,9 +48,9 @@ export class SecuritySummaryComponent {
     domain: ['#008B38', '#2291F2'], 
   };
 
-  constructor(private accessLogService: AccessLogService, private employeeService: EmployeeService) {
+  constructor(private accessLogService: AccessLogService, private employeeService: EmployeeService, private logintotalService: LoginTotalService) {
     Object.assign(this, { multi });
-
+    this.fetchDataForCurrentMonth();
     // Set the xAxisLabel dynamically to the current month
     const currentDate = new Date();
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -62,12 +66,105 @@ export class SecuritySummaryComponent {
   onResize(event: any) {
     this.calculateChartDimensions();
   }
+//CODE
+  fetchDataForCurrentMonth() {
+    this.logintotalService.getLogsForCurrentMonth().subscribe(
+      (data: totalLogs[]) => {
+        // Process the data received from the backend
+        this.processDataForChart(data);
+      },
+      (error) => {
+        console.error('Error fetching data for the current month:', error);
+      }
+    );
+  }
+
+  processDataForChart(data: totalLogs[]) {
+    // Initialize multi array to hold chart data
+    this.multi = [];
+  
+    // Get the total number of days in the current month
+    const currentDate = new Date();
+    const totalDays = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+  
+    // Loop through each day of the month
+    for (let day = 1; day <= totalDays; day++) {
+      // Check if there is data available for the current day
+      const entry = data.find(item => {
+        return item.date && new Date(item.date).getDate() === day;
+      });
+  
+      // If data is available, push it to the multi array
+      if (entry) {
+        const dayOfMonth = new Date(entry.date!).getDate(); // Add "!" to assert that entry.date is defined
+        this.multi.push({
+          'name': dayOfMonth,
+          'series': [
+            { 'name': 'Login', 'value': Number(entry.loginstoday) },
+            { 'name': 'Not on Site', 'value': Number(entry.notlogin) }
+          ]
+        });
+      } else {
+        // If no data is available, push an object with 0 values for both "Login" and "Not on Site"
+        this.multi.push({
+          'name': day,
+          'series': [
+            { 'name': 'Login', 'value': 0 },
+            { 'name': 'Not on Site', 'value': 0 }
+          ]
+        });
+      }
+    }
+  
+    console.log('Multi Array:', this.multi);
+    // Call a method to update the chart with the new data
+    this.updateChart();
+  }
+  
+  
+
+  // processDataForChart(data: totalLogs[]) {
+  //   // Initialize multi array to hold chart data
+  //   this.multi = [];
+
+  //   // Loop through each data entry
+  //    // Loop through each data entry
+  //    data.forEach((entry) => {
+  //     // Check if entry.date is defined
+  //     if (entry.date) {
+  //       // Extract the day of the month from the date
+  //       const dayOfMonth = new Date(entry.date).getDate();
+    
+  //       // Push an object with the day of the month and series data to the multi array
+  //       this.multi.push({ 
+  //         'name': dayOfMonth, 
+  //         'series': [
+  //           { 'name': 'Login', 'value': Number(entry.loginstoday) },
+  //           { 'name': 'Not on Site', 'value': Number(entry.notlogin) }
+  //         ]
+  //       });
+  //     }
+  //   });
+  //   console.log('Multi Array:', this.multi);
+  //   // Sort the multi array based on date (optional)
+  //   // this.multi.sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+
+    
+  //   // Call a method to update the chart with the new data
+  //   this.updateChart();
+  // }
+
+  updateChart() {
+  }
+
+
 
   calculateChartDimensions() {
     this.chartWidth = window.innerWidth * 0.63; 
     this.chartHeight = window.innerHeight * 0.45;
   }
 
+ 
   fetchLoginsToday() {
     // Fetch employees and access logs in parallel
     combineLatest([
@@ -92,12 +189,82 @@ export class SecuritySummaryComponent {
         
         // Calculate NotOnSite
         this.NotOnSite = this.total - this.LoginsToday;
-      },
-      error => {
-        console.error('Error fetching data:', error);
+
+  // Check if today's login statistics exist in the database
+  this.logintotalService.getTodayLoginStatistics().subscribe(
+    (todayLoginStats) => {
+      if (!todayLoginStats) {
+        // Today's login statistics don't exist, so create a default entry
+        this.logintotalService.createDefaultEntry(this.LoginsToday.toString(), this.NotOnSite.toString()).subscribe(
+          () => {
+            console.log('Default entry created successfully.');
+            // After creating the default entry, update the login statistics in the backend
+            this.updateLoginStatisticsInBackend();
+          },
+          error => {
+            console.error('Error creating default entry:', error);
+          }
+        );
+      } else {
+        // Today's login statistics already exist, update them in the backend
+        this.updateLoginStatisticsInBackend();
       }
-    );
-  }
+    },
+    error => {
+      console.error('Error fetching today\'s login statistics:', error);
+    }
+  );
+},
+error => {
+  console.error('Error fetching employees:', error);
+}
+);
+}
+
+updateLoginStatisticsInBackend() {
+// Update the login statistics in the backend
+this.logintotalService.updateTodayLoginStatistics(this.LoginsToday.toString(), this.NotOnSite.toString()).subscribe(
+() => {
+  console.log('Login statistics updated successfully.');
+},
+error => {
+  console.error('Error updating login statistics:', error);
+}
+);
+}
+
+  // updateLoginStatisticsInBackend() {
+  //   // Calculate LoginsToday and NotOnSite
+  //   const totalEmployees$ = this.employeeService.getEmployee();
+    
+  //   const today = new Date().toLocaleDateString();
+  
+  //   totalEmployees$.subscribe(
+  //     employees => {
+  //       const totalEmployees = employees.length;
+  //       const loggedTodayEmployees = employees.filter(employee => {
+  //         return employee.lastlogdate && new Date(employee.lastlogdate).toLocaleDateString() === today;
+  //       });
+        
+  //       const LoginsToday = loggedTodayEmployees.length;
+  //       const NotOnSite = totalEmployees - LoginsToday;
+  
+  //       // Update the login statistics in the backend
+  //       this.logintotalService.updateTodayLoginStatistics(LoginsToday.toString(), NotOnSite.toString()).subscribe(
+  //         () => {
+  //           console.log('Login statistics updated successfully.');
+  //         },
+  //         error => {
+  //           console.error('Error updating login statistics:', error);
+  //         }
+  //       );
+  //     },
+  //     error => {
+  //       console.error('Error fetching employees:', error);
+  //     }
+  //   );
+  // }
+  
 
   loadEmployeeInfo() {
     this.employeeService.getEmployee().subscribe(
@@ -140,4 +307,6 @@ export class SecuritySummaryComponent {
   customLegend = {
 
   };
+
+  
 }

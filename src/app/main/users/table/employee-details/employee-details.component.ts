@@ -18,6 +18,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   selectedImage!: File ;
   photoSrc: string | ArrayBuffer | null = null;
   editMode: boolean = false;
+  rfidScanMode: boolean = false;
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
   
@@ -28,6 +29,7 @@ export class EmployeeDetailsComponent implements OnChanges {
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       phone: ['', Validators.required],
+      rfidtag: ['']
     });
     this.updateEmployeeForm.disable();
   }
@@ -127,6 +129,10 @@ export class EmployeeDetailsComponent implements OnChanges {
     this.editMode = true;
     this.updateEmployeeForm.enable();
   }
+
+  enableRfidScan(){
+    this.rfidScanMode = true;
+  }
   
   onRoleChange(event: Event){
     const target = event.target as HTMLInputElement;
@@ -140,7 +146,8 @@ export class EmployeeDetailsComponent implements OnChanges {
       fullname: employee.fullname,
       email: employee.email,
       role: employee.role,
-      phone: employee.phone
+      phone: employee.phone,
+      rfidtag: employee.rfidtag
     })
     this.employeeDetails = employee;
   }
