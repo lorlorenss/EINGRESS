@@ -29,8 +29,10 @@
 }
 
 .upper-left {
+    
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+    grid-template-columns: 50% 1fr; /* Adjusted grid-template-columns */
 }
 
 .upper-right {
