@@ -19,7 +19,7 @@ input[type="checkbox"] {
     position: sticky;
     color: gray;
     display: grid;
-    grid-template-columns: 20px repeat(4, 1fr); /* Fixed width first column, rest are 1fr */
+    grid-template-columns: 100px repeat(4, 1fr); /* Fixed width first column, rest are 1fr */
     align-items: center;
     gap: 20px;
     padding: 20px;

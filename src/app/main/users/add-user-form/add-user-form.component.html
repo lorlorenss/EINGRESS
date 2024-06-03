@@ -12,10 +12,10 @@
         <div class="main-container">
             <div class="left-container">
                 <div class="photo-section">
-                    <img class="photoholder" [src]="'/assets/images/max-smith.png'">
+                    <img class="photoholder" [src]="photoSrc || 'http://localhost:3000/api/employee/profile-image/' + newEmployee.profileImage">
                     <div class="icons pointer">
                         <div class="edit">
-                            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display:none">
+                            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
                             <img class="icon pointer" src="/assets/images/edit-blue.png" (click)="fileInput.click()">
                         </div>
                         <div class="delete">
@@ -38,9 +38,12 @@
                             <div class="icon-holder ">
                                 <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="fingerprint icon">
                             </div>
+                            <div class="begin-scan pointer r" [class.disabled]="!editMode" (click)="startRFIDScan()">
+                                Begin scan
+                            </div>
                             <div class="details-holder">
                                 <span>RFID</span>
-                                <input type="text" placeholder="ABC19021DC" [(ngModel)]="newEmployee.rfidtag">
+                                <input #rfidInput type="text" placeholder="ABC19021DC" disabled [(ngModel)]="newEmployee.rfidtag">
                             </div>
                         </div>
                 </div>
@@ -115,10 +118,13 @@
                         <div class="icon-holder">
                         <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
                     </div>
-                        <div class="details-holder">
-                            <span>Fingerprint ID</span>
-                            <input type="text" placeholder="135135115161" disabled>
-                        </div>
+                    <div class="begin-scan pointer f" [class.disabled]="!editMode" (click)="startFingerprintScan()">
+                        Begin scan
+                    </div>
+                    <div class="details-holder">
+                        <span>Fingerprint ID</span>
+                        <input #fingerprintInput type="text" placeholder="135135115161" disabled>
+                    </div>
                     </div>
                 </div>
                 <div class="submit-user pointer" (click)="submitUser()">Submit</div>

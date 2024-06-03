@@ -34,11 +34,14 @@
                     <span>RFID</span>
                         <div class="rfid-content">
                             <div class="icon-holder ">
-                                <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="fingerprint icon">
+                                <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="rfid icon">
+                            </div>
+                            <div class="begin-scan pointer r" [class.disabled]="!editMode" (click)="startRFIDScan()">
+                                Begin scan
                             </div>
                             <div class="details-holder">
                                 <span>RFID</span>
-                                <input formControlName="rfidtag" type="text" placeholder="ABC19021DC" [disabled]="!editMode">
+                                <input formControlName="rfidtag" #rfidInput type="text" placeholder="ABC19021DC">
                             </div>
                         </div>
                 </div>
@@ -58,6 +61,7 @@
                 <div class="roles">
                     <span>Roles</span>
                     <select name="roles" formControlName="role" class="roles-select">
+
                         <option value="Driver/ Maintenance">Driver/ Maintenance</option>
                         <option value="Project Coordinator">Project Coordinator</option>
                         <option value="Full Stack Developer">Full Stack Developer</option>
@@ -110,11 +114,14 @@
                     <span>Fingerprint</span>
                     <div class="fingerprint-content">
                         <div class="icon-holder">
-                        <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
-                    </div>
+                            <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
+                        </div>
+                        <div class="begin-scan pointer f" [class.disabled]="!editMode" (click)="startFingerprintScan()">
+                            Begin scan
+                        </div>
                         <div class="details-holder">
                             <span>Fingerprint ID</span>
-                            <input type="text" placeholder="135135115161" disabled>
+                            <input  #fingerprintInput type="text" placeholder="135135115161">
                         </div>
                     </div>
                 </div>

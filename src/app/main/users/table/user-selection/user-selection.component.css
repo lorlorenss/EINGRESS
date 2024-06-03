@@ -12,8 +12,6 @@ input[type="checkbox"] {
     align-items: center;
     gap: 20px;
     border-top: 1px solid var(--background);
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 .user:hover {
@@ -36,8 +34,13 @@ input[type="checkbox"] {
 
 .employee-info-container{
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
     cursor: pointer;
     width: 100%;
-    grid-template-columns: repeat(4, 1fr);
+   
     gap: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
 }

@@ -7,6 +7,7 @@
   }
 
 .upper{
+  margin-top: 20px;
   gap: 20px;
   display: grid;
   grid-row: 1 / 2;
@@ -31,7 +32,7 @@
     background-color: var(--background);
     border-radius: 10px;
     color: var(--success);
-    padding: 0;
+    padding: 20px;
   }
   
   .not-on-site {
@@ -41,7 +42,6 @@
     grid-row: 1 / 2;
     align-items: center;
     font-family: Poppins;
-
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -49,6 +49,7 @@
     background-color: var(--background);
     border-radius: 10px;
     color: var(--secondary);
+    padding: 20px;
   }
   
   .total {
@@ -65,12 +66,13 @@
     background-color: var(--background);
     border-radius: 10px;
     color: #e69b00;
+    padding: 20px;
   }
   
   .count{
-    margin-top: 20px;
-    font-size: 2rem;
+    font-size: 3.5rem;
     color: black;
+    height: 60px;
   }
   
   .activity {
@@ -84,10 +86,7 @@
     width: 80%; /* Set the width to a specific percentage */
     max-width: 800px; /* Set a maximum width in pixels */
     height: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr; /* First column auto, second column fills the remaining width */
-    grid-template-rows: repeat(8, 1fr) 10px 50px; /* 9 rows with equal height, 9th row with 10px height, 10th row returns to 1fr */
-    gap: 10px; /* Gap between grid items */
+    display: grid;  
   }
   
   
