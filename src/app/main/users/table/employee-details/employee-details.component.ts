@@ -4,7 +4,6 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
-import { Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-details',
@@ -13,16 +12,17 @@ import { Validator } from '@angular/forms';
 })
 export class EmployeeDetailsComponent implements OnChanges {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  
+  @ViewChild('rfidInput') rfidInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fingerprintInput') fingerprintInput!: ElementRef<HTMLInputElement>;
+
   employeeDetails!: Employee | undefined;
-  selectedImage!: File ;
+  selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
   editMode: boolean = false;
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
-  
-  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService)
-  {
+
+  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService) {
     this.updateEmployeeForm = this.formBuilder.group({
       fullname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -33,7 +33,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['employeeDetails'] && changes['employeeDetails'].currentValue){
+    if (changes['employeeDetails'] && changes['employeeDetails'].currentValue) {
       this.updateEmployeeForm.patchValue(changes['employeeDetails'].currentValue);
     }
   }
@@ -43,7 +43,7 @@ export class EmployeeDetailsComponent implements OnChanges {
     if (file) {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         this.selectedImage = file;
-  
+
         // Update the image source for preview
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -58,36 +58,33 @@ export class EmployeeDetailsComponent implements OnChanges {
 
   updateEmployee(): void {
     const id = this.employeeDetails?.id;
-  
 
     if (id) {
       const emailControl = this.updateEmployeeForm.get('email');
 
-      if(this.updateEmployeeForm.invalid && emailControl?.value === '' ){
+      if (this.updateEmployeeForm.invalid && emailControl?.value === '') {
         this.dialogService.openAlertDialog('Please fill in all credentials');
-        return
+        return;
       }
-      
-      if(emailControl && emailControl.invalid){
+
+      if (emailControl && emailControl.invalid) {
         this.dialogService.openAlertDialog('Invalid email please try again');
-        return
+        return;
       }
 
       const updateEmployee: Employee = this.updateEmployeeForm.value;
-      const file: File = this.selectedImage; 
+      const file: File = this.selectedImage;
 
       this.isUpdating = true; // Set update flag
-    
+
       if (file) {
         this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
           (response) => {
-            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
-              if(confirmed){
-                this.isUpdating = false; 
+            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed => {
+              if (confirmed) {
+                this.isUpdating = false;
               }
-
             });
-
           },
           (error) => {
             this.dialogService.openAlertDialog('Error updating dialog');
@@ -97,13 +94,12 @@ export class EmployeeDetailsComponent implements OnChanges {
       } else {
         this.employeeService.updateEmployeeWithoutImage(id, updateEmployee).subscribe(
           (response) => {
-            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed =>{
-              if(confirmed){
+            this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed => {
+              if (confirmed) {
                 console.log('Employee update successful', response);
-                this.isUpdating = false; 
+                this.isUpdating = false;
               }
             });
-
           },
           (error) => {
             this.dialogService.openAlertDialog('Error updating dialog');
@@ -114,39 +110,54 @@ export class EmployeeDetailsComponent implements OnChanges {
     }
   }
 
-  onClear(){
+  onClear(): void {
     Object.keys(this.updateEmployeeForm.controls).forEach(controlName => {
       const control = this.updateEmployeeForm.get(controlName);
-      if(control instanceof FormControl){
+      if (control instanceof FormControl) {
         control.setValue('');
       }
     });
   }
 
-  enableEdit(){
+  enableEdit(): void {
     this.editMode = true;
     this.updateEmployeeForm.enable();
   }
-  
-  onRoleChange(event: Event){
+
+  onRoleChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const roleValue = target.getAttribute('value');
-    this.updateEmployeeForm.patchValue({ role: roleValue});
-    console.log({ role: roleValue});
+    this.updateEmployeeForm.patchValue({ role: roleValue });
+    console.log({ role: roleValue });
   }
-  
-  showEmployeeDetails(employee: Employee){
+
+  showEmployeeDetails(employee: Employee): void {
     this.updateEmployeeForm.patchValue({
       fullname: employee.fullname,
       email: employee.email,
       role: employee.role,
       phone: employee.phone
-    })
+    });
     this.employeeDetails = employee;
   }
 
-  hideEmployeeDetails(){
+  hideEmployeeDetails(): void {
     this.employeeDetails = undefined;
     this.employeeService.reloadPage();
+  }
+
+
+  startRFIDScan(): void {
+    if (this.editMode) {
+      this.rfidInput.nativeElement.removeAttribute('disabled');
+      this.rfidInput.nativeElement.focus();
+    }
+  }
+
+  startFingerprintScan(): void {
+    if (this.editMode) {
+      this.fingerprintInput.nativeElement.removeAttribute('disabled');
+      this.fingerprintInput.nativeElement.focus();
+    }
   }
 }

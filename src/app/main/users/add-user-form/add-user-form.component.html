@@ -38,12 +38,12 @@
                             <div class="icon-holder ">
                                 <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="fingerprint icon">
                             </div>
-                            <button class="begin-scan pointer r">
+                            <div class="begin-scan pointer r" [class.disabled]="!editMode" (click)="startRFIDScan()">
                                 Begin scan
-                            </button>
+                            </div>
                             <div class="details-holder">
                                 <span>RFID</span>
-                                <input type="text" placeholder="ABC19021DC" disabled>
+                                <input #rfidInput type="text" placeholder="ABC19021DC" disabled>
                             </div>
                         </div>
                 </div>
@@ -118,13 +118,13 @@
                         <div class="icon-holder">
                         <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
                     </div>
-                        <button class="begin-scan pointer f">
-                            Begin scan
-                        </button>
-                        <div class="details-holder">
-                            <span>Fingerprint ID</span>
-                            <input type="text" placeholder="135135115161" disabled>
-                        </div>
+                    <div class="begin-scan pointer f" [class.disabled]="!editMode" (click)="startFingerprintScan()">
+                        Begin scan
+                    </div>
+                    <div class="details-holder">
+                        <span>Fingerprint ID</span>
+                        <input #fingerprintInput type="text" placeholder="135135115161" disabled>
+                    </div>
                     </div>
                 </div>
                 <div class="submit-user pointer" (click)="submitUser()">Submit</div>

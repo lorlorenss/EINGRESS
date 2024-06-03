@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { Employee } from 'src/app/interface/employee.interface';
 import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
@@ -10,11 +9,14 @@ import { DialogService } from 'src/app/services/dialog.service';
 })
 export class AddUserFormComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('employeeRole', {static: false}) employeeRole?: ElementRef
+  @ViewChild('rfidInput') rfidInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fingerprintInput') fingerprintInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('employeeRole', {static: false}) employeeRole?: ElementRef;
 
   addUserForm: boolean = false;
-  selectedImage!: File ;
+  selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
+  editMode: boolean = true; // Assuming edit mode is true to enable the "Begin scan" functionality
 
   // Using the Employee interface for form fields
   newEmployee = {
@@ -42,7 +44,7 @@ export class AddUserFormComponent {
     if (file) {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         this.selectedImage = file;
-  
+
         // Update the image source for preview
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -71,7 +73,7 @@ export class AddUserFormComponent {
         .subscribe(
           response => {
             this.dialogService.openSuccessDialog('Employee Created Successfully').subscribe(confirmed => {
-              if(confirmed){
+              if (confirmed) {
                 this.employeeService.reloadPage();
               }
             });
@@ -81,7 +83,7 @@ export class AddUserFormComponent {
           error => {
             console.error('Error adding employee', error);
             let errorMessage = 'Error adding employee. Please try again.';
-    
+
             if (error.status === 400) {
               errorMessage = 'Bad request. Please check your input data.';
             } else if (error.status === 500) {
@@ -89,7 +91,7 @@ export class AddUserFormComponent {
             } else if (error.error && error.error.message) {
               errorMessage = error.error.message;
             }
-    
+
             alert(errorMessage);
           }
         );
@@ -99,7 +101,7 @@ export class AddUserFormComponent {
         .subscribe(
           response => {
             this.dialogService.openSuccessDialog('Employee Created Successfully').subscribe(confirmed => {
-              if(confirmed){
+              if (confirmed) {
                 this.employeeService.reloadPage();
               }
             });
@@ -109,7 +111,7 @@ export class AddUserFormComponent {
           error => {
             console.error('Error adding employee', error);
             let errorMessage = 'Error adding employee. Please try again.';
-    
+
             if (error.status === 400) {
               errorMessage = 'Bad request. Please check your input data.';
             } else if (error.status === 500) {
@@ -117,11 +119,24 @@ export class AddUserFormComponent {
             } else if (error.error && error.error.message) {
               errorMessage = error.error.message;
             }
-    
+
             alert(errorMessage);
           }
         );
     }
   }
 
+  startRFIDScan(): void {
+    if (this.editMode) {
+      this.rfidInput.nativeElement.removeAttribute('disabled');
+      this.rfidInput.nativeElement.focus();
+    }
+  }
+
+  startFingerprintScan(): void {
+    if (this.editMode) {
+      this.fingerprintInput.nativeElement.removeAttribute('disabled');
+      this.fingerprintInput.nativeElement.focus();
+    }
+  }
 }
