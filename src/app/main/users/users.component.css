@@ -40,7 +40,8 @@
     grid-row: 1 / 2;
     display: flex;
     flex-direction: row-reverse;
-    gap: 20px;
+    gap: 40px;
+    padding-right: 80px;
 }
 
 .lower {
