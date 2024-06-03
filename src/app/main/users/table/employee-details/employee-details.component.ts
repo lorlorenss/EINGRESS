@@ -28,6 +28,7 @@ export class EmployeeDetailsComponent implements OnChanges {
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       phone: ['', Validators.required],
+      rfidtag: ['', Validators.required],
     });
     this.updateEmployeeForm.disable();
   }
@@ -136,7 +137,8 @@ export class EmployeeDetailsComponent implements OnChanges {
       fullname: employee.fullname,
       email: employee.email,
       role: employee.role,
-      phone: employee.phone
+      phone: employee.phone,
+      rfidtag: employee.rfidtag,
     });
     this.employeeDetails = employee;
   }

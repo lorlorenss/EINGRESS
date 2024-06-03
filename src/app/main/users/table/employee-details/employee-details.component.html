@@ -41,7 +41,7 @@
                             </div>
                             <div class="details-holder">
                                 <span>RFID</span>
-                                <input #rfidInput type="text" placeholder="ABC19021DC" disabled>
+                                <input formControlName="rfidtag" #rfidInput type="text" placeholder="ABC19021DC">
                             </div>
                         </div>
                 </div>
@@ -110,7 +110,6 @@
                     </select>
                 </div>
 
-
                 <div class="fingerprint-container">
                     <span>Fingerprint</span>
                     <div class="fingerprint-content">
@@ -122,7 +121,7 @@
                         </div>
                         <div class="details-holder">
                             <span>Fingerprint ID</span>
-                            <input #fingerprintInput type="text" placeholder="135135115161" disabled>
+                            <input  #fingerprintInput type="text" placeholder="135135115161">
                         </div>
                     </div>
                 </div>
