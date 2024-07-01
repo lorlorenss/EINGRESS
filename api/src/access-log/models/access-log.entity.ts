@@ -9,8 +9,8 @@ export class _dbaccesslog {
   @ManyToOne(() => _dbemployee, employee => employee.accessLogs)
   employee: _dbemployee;
 
-  @Column ()
-  rfidtag:string;
+  @Column()
+  rfidtag: string;
 
   @Column()
   accessDateTime: Date;
@@ -20,4 +20,7 @@ export class _dbaccesslog {
 
   @Column()
   roleAtAccess: string; // Role of the employee at the time of access
+
+  @Column()
+  fingerprint: string;
 }
