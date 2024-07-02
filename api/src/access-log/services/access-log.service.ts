@@ -83,6 +83,7 @@ export class AccessLogService {
           accessDateTime: new Date(),
           accessType: 'In', // or 'Out', depending on the logic
           roleAtAccess: employee.role,
+          fingerprint: employee.fingerprint,
           employee: employee // Include the employee entity
           // Any additional properties you need to include in the access log entry
         };
