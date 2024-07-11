@@ -79,7 +79,7 @@ span{
 .dashboard{
     display: flex;
     align-items: center;
-   margin-top: 50px;
+   margin-top: 100px;
     height: 50px;
    font-family: "Poppins", sans-serif;
    font-weight: 700;
@@ -92,7 +92,6 @@ span{
 }
 .dashboard:hover{
     background-color: var(--hover);
-    cursor: pointer;
     border-radius:10px;
 }
 
@@ -123,7 +122,7 @@ span{
  }
 .reports:hover{
     background-color: var(--hover);
-    cursor: pointer;
+  
     border-radius:10px;
 }
 
@@ -148,7 +147,6 @@ span{
  }
 .users:hover{
     background-color: var(--hover);
-    cursor: pointer;
     border-radius:10px;
 }
 
@@ -173,7 +171,6 @@ span{
  }
 .logout:hover{
     background-color: var(--hover);
-    cursor: pointer;
     border-radius:10px;
 }
 
@@ -203,9 +200,14 @@ span{
  }
 .lock-side:hover{
     background-color: var(--hover);
-    cursor: pointer;
 }
 
 .side-bar:hover .collapse-icon{
     content: url('/assets/images/collapse-left.png');  
+}
+
+.logout-pointer{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
 }

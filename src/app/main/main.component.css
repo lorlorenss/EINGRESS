@@ -30,6 +30,7 @@
 .pages{
     display: flex;
     position: absolute;
+    justify-content: center;
     background-color: var(--background);
     width: calc(100% - 48px);
     height: calc(100% - 48px);
@@ -41,20 +42,36 @@
 }
 
 .navbar:hover ~ .pages  {
-    justify-content: center;
-    left: 116px;
+    width: calc(100% - 216px);
+    left: 216px;
 }
 
 
-
 .inner-page{
+    /* background-color: aquamarine; */
+    /* display: flex;
+    justify-content: center; */
     max-height: 100%;
-    width: 1250px;
+    width: calc(100vw - 285px);
     margin-top: 20px;
     border-radius: 20px;
     margin-bottom: 20px;
     overflow: auto; /* Allow scrolling */
     transition: left 0.2s ease, width 0.2s ease-out;
-
+    /* background-color: pink; */
 }
 
+
+@media screen and (max-width: 1700px){
+    .inner-page{
+        width: 100vw;
+    }
+    
+    
+}
+
+@media screen and (max-width: 800px) {
+    .inner-page{
+        width: 800px;
+    }
+}
