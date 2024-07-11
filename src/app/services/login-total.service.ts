@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap } from 'rxjs';
 import { totalLogs } from '../interface/logs-total.interface';
-
+import { environment } from '../environments/environment.prod';
 
 @Injectable({
     providedIn: 'root'
   })
   export class LoginTotalService {
 
-    private apiUrl = '/api/total-logs';
+    private apiUrl = `${environment.baseURL}api/total-logs`;
 
     constructor(private http: HttpClient) { }
 

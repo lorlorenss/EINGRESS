@@ -6,14 +6,14 @@ import { Subject } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { environment } from '../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  private apiUrl = '/api/employee';
+  private apiUrl = `${environment.baseURL}api/employee`;
   
   private deletedClickedSource = new Subject<void>();
   deletedClicked$ = this.deletedClickedSource.asObservable();

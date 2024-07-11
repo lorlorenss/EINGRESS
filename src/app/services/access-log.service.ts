@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap } from 'rxjs';
 import { AccessLog } from '../interface/access-log.interface';
+import { environment } from '../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccessLogService {
 
-  private apiUrl = '/api/access-log';
+  private apiUrl = `${environment.baseURL}api/access-log`;
 
   constructor(private http: HttpClient) { }
 

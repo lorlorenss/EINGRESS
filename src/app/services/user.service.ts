@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs';
 import { shareReplay } from 'rxjs';
 import { User } from '../interface/user.interface';
+import { environment } from '../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = '/api/users';
+  private apiUrl = `${environment.baseURL}api/users`;
 
   constructor(private http: HttpClient) { }
 
