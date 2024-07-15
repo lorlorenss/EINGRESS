@@ -17,7 +17,7 @@ export class AddUserFormComponent {
   selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
   editMode: boolean = true; // Assuming edit mode is true to enable the "Begin scan" functionality
-
+  baseUrl = this.employeeService.apiUrl;
   // Using the Employee interface for form fields
   newEmployee = {
     id: 0,

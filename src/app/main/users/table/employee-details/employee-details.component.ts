@@ -14,7 +14,6 @@ export class EmployeeDetailsComponent implements OnChanges {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('rfidInput') rfidInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fingerprintInput') fingerprintInput!: ElementRef<HTMLInputElement>;
-
   employeeDetails!: Employee | undefined;
   selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
@@ -22,6 +21,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   rfidScanMode: boolean = false;
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
+  baseUrl = this.employeeService.apiUrl;
 
   constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService) {
     this.updateEmployeeForm = this.formBuilder.group({

@@ -13,7 +13,7 @@ import { environment } from '../environments/environment.prod';
 })
 export class EmployeeService {
 
-  private apiUrl = `${environment.baseURL}api/employee`;
+  apiUrl = `${environment.baseURL}api/employee`;
   
   private deletedClickedSource = new Subject<void>();
   deletedClicked$ = this.deletedClickedSource.asObservable();

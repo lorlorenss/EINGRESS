@@ -4,17 +4,21 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { startWith, switchMap } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
-
+import { environment } from 'src/app/environments/environment.prod';
 @Component({
   selector: 'app-user-selection',
   templateUrl: './user-selection.component.html',
   styleUrls: ['./user-selection.component.css']
 })
 export class UserSelectionComponent implements OnInit, OnDestroy {
-  
+  baseUrl = this.employeeService.apiUrl;
+  constructor(private employeeService: EmployeeService, private dialogService: DialogService){
+
+  }
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
   searchSubscription: Subscription | undefined;
+  
 
   @Output() employeeSelected = new EventEmitter<any>();
 
@@ -22,7 +26,7 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
     employee.selected = !employee.selected;
   }
 
-  constructor(private employeeService: EmployeeService, private dialogService: DialogService){}
+  
 
   ngOnInit(){
     this.loadEmployeeInfo();
@@ -72,4 +76,6 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
   selectedEmployee(employee: Employee){
     this.employeeSelected.emit(employee);
   }
+
+  
 }
