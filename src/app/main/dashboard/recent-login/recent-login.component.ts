@@ -10,7 +10,7 @@ import { Employee } from 'src/app/interface/employee.interface';
 })
 export class RecentLoginComponent {
   recentLogin: Employee | null = null;
-
+  baseUrl = this.employeeService.apiUrl;
   constructor(private employeeService: EmployeeService) {
     this.findRecentLoginEmployee();
   }
@@ -39,7 +39,8 @@ export class RecentLoginComponent {
     // Check if selectedEmployee exists and has a profileImage
     if (employee && employee.profileImage) {
       // Assuming profile image URL is relative to the base URL
-      return `http://localhost:3000/api/employee/profile-image/${employee.profileImage}`;
+      // return `http://localhost:3000/api/employee/profile-image/${employee.profileImage}`;
+      return `${this.baseUrl}/profile-image/${employee.profileImage}`;
     } else {
       // Default profile image URL
       return '/assets/images/default-profile-image.png'; // Replace with your default image path

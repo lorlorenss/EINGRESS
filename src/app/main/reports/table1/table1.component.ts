@@ -9,6 +9,7 @@ import { AccessLogService } from 'src/app/services/access-log.service';
   styleUrls: ['./table1.component.css']
 })
 export class Table1Component implements OnInit {
+  baseUrl = this.employeeService.apiUrl;
   @Input() employees: Employee[] = [];
   @Output() employeeSelected = new EventEmitter<Employee>();
   selectedEmployee: Employee | null = null;
