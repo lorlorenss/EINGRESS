@@ -1,19 +1,30 @@
 .security-content {
-    margin-top: 40px;
     width: 100%;
     height: calc(100% - 50px); /* Set the height to fill the remaining viewport height */
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: repeat(6, 1fr);
     gap: 20px;
   }
-  
+
+.upper{
+  margin-top: 20px;
+  gap: 20px;
+  display: grid;
+  grid-row: 1 / 2;
+}
+
+.lower{
+  grid-row: 2 / 7;
+  height: 100%;
+
+}
   .logins-today {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
     grid-column: 1 / 2;
     grid-row: 1 / 2;
-    padding-top: 20px;
+    align-items: center;
     font-family: Poppins;
-    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -21,15 +32,16 @@
     background-color: var(--background);
     border-radius: 10px;
     color: var(--success);
+    padding: 20px;
   }
   
   .not-on-site {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-  
-    padding-top: 20px;
+    align-items: center;
     font-family: Poppins;
-    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -37,91 +49,45 @@
     background-color: var(--background);
     border-radius: 10px;
     color: var(--secondary);
+    padding: 20px;
   }
   
-  .unauthorized-attempts {
+  .total {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
     grid-column: 3 / 4;
     grid-row: 1 / 2;
-  
-   
+    align-items: center;
     font-family: Poppins;
-    font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     text-align: center;
     background-color: var(--background);
     border-radius: 10px;
-    color: var(--error);
-    padding: 20px 0 0 0;
+    color: #e69b00;
+    padding: 20px;
   }
   
   .count{
-    margin-top: 20px;
-    font-size: 2rem;
+    font-size: 3.5rem;
     color: black;
+    height: 60px;
   }
   
-  .activity{
+  .activity {
     grid-column: 1 / 4;
     grid-row: 2 / 9;
-    height: auto;
+    height: 100%;
   }
   
   .activity-content {
-    width: 100%;
-  padding-top: 20px;
+    padding-top: 20px;
+    width: 80%; /* Set the width to a specific percentage */
+    max-width: 800px; /* Set a maximum width in pixels */
     height: 100%;
-    display: grid;
-    grid-template-columns: 20px 1fr; /* First column 20px, second column fills the remaining width */
-    grid-template-rows: repeat(9, 1fr) 10px 1fr; /* 9 rows with equal height, 9th row with 10px height, 10th row returns to 1fr */
-    gap: 10px; /* Gap between grid items */
-  }
-  
-  .people-count{
-    grid-column: 1 / 2;
-    grid-row: 1 / 9;
-  
-  
-    display: grid;
-    grid-template-columns: 1;
-    grid-template-rows: repeat(8, 1fr);
-  }
-  
-  .histogram{
-    grid-column: 2 / 3;
-    grid-row: 1 / 9;
-    background-color: var(--background);
-    border-radius: 10px;
-  }
-  
-  .dates{
-    grid-column: 2 / 3;
-    grid-row: 9 / 10;
-  
-    display: grid;
-    grid-template-columns: repeat(32, 1fr);
-    grid-template-rows: 1;
-  
-    font-size: .5rem;
+    display: grid;  
   }
   
   
-  .month{
-    grid-column: 2 / 3;
-    grid-row: 10 / 11;
-  
-    text-align: center;
-    text-justify:auto ;
-  }
-  
-  .people{
-    font-family: Poppins;
-  font-size: .5rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-align: center;
-  
-  }
   

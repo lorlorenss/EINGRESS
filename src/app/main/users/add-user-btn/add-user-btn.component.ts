@@ -1,6 +1,7 @@
 // add-user-btn.component.ts
 import { Component, Output, EventEmitter } from '@angular/core';
 
+
 @Component({
   selector: 'app-add-user-btn',
   templateUrl: './add-user-btn.component.html',
@@ -9,7 +10,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class AddUserBtnComponent {
   @Output() addUserClicked = new EventEmitter<void>();
 
-  onClick(): void {
+  onAddUserClicked(){
     this.addUserClicked.emit();
   }
 }

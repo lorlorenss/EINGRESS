@@ -1,22 +1,20 @@
 <div class="main-container">
-
-        <div class="photoholder">
-            <img src="/assets/images/max-smith.png">
-
+    <div class="photoholder">
+        <img [src]="getProfileImage(selectedEmployee)" alt="Profile Image">
     </div>
-    <div class="right-container">
-        <div class="user-name">Max Smith</div>
+    <div class="right-container" *ngIf="selectedEmployee">
+        <div class="user-name">{{ selectedEmployee.fullname }}</div>
         <div class="user-role">
             <img src="/assets/images/user-blue.png" alt="">
-            <span>Employee</span>
+            <span>{{ selectedEmployee.role }}</span>
         </div>
         <div class="user-email">
             <img src="/assets/images/email-gray.png" alt="">
-            <span>Employee</span>
+            <span>{{ selectedEmployee.email }}</span>
         </div>
         <div class="user-contact">
             <img src="/assets/images/contact-gray.png" alt="">
-            <span>Employee</span>
+            <span>{{ selectedEmployee.phone }}</span>
         </div>
     </div>
 </div>

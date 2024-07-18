@@ -30,6 +30,7 @@
 .pages{
     display: flex;
     position: absolute;
+    justify-content: center;
     background-color: var(--background);
     width: calc(100% - 48px);
     height: calc(100% - 48px);
@@ -47,8 +48,9 @@
 
 
 .inner-page{
-    display:flex;
-    justify-content: center;
+    /* background-color: aquamarine; */
+    /* display: flex;
+    justify-content: center; */
     max-height: 100%;
     width: calc(100vw - 285px);
     margin-top: 20px;
@@ -57,4 +59,19 @@
     overflow: auto; /* Allow scrolling */
     transition: left 0.2s ease, width 0.2s ease-out;
     /* background-color: pink; */
+}
+
+
+@media screen and (max-width: 1700px){
+    .inner-page{
+        width: 100vw;
+    }
+    
+    
+}
+
+@media screen and (max-width: 800px) {
+    .inner-page{
+        width: 800px;
+    }
 }

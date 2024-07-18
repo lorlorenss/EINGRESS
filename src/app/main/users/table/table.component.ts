@@ -1,17 +1,17 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, ViewChild, } from '@angular/core';
+import { UserSelectionComponent } from './user-selection/user-selection.component';
+import { Employee } from 'src/app/interface/employee.interface';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent {
-  isHeaderChecked: boolean = false; // Track state of header checkbox
+export class TableComponent  {
+  @ViewChild(EmployeeDetailsComponent) employeeDetailsComponent!: EmployeeDetailsComponent; 
 
-  @Output() headerCheckboxChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  toggleHeaderCheckbox(event: any) {
-    this.isHeaderChecked = event.target.checked;
-    this.headerCheckboxChange.emit(this.isHeaderChecked); // Emit event with new state
+  onEmployeeSelected(employee: Employee){
+    this.employeeDetailsComponent.showEmployeeDetails(employee);
   }
 }
