@@ -9,14 +9,13 @@
         </div>
     
 
-        <div class="main-container">
+        <form [formGroup]="userForm" class="main-container">
             <div class="left-container">
                 <div class="photo-section">
-                    <!-- <img class="photoholder" [src]="photoSrc || 'http://localhost:3000/api/employee/profile-image/' + newEmployee.profileImage"> -->
-                    <img class="photoholder" [src]="photoSrc || baseUrl + '/profile-image/' + newEmployee.profileImage" alt="Profile Image">
+                    <img class="photoholder" [src]="photoSrc ? photoSrc : (baseUrl + '/profile-image/' + (newEmployee.profileImage || 'max-smith.png'))" alt="Profile Image">
                     <div class="icons pointer">
                         <div class="edit">
-                            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
+                            <input type="file" formControlName="profileImage" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
                             <img class="icon pointer" src="/assets/images/edit-blue.png" (click)="fileInput.click()">
                         </div>
                         <div class="delete">
@@ -27,11 +26,11 @@
     
                 <div class="name">
                     <span>Full Name</span>
-                    <input class="textbox" type="text" placeholder="Enter Name" [(ngModel)]="newEmployee.fullname">
+                    <input formControlName="fullname" class="textbox" type="text" placeholder="Enter Name" [(ngModel)]="newEmployee.fullname">
                 </div>
                 <div class="email">
                     <span>Email</span>
-                    <input class="textbox" type="email" placeholder="Enter Email" [(ngModel)]="newEmployee.email">
+                    <input formControlName="email" class="textbox" type="email" placeholder="Enter Email" [(ngModel)]="newEmployee.email">
                 </div>
                 <div class="rfid-container">
                     <span>RFID</span>
@@ -44,7 +43,7 @@
                             </div>
                             <div class="details-holder">
                                 <span>RFID</span>
-                                <input #rfidInput type="text" placeholder="ABC19021DC" disabled [(ngModel)]="newEmployee.rfidtag">
+                                <input formControlName="rfidtag" #rfidInput type="text" placeholder="ABC19021DC" [(ngModel)]="newEmployee.rfidtag">
                             </div>
                         </div>
                 </div>
@@ -59,12 +58,12 @@
     
                 <div class="contact-number">
                     <span>Contact Number</span>
-                    <input class="textbox" type="text" placeholder="+639 xxx xxx xxxx" [(ngModel)]="newEmployee.phone">
+                    <input formControlName="phone" class="textbox" type="text" placeholder="+639 xxx xxx xxxx" [(ngModel)]="newEmployee.phone">
                 </div>
 
                 <div class="roles">
                     <span>Roles</span>
-                    <select name="roles" #employeeRole class="roles-select">
+                    <select formControlName="role" name="roles" #employeeRole class="roles-select">
                         <option value="Driver/ Maintenance">Driver/ Maintenance</option>
                         <option value="Project Coordinator">Project Coordinator</option>
                         <option value="Full Stack Developer">Full Stack Developer</option>
@@ -124,12 +123,12 @@
                     </div>
                     <div class="details-holder">
                         <span>Fingerprint ID</span>
-                        <input #fingerprintInput type="text" placeholder="135135115161" disabled>
+                        <input formControlName="fingerprint" #fingerprintInput type="text" placeholder="135135115161">
                     </div>
                     </div>
                 </div>
                 <div class="submit-user pointer" (click)="submitUser()">Submit</div>
             </div>
-        </div>
+        </form>
     </div>
     </body>

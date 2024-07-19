@@ -28,6 +28,7 @@ export class EmployeeDetailsComponent implements OnChanges {
       fullname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
+      profileImage: [''],
       phone: ['', Validators.required],
       rfidtag: ['', Validators.required],
       fingerprint: ['', Validators.required]
@@ -59,7 +60,8 @@ export class EmployeeDetailsComponent implements OnChanges {
     }
   }
 
-  updateEmployee(): void {
+  updateEmployee(event: Event): void {
+    event.preventDefault(); // Prevent the default form submission behavior
     const id = this.employeeDetails?.id;
 
     if (id) {
@@ -86,6 +88,7 @@ export class EmployeeDetailsComponent implements OnChanges {
             this.dialogService.openSuccessDialog('Employee update successfully').subscribe(confirmed => {
               if (confirmed) {
                 this.isUpdating = false;
+                this.hideEmployeeDetails();
               }
             });
           },
@@ -101,6 +104,7 @@ export class EmployeeDetailsComponent implements OnChanges {
               if (confirmed) {
                 console.log('Employee update successful', response);
                 this.isUpdating = false;
+                this.hideEmployeeDetails();
               }
             });
           },
@@ -151,7 +155,6 @@ export class EmployeeDetailsComponent implements OnChanges {
     this.employeeService.reloadPage();
   }
 
-
   startRFIDScan(): void {
     if (this.editMode) {
       this.rfidInput.nativeElement.removeAttribute('disabled');
@@ -163,6 +166,12 @@ export class EmployeeDetailsComponent implements OnChanges {
     if (this.editMode) {
       this.fingerprintInput.nativeElement.removeAttribute('disabled');
       this.fingerprintInput.nativeElement.focus();
+    }
+  }
+
+  preventDefault(event: Event): void {
+    if ((event as KeyboardEvent).key === 'Enter') {
+      event.preventDefault();
     }
   }
 }

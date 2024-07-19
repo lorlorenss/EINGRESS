@@ -7,14 +7,14 @@
             </button>
         </div>
 
-        <form [formGroup]="updateEmployeeForm" class="main-container">
+        <form [formGroup]="updateEmployeeForm" class="main-container" (keydown.enter)="preventDefault($event)">
             <div class="left-container">
                 <div class="photo-section">
                     <!-- <img class="photoholder" [src]="photoSrc || 'http://localhost:3000/api/employee/profile-image/' + employeeDetails.profileImage"> -->
-                    <img class="photoholder" [src]="photoSrc || baseUrl + '/profile-image/' + employeeDetails.profileImage" alt="Profile Image">
+                    <img class="photoholder"  [src]="photoSrc || baseUrl + '/profile-image/' + employeeDetails.profileImage" alt="Profile Image">
                     <div class="icons pointer">
                         <div class="edit">
-                            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
+                            <input type="file" formControlName="profileImage" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
                             <img class="icon pointer" src="/assets/images/edit-blue.png" (click)="fileInput.click()">
                         </div>
                         <div class="delete">
@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <button (click)="enableEdit()" class="edit-user pointer" *ngIf="!editMode">Edit</button>
-                <button (click)="updateEmployee()" class="submit-user pointer" *ngIf="editMode">Update</button>
+                <button (click)="updateEmployee($event)" class="submit-user pointer" *ngIf="editMode">Update</button>
             </div>
         </form>
     </div>
