@@ -8,7 +8,7 @@ WORKDIR /src/app
 COPY package*.json /src/app/
 
 # Install dependencies
-RUN npm install
+RUN npm install --production
 
 # Install global dependencies
 RUN npm install -g @nestjs/cli
@@ -31,8 +31,8 @@ COPY . /src/app
 # Copy .env file to /src/app
 COPY .env /src/app/.env
 
-# Expose the application port (replace <your-port> with the actual port)
-EXPOSE <your-port>
+# Expose the application port (using port 80 for production)
+EXPOSE 80
 
 # Start the application (replace with your start script if different)
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:prod"]
