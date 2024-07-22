@@ -5,13 +5,13 @@ FROM node:14
 WORKDIR /src/app
 
 # Copy package.json and package-lock.json to /src/app
-COPY package*.json /src/app/
+COPY package.json package-lock.json /src/app/
 
 # Install dependencies
 RUN npm install --production
 
 # Install global dependencies
-RUN npm install -g @nestjs/cli
+RUN npm install -g @nestjs/cli @angular/cli
 
 # Verify NestJS CLI installation
 RUN nest -v
@@ -33,6 +33,9 @@ COPY .env /src/app/.env
 
 # Expose the application port (using port 80 for production)
 EXPOSE 80
+
+# Build the Angular app
+RUN npm run build
 
 # Start the application (replace with your start script if different)
 CMD ["npm", "run", "start:prod"]
