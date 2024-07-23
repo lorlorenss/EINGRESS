@@ -1,19 +1,35 @@
-# First stage: Build the Angular application
-FROM node:20-alpine as angular
+# Stage 1: Build the Angular app
+FROM node:20-alpine as build
 
+# Set working directory
 WORKDIR /app
 
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
+# Copy the rest of the application code
 COPY . .
 
-# Verify Node.js version
-RUN node -v
+# Build the Angular application for production
+RUN npm run build -- --configuration=production
 
-RUN npm run build
+# Stage 2: Serve the app using NGINX
+FROM nginx:alpine
 
-# Second stage: Serve the built application using Apache
-FROM httpd:alpine3.15
+# Set the working directory in the NGINX container
+WORKDIR /usr/share/nginx/html
 
-WORKDIR /usr/local/apache2/htdocs
-COPY --from=angular /app/dist/eingress-project .
+# Copy the built Angular app from the build stage
+COPY --from=build /app/dist/eingress-project .
+
+# Copy custom NGINX configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80 for the NGINX server
+EXPOSE 80
+
+# Start NGINX in the foreground
+CMD ["nginx", "-g", "daemon off;"]

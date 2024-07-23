@@ -1,0 +1,15 @@
+version: '3'
+services:
+  nestjs:
+    image: eingressnest
+    container_name: nestjs
+    ports:
+      - "3000:3000"
+
+  angular:
+    image: eingressangular
+    container_name: angular
+    ports:
+      - "80:80"  # Adjust port as needed
+    depends_on:
+      - nestjs
