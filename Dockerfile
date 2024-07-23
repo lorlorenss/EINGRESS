@@ -23,11 +23,12 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
 # Copy the built Angular app from the build stage
-COPY --from=build /app/dist/eingress-device-ui .
+COPY --from=build /app/dist/eingress-project .
 
 # Copy custom NGINX configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# Expose port 80 for the NGINX server
 EXPOSE 80
 
 # Start NGINX in the foreground
