@@ -13,25 +13,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Install dependencies, build, and test
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and push Angular Docker image
         run: |
-          npm install
-          npm run build --if-present
-        # npm run test --if-present
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/eingressangular:latest -f Dockerfile.angular .
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/eingressangular:latest
 
-      - name: Zip artifact for deployment
-        run: zip -r release.zip .
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app
-          path: release.zip
+      - name: Build and push NestJS Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/eingressnest:latest -f Dockerfile.nest .
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/eingressnest:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -43,14 +42,6 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -58,10 +49,12 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D2BF076C991743EB96DC8468A39AE641 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7E4A69CC57634119A85CC92BC032B53C }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy Angular and NestJS Docker images to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'eingress'
           slot-name: 'Production'
-          package: .
+          images: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/eingressangular:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/eingressnest:latest
