@@ -1,0 +1,28 @@
+<div class="table">
+  <div class="table-header">
+    <div class="user-header">User</div>
+    <div class="role-header">Role</div>
+  </div>
+
+  <div class="table-body pointer">
+    <ng-container *ngIf="employees.length > 0; else noEmployees">
+      <div *ngFor="let employee of employees" 
+           class="user" 
+           [class.selected]="employee === selectedEmployee"
+           (click)="selectEmployee(employee)">
+        <div class="user-content">
+          <!-- <img class="photoholder" src="http://localhost:3000/api/employee/profile-image/{{employee.profileImage}}"> -->
+          <img class="photoholder" [src]="baseUrl + '/profile-image/' + employee.profileImage" alt="Profile Image">
+            <div class="name-email">
+                <div class="username">{{ employee.fullname }}</div>
+                <div class="useremail">{{ employee.email }}</div>
+            </div>
+        </div>
+        <div class="role-content">{{ employee.role }}</div>
+      </div>
+    </ng-container>
+    <ng-template #noEmployees>
+      <div class="no-employees-message">No users found</div>
+    </ng-template>
+  </div>
+</div>

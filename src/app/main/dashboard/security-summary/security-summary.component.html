@@ -1,0 +1,49 @@
+<div class="security-content">
+  <div class="upper">
+    <div class="logins-today">
+      <div>Logins Today</div><br>
+      <div class="count">{{ LoginsToday }}</div>
+    </div>
+    <div class="not-on-site">
+      <div>Not on site</div><br>
+      <div class="count">{{ NotOnSite }}</div>
+    </div>
+    <div class="total">
+      <div>Total Registered Users</div><br>
+      <div class="count">{{ total }}</div>
+    </div>
+  </div>
+  <div class="lower">
+    <div class="activity">
+      <div>Activity Chart</div>
+
+      <div class="activity-content">
+        <ngx-charts-bar-vertical-2d
+          [view]="[chartWidth, chartHeight]"
+          [scheme]="colorScheme"
+          [results]="multi"
+          [showDataLabel]="showDataLabel"
+          [gradient]="gradient"
+          [barPadding]="barPadding"
+          [groupPadding]="groupPadding"
+          [wrapTicks]="wrapTicks"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [yScaleMax]="yScaleMax"
+          [legend]="showLegend"
+          [legendPosition]="below"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [legendTitle]="legendTitle"
+          [xAxisTickFormatting]="xAxisTickFormatting"
+          [yAxisTickFormatting]="yAxisTickFormatting"
+          (select)="onSelect($event)"
+          (activate)="onActivate($event)"
+          (deactivate)="onDeactivate($event)"
+        >
+        </ngx-charts-bar-vertical-2d>
+      </div>
+    </div>
+  </div>
+</div>

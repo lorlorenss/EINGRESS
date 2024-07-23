@@ -6,6 +6,7 @@
     background-color: var(--primary);
     height: 100vh;  
     width: 100%; 
+
 }
 
 .login-eingress-bckgrnd img{
@@ -23,9 +24,10 @@
     flex-flow: column;
     justify-content: space-evenly;
     background-color: #0E1520;
-    width: 360px;
+    width: 380px;
     height: 500px;
     padding: 30px;
+    border-radius: 20px;
 }
 
 .jairo-eingress{
@@ -33,7 +35,7 @@
     justify-content: center;
     align-items: center;
     flex-flow: column;
-    font-size: 12px;
+    font-size: .5rem;
 }
 
 .jairo-eingress img{
@@ -41,11 +43,16 @@
     width: 28px;
 }
 
+.jairo-eingress p{
+    color: #999999;
+    font-size: 1rem;
+}
+
 .banner{
     display: flex;
     flex-flow: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .banner h2{
@@ -53,7 +60,8 @@
 }
 
 .banner p{
-    font-size: 8px;
+    font-size: 12px;
+    color: #D9D9D9;
 }
 
 .login-form{
@@ -70,6 +78,7 @@
     background-color: #1F3049;
     height: 50px;
     width: 100%;
+    color: var(--white);
 }
 
 .login-input input[type=password]{
@@ -78,18 +87,34 @@
     background-color: #1F3049;
     height: 50px;
     width: 100%;
+    color: var(--white);
+}
+
+.password-container{
+    position: relative;
+    display: inline-block;
+}
+
+.password-container img{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
 }
 
 .remember-me{
     display: flex;
-    font-size: 8px;
+    font-size: 10px;
     gap: 5px;
+ 
 }
 
-.forgot-pass{
-    display: flex;
-    position: relative;
-    left: 45%;
+.remember{
+    cursor: pointer;
+    color: var(--white);
 }
 
 .login-input{
@@ -105,4 +130,12 @@
     height: 50px;
     width: 100%;
     z-index: 2;
+    cursor: pointer;
+    font-size: 12;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.login-form button:hover{
+    background-color: var(--secondary);
 }

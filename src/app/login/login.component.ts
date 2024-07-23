@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-login',
@@ -17,30 +18,59 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private http: HttpClient
+    private dialog: MatDialog,
+    private dialogService: DialogService
   ){
     this.form = this.formBuilder.group({
-      username: '',
-      password: ''
+      username: ['',Validators.required],
+      password: ['',Validators.required]
   });
   }
 
   submitCredentials() {
+    if(this.form.invalid){
+      this.dialogService.openAlertDialog('Please fill in all credentials');
+      return;
+    }
 
-    console.log(this.form.value);
-
-    this.userService.loginUser(this.form.value).subscribe( //Use Subscribe method to the Observable object
-      (res: any) => {
-        if(res.result){
-          alert('Login Success')
-          this.router.navigate(['/main']);
+    this.userService.loginUser(this.form.getRawValue()).subscribe({
+        next: (response: any) => {
+          localStorage.setItem('token', response.access_token);
+          this.router.navigateByUrl('/main');
+        },
+        error: (error) => {
+          this.dialogService.openAlertDialog('Invalid User please try again!');
+          console.error(error); 
         }
-        else{
-          alert(res.message)
-        }
-        
-      }
+      } 
     );
   }
 
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const passwordField = document.querySelector<HTMLInputElement>('.password-container input[type="password"]');
+  const showPasswordIcon = document.getElementById('show-icon') as HTMLImageElement;
+
+  if (passwordField) {
+      const initialPaddingRight = getComputedStyle(passwordField).paddingRight; // Get initial paddingRight
+      const initialWidth = passwordField.offsetWidth + 'px'; // Get initial width
+
+      showPasswordIcon.addEventListener('click', () => {
+          // Toggle password visibility
+          passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+          // Change icon based on password visibility
+          if (passwordField.type === 'password') {
+              showPasswordIcon.src = '/assets/images/show-password.png'; // Image for hidden password
+          } else {
+              showPasswordIcon.src = '/assets/images/hide-password.png'; // Image for visible password
+          }
+          // Set input width and paddingRight to their initial values
+          passwordField.style.width = initialWidth;
+          passwordField.style.paddingRight = initialPaddingRight;
+      });
+  } else {
+      console.error('Password input field not found.');
+  }
+});
+
