@@ -29,7 +29,7 @@ COPY --from=build /app/dist/eingress-project .
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80 for the NGINX server
-EXPOSE 80
+EXPOSE 8080
 
 # Start NGINX in the foreground
 CMD ["nginx", "-g", "daemon off;"]
