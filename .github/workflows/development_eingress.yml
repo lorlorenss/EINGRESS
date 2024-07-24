@@ -24,14 +24,16 @@ jobs:
           npm run build --if-present
         # npm run test --if-present
 
-      - name: Zip artifact for deployment
-        run: zip -r release.zip .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app
-          path: release.zip
+      - name: Log in to Azure Container Registry
+        run: echo ${{ secrets.AZURE_ACR_PASSWORD }} | docker login yourdockerregistry.azurecr.io -u ${{ secrets.AZURE_ACR_USERNAME }} --password-stdin
+
+      - name: Build and push Docker images with Docker Compose
+        run: |
+          docker-compose -f docker-compose.yml build
+          docker-compose -f docker-compose.yml push
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,17 +42,9 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -64,4 +58,4 @@ jobs:
         with:
           app-name: 'eingress'
           slot-name: 'Production'
-          package: .
+          package: ./deployment.zip
