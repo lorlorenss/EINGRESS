@@ -2,6 +2,7 @@ export const environment = {
     production : true,
 
     // apicontainer
-    baseURL: 'http://20.18.99.135:3000/' 
+    // baseURL: 'http://52.230.51.225:3000/' 
+    baseURL: 'http://localhost:3000/' 
 
 }
