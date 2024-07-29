@@ -17,7 +17,7 @@ export class MainComponent{
   }
 
   ngOnInit(): void {
-    this.loadUser();
+    //this.loadUser();
   }
 
   loadUser(){
