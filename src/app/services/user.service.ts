@@ -15,7 +15,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUser(): Observable<User[]> {
-    const getUserUrl = `${this.apiUrl}/current-user}`;
+    const getUserUrl = `${this.apiUrl}/current-user`; // Corrected URL
     return this.http.get<User[]>(getUserUrl);
   }
 
