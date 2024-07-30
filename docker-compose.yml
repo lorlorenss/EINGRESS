@@ -1,6 +1,9 @@
 version: '3.8'
 services:
   nestjs:
+    build:
+        context: ./api
+        dockerfile: Dockerfile
     image: eingressnest
     container_name: nestjs
     ports:

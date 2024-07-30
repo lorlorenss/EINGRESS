@@ -1,6 +1,8 @@
 export const environment = {
     production : true,
-    //baseURL : 'http://192.168.42.68:4200/'
-    // baseURL : 'http://192.168.42.64:4200/' 
-    baseURL: 'http://nestjs:3000/'  // URL for Docker network
+
+    // apicontainer
+    // baseURL: 'http://52.230.51.225:3000/' 
+    baseURL: 'http://104.43.100.222:3000/' 
+
 }
