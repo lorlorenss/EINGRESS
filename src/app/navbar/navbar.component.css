@@ -1,213 +1,189 @@
 
-
-.side-bar{
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    background-color:var(--primary);
-    top: 0;
-    left: 0;
-    width: 48px;
-    height: 100vh;
-    transition: width 0.2s ease; /* Add smooth transition effect */
-    
-    box-shadow: 5px 0px 10px rgba(0, 0, 0, .3); /* Set box shadow to the right */
-}
-
-.side-bar:hover{
-    width: 216px;
-   
-}
-
-.upper{
-    height: 50vh;
-
-}
-.lower{
-    height: 50vh;
-   
-    display: flex;
-    flex-direction: column-reverse;
-}
-
-.logo{
-    width: 60px;
-    height: 60px;
-    padding: 8px;
-    margin-right: 3px;
-}
-
-.project-name{
-    font-size: 1.5rem;
-}
-
-/* Show the inner text of the project when hovering over the side bar */
-.side-bar:hover .project-name{
-    text-align: center;
-    transition: ease-in-out;
-}
-
-.project{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 90px;
-    margin-top: 15px;
-   font-family: "Poppins", sans-serif;
-   font-weight: 700;
-   font-style: normal;
-    color: white;
-}
-
-span{
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.2s ease; /* Smooth transition for opacity and color */
-    color: white;
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  background-color: var(--primary);
+  top: 0;
+  left: 0;
+  width: 48px; 
+  height: 100vh;
+  transition: width 0.2s ease; 
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden; 
 }
 
 
-.side-bar:hover span{
-    color: white; /* Change color on hover */
-    opacity: 1; /* Show the text on hover */
-}
-.dasboard-icon{
-    width: 45px;
-    height: 45px;
-    padding: 8px;
-    margin-right: 3px;
-}
-.dashboard{
-    display: flex;
-    align-items: center;
-   margin-top: 100px;
-    height: 50px;
-   font-family: "Poppins", sans-serif;
-   font-weight: 700;
-   font-style: normal;
-   font-size: 1rem;
-}
-
-.dashboard span{
-   margin-left: 16px;
-}
-.dashboard:hover{
-    background-color: var(--hover);
-    border-radius:10px;
-}
-
-.dasboard a{
-    color: white;
+.side-bar:not(.locked):hover {
+  width: 216px; 
 }
 
 
-.reports-icon{
-    width: 45px;
-    height: 45px;
-    padding: 8px;
-    margin-right: 3px;
-}
-.reports{
-    display: flex;
-    align-items: center;
-   margin-top: 12px;
-   height: 50px;
-   font-family: "Poppins", sans-serif;
-   font-weight: 700;
-   font-style: normal;
-   font-size: 1rem;
-   color: white;
-}
-.reports span{
-    margin-left: 16px;
- }
-.reports:hover{
-    background-color: var(--hover);
-  
-    border-radius:10px;
-}
-
-.users-icon{
-    width: 45px;
-    height: 45px;
-    padding: 8px;
-    margin-right: 3px;
-}
-.users{
-    display: flex;
-    align-items: center;
-   margin-top: 12px;
-   font-family: "Poppins", sans-serif;
-   font-weight: 700;
-   font-style: normal;
-   font-size: 1rem;
-   color: white;
-}
-.users span{
-    margin-left: 16px;
- }
-.users:hover{
-    background-color: var(--hover);
-    border-radius:10px;
-}
-
-.logout-icon{
-    width: 45px;
-    height: 45px;
-    padding: 8px;
-    margin-right: 3px;
-}
-.logout{
-    display: flex;
-    align-items: center;
-
-   font-family: "Poppins", sans-serif;
-   font-weight: 700;
-   font-style: normal;
-   font-size: 1rem;
-   color: white;
-}
-.logout span{
-    margin-left: 16px;
- }
-.logout:hover{
-    background-color: var(--hover);
-    border-radius:10px;
+.side-bar.locked {
+  width: 216px;
+  transition: none; 
 }
 
 
-.collapse-icon{
-    width: 45px;
-    height: 45px;
-    padding: 8px;
-    margin-right: 5px;
-    margin-left: 3px;
+.upper,
+.lower {
+  display: flex;
+  flex-direction: column;
 }
 
-.lock-side{
-    margin-top:10px;
-    display: flex;
-    align-items: center;
-   font-family: "Poppins", sans-serif;
-   font-weight: lighter;
-   font-style: normal;
-   font-size: 1rem;
-   color: white;
-   margin-bottom: 20px;
-
-}
-.lock-side span{
-    margin-left: 25px;
- }
-.lock-side:hover{
-    background-color: var(--hover);
+.upper {
+  height: 50vh;
 }
 
-.side-bar:hover .collapse-icon{
-    content: url('/assets/images/collapse-left.png');  
+.lower {
+  height: 50vh;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
-.logout-pointer{
-    display: flex;
-    cursor: pointer;
-    align-items: center;
+
+.logo {
+  width: 60px;
+  height: 60px;
+  padding: 8px;
+  margin: 0 auto; 
+}
+
+
+.project-name {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0;
+  padding: 10px 0;
+  color: white;
+}
+
+
+.project {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  height: 90px;
+  margin-top: 15px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  color: white;
+}
+
+
+span {
+  opacity: 0; 
+  transition: opacity 0.2s ease; 
+  color: white;
+}
+
+
+.side-bar:not(.locked):hover span {
+  opacity: 0.9; 
+}
+
+
+.side-bar.locked span {
+  opacity: 0.9; /
+}
+
+
+.dashboard {
+  display: flex;
+  align-items: center;
+  margin-top: 120px; 
+  height: 50px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+
+.dashboard span,
+.reports span,
+.users span,
+.logout span {
+  margin-left: 16px;
+}
+
+
+.dashboard:hover,
+.reports:hover,
+.users:hover,
+.logout:hover {
+  background-color: var(--hover);
+  border-radius: 10px;
+}
+
+
+.dashboard-icon,
+.reports-icon,
+.users-icon,
+.logout-icon {
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin-right: 3px;
+}
+
+
+.reports {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  height: 50px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+}
+
+
+.users {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+}
+
+.collapse-icon {
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+
+
+.lock-side {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: lighter;
+  font-size: 1rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.lock-side span {
+  margin-left: 25px;
+}
+
+.logout-pointer {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
 }

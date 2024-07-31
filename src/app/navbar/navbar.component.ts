@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';3
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService } from '../services/dialog.service';
 
@@ -8,8 +8,13 @@ import { DialogService } from '../services/dialog.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  isLocked = false;
 
-  constructor(private router: Router, private dialogService: DialogService){
+  constructor(private router: Router, private dialogService: DialogService) {}
+
+  toggleLock() {
+    this.isLocked = !this.isLocked;
+   
   }
 
   logout() {
@@ -20,5 +25,4 @@ export class NavbarComponent {
       }
     });
   }
-  
 }
