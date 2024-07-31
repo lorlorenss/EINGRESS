@@ -14,7 +14,7 @@ export class NavbarComponent {
 
   toggleLock() {
     this.isLocked = !this.isLocked;
-   
+    
   }
 
   logout() {

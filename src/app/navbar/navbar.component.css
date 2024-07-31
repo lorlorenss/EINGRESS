@@ -1,4 +1,4 @@
-
+/* Sidebar default and expanded states */
 .side-bar {
   display: flex;
   flex-direction: column;
@@ -6,25 +6,25 @@
   background-color: var(--primary);
   top: 0;
   left: 0;
-  width: 48px; 
+  width: 48px; /* Collapsed width */
   height: 100vh;
-  transition: width 0.2s ease; 
+  transition: width 0.2s ease; /* Smooth width transition */
   box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);
-  overflow: hidden; 
+  overflow: hidden; /* Hide overflowing content */
 }
 
-
+/* Expand sidebar on hover if not locked */
 .side-bar:not(.locked):hover {
-  width: 216px; 
+  width: 216px; /* Expanded width */
 }
 
-
+/* Sidebar locked state */
 .side-bar.locked {
-  width: 216px;
-  transition: none; 
+  width: 216px; /* Fixed width when locked */
+  transition: none; /* No transition effect */
 }
 
-
+/* Upper and lower sections of the sidebar */
 .upper,
 .lower {
   display: flex;
@@ -41,28 +41,28 @@
   flex-direction: column-reverse;
 }
 
-
+/* Logo styling */
 .logo {
   width: 60px;
   height: 60px;
   padding: 8px;
-  margin: 0 auto; 
+  margin: 0 auto; /* Center horizontally */
 }
 
-
+/* Project name styling */
 .project-name {
   font-size: 1.5rem;
-  text-align: center;
-  margin: 0;
-  padding: 10px 0;
+  text-align: center; /* Center text horizontally */
+  margin: 0; /* Reset margin */
+  padding: 10px 0; /* Add padding for vertical spacing */
   color: white;
 }
 
-
+/* Project section styling */
 .project {
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center; /* Center items horizontally */
   height: 90px;
   margin-top: 15px;
   font-family: "Poppins", sans-serif;
@@ -70,35 +70,35 @@
   color: white;
 }
 
-
+/* Span styling for visibility */
 span {
-  opacity: 0; 
-  transition: opacity 0.2s ease; 
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.2s ease; /* Smooth opacity transition */
   color: white;
 }
 
-
+/* Make span visible on hover when not locked */
 .side-bar:not(.locked):hover span {
-  opacity: 0.9; 
+  opacity: 1; /* Show text on hover */
 }
 
-
+/* Ensure span is visible even if hovered when locked */
 .side-bar.locked span {
-  opacity: 0.9; /
+  opacity: 0.8; /* Slightly visible on hover when locked */
 }
 
-
+/* Dashboard section */
 .dashboard {
   display: flex;
   align-items: center;
-  margin-top: 120px; 
+  margin-top: 120px; /* Adjust this value to move the dashboard down */
   height: 50px;
   font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-size: 1rem;
 }
 
-
+/* Margin for span elements in menu items */
 .dashboard span,
 .reports span,
 .users span,
@@ -106,7 +106,7 @@ span {
   margin-left: 16px;
 }
 
-
+/* Hover effects for menu items */
 .dashboard:hover,
 .reports:hover,
 .users:hover,
@@ -115,7 +115,7 @@ span {
   border-radius: 10px;
 }
 
-
+/* Icon styling */
 .dashboard-icon,
 .reports-icon,
 .users-icon,
@@ -126,7 +126,7 @@ span {
   margin-right: 3px;
 }
 
-
+/* Reports section */
 .reports {
   display: flex;
   align-items: center;
@@ -138,7 +138,7 @@ span {
   color: white;
 }
 
-
+/* Users section */
 .users {
   display: flex;
   align-items: center;
@@ -149,6 +149,7 @@ span {
   color: white;
 }
 
+/* Logout section */
 .logout {
   display: flex;
   align-items: center;
@@ -158,6 +159,7 @@ span {
   color: white;
 }
 
+/* Collapse icon styling */
 .collapse-icon {
   width: 45px;
   height: 45px;
@@ -166,7 +168,7 @@ span {
   margin-left: 3px;
 }
 
-
+/* Lock-side styling */
 .lock-side {
   margin-top: 10px;
   display: flex;
