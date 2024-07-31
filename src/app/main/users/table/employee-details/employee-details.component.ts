@@ -174,4 +174,8 @@ export class EmployeeDetailsComponent implements OnChanges {
       event.preventDefault();
     }
   }
+  
+  
+
+  
 }
