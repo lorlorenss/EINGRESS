@@ -25,9 +25,8 @@
     width: 100%;
     padding: 30px 200px;
 } */
-
-
-.pages{
+  
+.pages {
     display: flex;
     position: absolute;
     justify-content: center;
@@ -35,17 +34,24 @@
     width: calc(100% - 48px);
     height: calc(100% - 48px);
     top: 48px;
-    left:48px;
+    left: 48px;
     transition: left 0.2s ease, width 0.2s ease-out;
     z-index: -9;
-    justify-content: center;
-}
-
-.navbar:hover ~ .pages  {
+  }
+  
+  
+  .navbar:not(.locked):hover ~ .pages {
     width: calc(100% - 216px);
     left: 216px;
-}
-
+  }
+  
+ 
+  .navbar.locked ~ .pages {
+    width: calc(100% - 216px); 
+    left: 216px; 
+    transition: none; 
+  }
+  
 
 .inner-page{
     /* background-color: aquamarine; */

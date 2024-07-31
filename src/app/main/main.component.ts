@@ -9,7 +9,8 @@ import { User } from '../interface/user.interface';
 })
 export class MainComponent{
 
-  private user: User[] = []
+  private user: User[] = [];
+  isNavbarLocked: boolean = false;
 
   constructor (
     private userService: UserService
@@ -24,5 +25,8 @@ export class MainComponent{
     this.userService.getUser().subscribe((response: any) =>{
       this.user = response.data;
     })
+  }
+  onLockStateChange(isLocked: boolean) {
+    this.isNavbarLocked = isLocked;
   }
 }
