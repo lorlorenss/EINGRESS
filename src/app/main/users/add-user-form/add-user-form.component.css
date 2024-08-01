@@ -29,7 +29,7 @@ body {
 }
 
 span {
-    font-size: 12px;
+    font-size: 15px;
 }
 
 .textbox {
@@ -46,9 +46,11 @@ span {
 
 .header {
     display: flex;
-    justify-content: space-between;
-
-}
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center;    /* Centers the content vertically */
+    position: relative;
+  }
+  
 
 .close {
     border-radius: 5px;
@@ -383,3 +385,12 @@ span {
     color: white;
     background-color: var(--secondary);
 }
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .close {
+    position: absolute;
+    right: 0;
+  }
