@@ -1,11 +1,12 @@
 <div class="employee-details-container" *ngIf="employeeDetails">
     <div class="container">
       <div class="header">
-        <span>View User</span>
+        <h5 class="header-title">User Information</h5>
         <button class="close pointer" (click)="hideEmployeeDetails()">
           <img class="icon pointer" src="/assets/images/exit.png">
         </button>
       </div>
+      
   
       <form [formGroup]="updateEmployeeForm" class="main-container" (keydown.enter)="preventDefault($event)">
         <div class="left-container">
