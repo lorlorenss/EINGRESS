@@ -43,7 +43,7 @@
 
 
 .logo {
-  width: 50px;
+  width: 55px;
   height: 70px;
   padding: 8px;
   margin: 0 auto; 
@@ -83,7 +83,7 @@ span {
 
 
 .side-bar.locked span {
-  opacity: 0.8; 
+  opacity: 1.0; 
 }
 
 
