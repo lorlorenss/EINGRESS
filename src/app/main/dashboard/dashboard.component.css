@@ -11,11 +11,12 @@
   gap: 20px;
   /* Gap between grid items */
 }
-
-.navbar:hover+.contents {
+.navbar:hover + .contents {
   width: calc(100% - 216px);
-  /* Adjust width as needed */
 }
+
+
+
 
 .security-summary {
   padding: 40px;

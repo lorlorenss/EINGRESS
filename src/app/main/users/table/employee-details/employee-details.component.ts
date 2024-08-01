@@ -152,7 +152,7 @@ export class EmployeeDetailsComponent implements OnChanges {
 
   hideEmployeeDetails(): void {
     this.employeeDetails = undefined;
-    this.employeeService.reloadPage();
+    
   }
 
   startRFIDScan(): void {
@@ -174,4 +174,8 @@ export class EmployeeDetailsComponent implements OnChanges {
       event.preventDefault();
     }
   }
+  
+  
+
+  
 }
