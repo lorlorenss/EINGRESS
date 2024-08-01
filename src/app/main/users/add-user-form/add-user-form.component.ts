@@ -14,7 +14,6 @@ export class AddUserFormComponent {
   @ViewChild('fingerprintInput') fingerprintInput!: ElementRef<HTMLInputElement>;
   @ViewChild('employeeRole', {static: false}) employeeRole?: ElementRef;
 
-
   addUserForm: boolean = false;
   selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
@@ -22,8 +21,7 @@ export class AddUserFormComponent {
   baseUrl = this.employeeService.apiUrl;
   userForm: FormGroup;
 
-
-  constructor(private formBuilder: FormBuilder,private employeeService: EmployeeService, private dialogService: DialogService) { 
+  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService) { 
     this.userForm = this.formBuilder.group({
       fullname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -42,14 +40,31 @@ export class AddUserFormComponent {
     phone: '',
     role: '',
     rfidtag: '',
-    profileImage: '' // Change the type to match the backend
+    profileImage: '' 
   };
+
   showAddUserForm() {
     this.addUserForm = true;
   }
 
   hideAddUserForm() {
     this.addUserForm = false;
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.userForm.reset();
+    this.newEmployee = {
+      id: 0,
+      fullname: '',
+      email: '',
+      phone: '',
+      role: '',
+      rfidtag: '',
+      profileImage: '' 
+    };
+    this.photoSrc = null;
+    this.selectedImage = null!;
   }
 
   onFileSelected(event: any): void {
@@ -58,7 +73,7 @@ export class AddUserFormComponent {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         this.selectedImage = file;
 
-        // Update the image source for preview
+        
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -117,6 +132,7 @@ export class AddUserFormComponent {
       }
     }
   }
+
   handleError(error: any) {
     throw new Error('Method not implemented.');
   }
