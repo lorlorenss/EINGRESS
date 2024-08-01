@@ -1,11 +1,12 @@
 <body *ngIf="addUserForm">
     <div class="container">
         <div class="header">
-            <span>User</span>
-            <button (click)="hideAddUserForm()" class="close">
-                <img class="icon pointer" src="/assets/images/exit.png">
+            <strong class="header-title">Add User</strong>
+            <button class="close pointer" (click)="hideAddUserForm()">
+              <img class="icon pointer" src="/assets/images/exit.png">
             </button>
-        </div>
+          </div>
+          
 
         <form [formGroup]="userForm" class="main-container">
             <div class="left-container">
