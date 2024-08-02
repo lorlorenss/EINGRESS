@@ -17,19 +17,16 @@
                             <input type="file" formControlName="profileImage" (change)="onFileSelected($event)" accept="image/png, image/jpeg" #fileInput style="display: none;">
                             <img class="icon pointer" src="/assets/images/edit-blue.png" (click)="fileInput.click()">
                         </div>
-                        <div class="delete">
-                            <img class="icon pointer" src="/assets/images/delete-red.png">
-                        </div>
                     </div>
                 </div>
     
                 <div class="name">
                     <span>Full Name</span>
-                    <input formControlName="fullname" class="textbox" type="text" placeholder="Enter Name" [(ngModel)]="newEmployee.fullname">
+                    <input formControlName="fullname" class="textbox" type="text" placeholder="Enter Name">
                 </div>
                 <div class="email">
                     <span>Email</span>
-                    <input formControlName="email" class="textbox" type="email" placeholder="Enter Email" [(ngModel)]="newEmployee.email">
+                    <input formControlName="email" class="textbox" type="email" placeholder="Enter Email">
                 </div>
                 <div class="rfid-container">
                     <span>RFID</span>
@@ -42,7 +39,7 @@
                         </div>
                         <div class="details-holder">
                             <span>RFID</span>
-                            <input formControlName="rfidtag" #rfidInput type="text" placeholder="ABC19021DC" [(ngModel)]="newEmployee.rfidtag">
+                            <input formControlName="rfidtag" #rfidInput type="text" placeholder="ABC19021DC">
                         </div>
                     </div>
                 </div>

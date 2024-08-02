@@ -153,6 +153,8 @@ export class EmployeeDetailsComponent implements OnChanges {
   hideEmployeeDetails(): void {
     this.employeeDetails = undefined;
     this.editMode = false;
+    this.employeeService.triggerReload();
+    this.updateEmployeeForm.disable();
   }
 
   startRFIDScan(): void {

@@ -73,7 +73,6 @@ export class AddUserFormComponent {
       if (file.type === 'image/jpeg' || file.type === 'image/png') {
         this.selectedImage = file;
 
-        
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -134,7 +133,8 @@ export class AddUserFormComponent {
   }
 
   handleError(error: any) {
-    throw new Error('Method not implemented.');
+    console.error('An error occurred:', error);
+    this.dialogService.openAlertDialog('An error occurred while processing your request. Please try again.');
   }
 
   enableEdit(): void {
