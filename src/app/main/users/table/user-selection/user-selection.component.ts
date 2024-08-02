@@ -2,9 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Employee } from 'src/app/interface/employee.interface';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { startWith, switchMap } from 'rxjs/operators';
-import { Subscription, of } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
-import { environment } from 'src/app/environments/environment.prod';
 
 @Component({
   selector: 'app-user-selection',
@@ -16,7 +15,7 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
   searchSubscription: Subscription | undefined;
-  selectAll: boolean = false;
+  private reloadSubscription: Subscription = new Subscription();
 
   @Output() employeeSelected = new EventEmitter<any>();
 
@@ -24,8 +23,13 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadEmployeeInfo();
+
     this.employeeService.deletedClicked$.subscribe(() => {
       this.deleteEmployee();
+    });
+
+    this.reloadSubscription = this.employeeService.reload$.subscribe(() => {
+      this.loadEmployeeInfo(); // Refresh employee info when reload is triggered
     });
   }
 
@@ -33,6 +37,7 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
+    this.reloadSubscription.unsubscribe();
   }
 
   loadEmployeeInfo() {
@@ -51,29 +56,13 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
     });
   }
 
-  toggleAllSelection(event: any): void {
-    const isChecked = event.target.checked;
-    this.filteredEmployees.forEach(employee => {
-      employee.selected = isChecked;
-    });
-  }
-
-  toggleSelection(employee: Employee): void {
-    employee.selected = !employee.selected;
-    this.updateSelectAll();
-  }
-
-  updateSelectAll() {
-    this.selectAll = this.filteredEmployees.every(employee => employee.selected);
-  }
-
   deleteEmployee() {
-    const selectedEmployees = this.employees.filter(employee => employee.selected).map(employee => employee.id);
-    if (selectedEmployees.length > 0) {
+    const selectedEmployee = this.employees.filter(employee => employee.selected).map(employee => employee.id);
+    if (selectedEmployee.length > 0) {
       this.dialogService.openConfirmDialog('Do you want to Delete this user/s?', 'Cancel', 'Confirm').subscribe(confirmed => {
         if (confirmed) {
-          this.employeeService.deleteEmployee(selectedEmployees).subscribe(() => {
-            this.loadEmployeeInfo();
+          this.employeeService.deleteEmployee(selectedEmployee).subscribe(() => {
+            this.loadEmployeeInfo(); // Refresh employee info after deletion
           });
         }
       });

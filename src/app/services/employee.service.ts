@@ -92,4 +92,12 @@ export class EmployeeService {
     window.location.reload();
   }
 
+  private reloadSubject = new Subject<void>();
+
+  reload$ = this.reloadSubject.asObservable();
+
+  triggerReload() {
+    this.reloadSubject.next();
+  }
+
 }
