@@ -5,7 +5,6 @@ import { startWith, switchMap } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
 import { environment } from 'src/app/environments/environment.prod';
-
 @Component({
   selector: 'app-user-selection',
   templateUrl: './user-selection.component.html',
@@ -13,35 +12,45 @@ import { environment } from 'src/app/environments/environment.prod';
 })
 export class UserSelectionComponent implements OnInit, OnDestroy {
   baseUrl = this.employeeService.apiUrl;
+  constructor(private employeeService: EmployeeService, private dialogService: DialogService){
+
+  }
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
   searchSubscription: Subscription | undefined;
-  selectAll: boolean = false;
+  
 
   @Output() employeeSelected = new EventEmitter<any>();
 
-  constructor(private employeeService: EmployeeService, private dialogService: DialogService) {}
+  toggleSelection(employee: Employee): void{
+    employee.selected = !employee.selected;
+  }
 
-  ngOnInit() {
+  
+
+  ngOnInit(){
     this.loadEmployeeInfo();
+
     this.employeeService.deletedClicked$.subscribe(() => {
       this.deleteEmployee();
     });
+    
   }
 
-  ngOnDestroy() {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
+  ngOnDestroy(){
+    if(this.searchSubscription){
+      this.searchSubscription.unsubscribe;
     }
   }
 
-  loadEmployeeInfo() {
+  loadEmployeeInfo(){
     this.searchSubscription = this.employeeService.searchUserTrigger$.pipe(
       startWith(''),
-      switchMap(searchInputValue => {
-        if (!searchInputValue.trim()) {
+      switchMap( searchInputValue => {
+        if(!searchInputValue.trim()){
           return this.employeeService.getEmployee();
-        } else {
+        }
+        else{
           return this.employeeService.searchEmployee(searchInputValue);
         }
       })
@@ -51,36 +60,22 @@ export class UserSelectionComponent implements OnInit, OnDestroy {
     });
   }
 
-  toggleAllSelection(event: any): void {
-    const isChecked = event.target.checked;
-    this.filteredEmployees.forEach(employee => {
-      employee.selected = isChecked;
-    });
-  }
-
-  toggleSelection(employee: Employee): void {
-    employee.selected = !employee.selected;
-    this.updateSelectAll();
-  }
-
-  updateSelectAll() {
-    this.selectAll = this.filteredEmployees.every(employee => employee.selected);
-  }
-
-  deleteEmployee() {
-    const selectedEmployees = this.employees.filter(employee => employee.selected).map(employee => employee.id);
-    if (selectedEmployees.length > 0) {
-      this.dialogService.openConfirmDialog('Do you want to Delete this user/s?', 'Cancel', 'Confirm').subscribe(confirmed => {
-        if (confirmed) {
-          this.employeeService.deleteEmployee(selectedEmployees).subscribe(() => {
+  deleteEmployee(){
+    const selectedEmployee = this.employees.filter(employees => employees.selected).map(employees => employees.id)
+    if(selectedEmployee.length > 0){
+      this.dialogService.openConfirmDialog('Do you want to Delete this user/s?', 'Cancel', 'Confirm').subscribe(confirmed =>{
+        if(confirmed){
+          this.employeeService.deleteEmployee(selectedEmployee).subscribe(()=>{
             this.loadEmployeeInfo();
-          });
+          })
         }
-      });
+      })
     }
   }
 
-  selectedEmployee(employee: Employee) {
+  selectedEmployee(employee: Employee){
     this.employeeSelected.emit(employee);
   }
+
+  
 }

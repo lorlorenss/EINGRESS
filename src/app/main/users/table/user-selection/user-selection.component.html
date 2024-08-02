@@ -1,22 +1,19 @@
-<div>
-    <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleAllSelection($event)" /> Select All
-  </div>
-  <div *ngIf="filteredEmployees && filteredEmployees.length > 0; else noMatch">
-    <div *ngFor="let employee of filteredEmployees" class="user pointer">
+<div *ngIf="filteredEmployees && filteredEmployees.length > 0; else noMatch">
+  <div *ngFor="let employee of filteredEmployees" class="user pointer" >
       <div class="checkbox-content">
-        <input type="checkbox" [(ngModel)]="employee.selected" (change)="toggleSelection(employee)" />
+          <input type="checkbox" [(ngModel)]="employee.selected" change="toggleSelection(employee)" >
       </div>
+      <!-- <img src="http://localhost:3000/api/employee/profile-image/{{employee.profileImage}}" alt=""> -->
       <img [src]="baseUrl + '/profile-image/' + employee.profileImage" alt="Profile Image">
       <div class="employee-info-container" (click)="selectedEmployee(employee)">
-        <div class="employee-fullname">{{ employee.fullname }}</div>
-        <div class="role-content">{{ employee.role }}</div>
-        <div class="registered-date-content">{{ employee.regdate }}</div>
-        <div class="last-login-content">{{ employee.lastlogdate }}</div>
-      </div>
-    </div>
+          <div class="employee-fullname">{{ employee.fullname }}</div>
+          <div class="role-content">{{ employee.role }}</div>
+          <div class="registered-date-content">{{ employee.regdate }}</div>
+          <div class="last-login-content">{{ employee.lastlogdate }}</div>
+      </div>    
   </div>
-  
-  <ng-template #noMatch>
-    <div>No matching results found</div>
-  </ng-template>
-  
+</div>
+
+<ng-template #noMatch>
+  <div>No matching results found</div>
+</ng-template>
