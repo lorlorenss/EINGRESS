@@ -17,6 +17,7 @@
     --icons-secondary:#4E6384;
     --icons-tertiary:#95A1B5;
     --background:#EAEAEA;
+    --errorbackground: #ffe6e6;
 }
 
 *{

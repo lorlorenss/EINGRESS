@@ -11,5 +11,6 @@ export interface Employee {
   rfidtag?: string;
   selected?: boolean;
   accessLogs?: AccessLog[]; // Add accessLogs property
-  fingerprint?: string;
+  fingerprint1?: string;
+  fingerprint2?: string;
 }
