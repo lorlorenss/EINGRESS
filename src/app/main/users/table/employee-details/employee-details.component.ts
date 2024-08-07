@@ -13,7 +13,8 @@ import { DialogService } from 'src/app/services/dialog.service';
 export class EmployeeDetailsComponent implements OnChanges {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('rfidInput') rfidInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('fingerprintInput') fingerprintInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fingerprintInput1') fingerprintInput1!: ElementRef<HTMLInputElement>;
+  @ViewChild('fingerprintInput2') fingerprintInput2!: ElementRef<HTMLInputElement>;
   employeeDetails!: Employee | undefined;
   selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
@@ -22,6 +23,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
   baseUrl = this.employeeService.apiUrl;
+  added: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService) {
     this.updateEmployeeForm = this.formBuilder.group({
@@ -30,8 +32,9 @@ export class EmployeeDetailsComponent implements OnChanges {
       role: ['', Validators.required],
       profileImage: [''],
       phone: ['', Validators.required],
-      rfidtag: ['', Validators.required],
-      fingerprint: ['', Validators.required]
+      rfidtag: [''],
+      fingerprint1: [''],
+      fingerprint2: [''],
     });
     this.updateEmployeeForm.disable();
   }
@@ -146,6 +149,7 @@ export class EmployeeDetailsComponent implements OnChanges {
       phone: employee.phone,
       rfidtag: employee.rfidtag,
       fingerprint: employee.fingerprint
+      
     });
     this.employeeDetails = employee;
   }
@@ -155,6 +159,7 @@ export class EmployeeDetailsComponent implements OnChanges {
     this.editMode = false;
     this.employeeService.triggerReload();
     this.updateEmployeeForm.disable();
+    this.added = false;
   }
 
   startRFIDScan(): void {
@@ -163,21 +168,18 @@ export class EmployeeDetailsComponent implements OnChanges {
       this.rfidInput.nativeElement.focus();
     }
   }
-
-  startFingerprintScan(): void {
-    if (this.editMode) {
-      this.fingerprintInput.nativeElement.removeAttribute('disabled');
-      this.fingerprintInput.nativeElement.focus();
-    }
-  }
-
+  
   preventDefault(event: Event): void {
     if ((event as KeyboardEvent).key === 'Enter') {
       event.preventDefault();
     }
   }
   
-  
+  toggleFingerprint() {
+    this.added = !this.added;
+    this.fingerprintInput2.nativeElement.value = "";
+  }
+
 
   
 }

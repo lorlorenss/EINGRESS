@@ -251,6 +251,7 @@ span {
     flex-direction: column;
 }
 
+
 .roles{
     grid-row: 3 / 4;
     display: flex;
@@ -268,23 +269,13 @@ span {
 
 .fingerprint-container{
     grid-row: 4 / 5;
-    border-radius: 10px;
-}
-
-.fingerprint-content{
-    background-color: var(--background);
-    height: 300px;
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    align-items: center;
-    border-radius: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;  
 }
 
+.fingerprintspan{
+    margin-top: 20px;
+}
 .icon-holder{
     width: 60px;
     height: 60px;
@@ -295,10 +286,6 @@ span {
     justify-content: center;
 }
 
-.fingerprint-icon{
-    height: 50px;
-    width: auto;
-}
 
 .begin-scan{
     margin: 20px;
@@ -394,3 +381,76 @@ span {
     position: absolute;
     right: 0;
   }
+
+  /*  */
+.addfingerprint{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+  
+
+.addfingerprintbtn{
+    width: 180px;
+    height: 40px;
+    border-radius: 10px; /* Updated border-radius */
+    display: flex;
+    align-items: center;
+    background-color: #e3f2ff;
+    justify-content: center;
+    color: var(--secondary);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.addfingerprintbtn img{
+    width: 20px;
+    height: 20px;
+}
+
+.addfingerprintbtn.error {
+    width: 240px;
+    background-color: var(--errorbackground);
+    color: var(--error);
+  }
+
+.addfingerprintbtn:hover{
+    background-color: var(--secondary);
+}
+
+.addfingerprintbtn.error:hover {
+    background-color: var(--error);
+  }
+
+  .addfingerprintbtn.error:hover img{
+    content: url('/assets/images/delete-white.png');
+  }
+
+  .addfingerprintbtn:hover .fingerprint-span {
+    color: white;
+  }
+
+span{
+    margin-left: 10px;
+    font-size: 1rem;
+}
+
+.addfingerprintbtn:hover img{
+    content: url('/assets/images/add-white.png');
+}
+
+@media screen and (max-width: 700px) {
+    
+    .addfingerprintbtn {
+        width: 40px; /* Updated width */
+    }
+
+    .addfingerprintbtn img{
+        width: 20px;
+        height: 20px;
+    }
+
+    span{
+        display: none;
+    }
+ }
