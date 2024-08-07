@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-user-form',
@@ -11,14 +11,14 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class AddUserFormComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('rfidInput') rfidInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('fingerprintInput1') fingerprintInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fingerprintInput1') fingerprintInput1!: ElementRef<HTMLInputElement>;
   @ViewChild('fingerprintInput2') fingerprintInput2!: ElementRef<HTMLInputElement>;
   @ViewChild('employeeRole', {static: false}) employeeRole?: ElementRef;
 
   addUserForm: boolean = false;
   selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
-  added: boolean = true;
+  added: boolean = false;
   baseUrl = this.employeeService.apiUrl;
   userForm: FormGroup;
 
@@ -144,7 +144,6 @@ export class AddUserFormComponent {
     this.dialogService.openAlertDialog('An error occurred while processing your request. Please try again.');
   }
 
-
   startRFIDScan(): void {
     if (this.added) {
       this.rfidInput.nativeElement.removeAttribute('disabled');
@@ -153,7 +152,7 @@ export class AddUserFormComponent {
   }
 
   toggleFingerprint() {
-    this.added = !this.added;
-    this.fingerprintInput2.nativeElement.value = "";
+      this.added = !this.added;
+      this.userForm.get('fingerprint2')?.setValue('');
   }
 }

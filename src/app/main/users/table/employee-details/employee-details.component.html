@@ -112,7 +112,7 @@
             <span class="fingerprintspan" *ngIf="added">Fingerprint ID 2</span>
             <input formControlName="fingerprint2" #fingerprintInput2 type="text" placeholder="135135115161" class="textbox fingerprint2" *ngIf="added">
             <div class="addfingerprint">
-                <button class="addfingerprintbtn" [ngClass]="{ 'error': added }" (click)="toggleFingerprint()">
+                <button class="addfingerprintbtn" [ngClass]="{ 'error': added }" (click)="toggleFingerprint()" *ngIf = "editMode">
                   <img [src]="added ? '/assets/images/delete-red.png' : '/assets/images/add-blue.png'">
                   <span class="fingerprint-span">
                     {{ added ? 'Delete Fingerprint ID 2' : 'Add Fingerprint' }}

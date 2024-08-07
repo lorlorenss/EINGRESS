@@ -15,6 +15,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   @ViewChild('rfidInput') rfidInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fingerprintInput1') fingerprintInput1!: ElementRef<HTMLInputElement>;
   @ViewChild('fingerprintInput2') fingerprintInput2!: ElementRef<HTMLInputElement>;
+  hasVal: boolean = false;
   employeeDetails!: Employee | undefined;
   selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
@@ -23,7 +24,7 @@ export class EmployeeDetailsComponent implements OnChanges {
   updateEmployeeForm: FormGroup;
   isUpdating: boolean = false;
   baseUrl = this.employeeService.apiUrl;
-  added: boolean = false;
+  added!: boolean;
 
   constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private dialogService: DialogService) {
     this.updateEmployeeForm = this.formBuilder.group({
@@ -37,6 +38,10 @@ export class EmployeeDetailsComponent implements OnChanges {
       fingerprint2: [''],
     });
     this.updateEmployeeForm.disable();
+  }
+
+  ngOnInit(): void {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,25 +71,33 @@ export class EmployeeDetailsComponent implements OnChanges {
   updateEmployee(event: Event): void {
     event.preventDefault(); // Prevent the default form submission behavior
     const id = this.employeeDetails?.id;
-
+  
     if (id) {
       const emailControl = this.updateEmployeeForm.get('email');
-
+  
       if (this.updateEmployeeForm.invalid && emailControl?.value === '') {
         this.dialogService.openAlertDialog('Please fill in all credentials');
         return;
       }
-
+  
       if (emailControl && emailControl.invalid) {
         this.dialogService.openAlertDialog('Invalid email please try again');
         return;
       }
-
+  
+      const fingerprint1 = this.updateEmployeeForm.get('fingerprint1')?.value;
+      const fingerprint2 = this.updateEmployeeForm.get('fingerprint2')?.value;
+  
+      if (fingerprint1 && fingerprint2 && fingerprint1 === fingerprint2) {
+        this.dialogService.openAlertDialog('Fingerprint1 and Fingerprint2 cannot be the same.');
+        return;
+      }
+  
       const updateEmployee: Employee = this.updateEmployeeForm.value;
       const file: File = this.selectedImage;
-
+  
       this.isUpdating = true; // Set update flag
-
+  
       if (file) {
         this.employeeService.updateEmployee(id, updateEmployee, file).subscribe(
           (response) => {
@@ -119,6 +132,7 @@ export class EmployeeDetailsComponent implements OnChanges {
       }
     }
   }
+  
 
   onClear(): void {
     Object.keys(this.updateEmployeeForm.controls).forEach(controlName => {
@@ -148,10 +162,16 @@ export class EmployeeDetailsComponent implements OnChanges {
       role: employee.role,
       phone: employee.phone,
       rfidtag: employee.rfidtag,
-      fingerprint: employee.fingerprint
-      
+      fingerprint1: employee.fingerprint1,
+      fingerprint2: employee.fingerprint2
     });
     this.employeeDetails = employee;
+  
+    const fingerprint2Value = this.updateEmployeeForm.get('fingerprint2')?.value;
+    if (fingerprint2Value) {
+      this.hasVal = true;
+      this.added = true;
+    }
   }
 
   hideEmployeeDetails(): void {
@@ -176,10 +196,13 @@ export class EmployeeDetailsComponent implements OnChanges {
   }
   
   toggleFingerprint() {
-    this.added = !this.added;
-    this.fingerprintInput2.nativeElement.value = "";
-  }
-
-
-  
+    if(this.updateEmployeeForm.get('fingerprint1')?.value){
+      this.added = !this.added;
+      this.updateEmployeeForm.get('fingerprint2')?.setValue('');
+    }
+    else{
+      this.dialogService.openAlertDialog('Please put value in Fingerprint ID 1 first');
+      return;
+    }
+}
 }
