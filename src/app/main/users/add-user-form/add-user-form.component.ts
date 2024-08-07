@@ -152,7 +152,13 @@ export class AddUserFormComponent {
   }
 
   toggleFingerprint() {
+    if(this.userForm.get('fingerprint1')?.value){
       this.added = !this.added;
       this.userForm.get('fingerprint2')?.setValue('');
-  }
+    }
+    else{
+      this.dialogService.openAlertDialog('Please put value in Fingerprint ID 1 first');
+      return;
+    }
+}
 }
