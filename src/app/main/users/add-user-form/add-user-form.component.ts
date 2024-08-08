@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-user-form',
@@ -11,13 +11,14 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class AddUserFormComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('rfidInput') rfidInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('fingerprintInput') fingerprintInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fingerprintInput1') fingerprintInput1!: ElementRef<HTMLInputElement>;
+  @ViewChild('fingerprintInput2') fingerprintInput2!: ElementRef<HTMLInputElement>;
   @ViewChild('employeeRole', {static: false}) employeeRole?: ElementRef;
 
   addUserForm: boolean = false;
   selectedImage!: File;
   photoSrc: string | ArrayBuffer | null = null;
-  editMode: boolean = true; // Assuming edit mode is true to enable the "Begin scan" functionality
+  added: boolean = false;
   baseUrl = this.employeeService.apiUrl;
   userForm: FormGroup;
 
@@ -29,7 +30,8 @@ export class AddUserFormComponent {
       profileImage: [''],
       phone: ['', Validators.required],
       rfidtag: [''],
-      fingerprint: ['']
+      fingerprint1: [''],
+      fingerprint2: ['']
     });
   }
 
@@ -40,7 +42,9 @@ export class AddUserFormComponent {
     phone: '',
     role: '',
     rfidtag: '',
-    profileImage: '' 
+    profileImage: '' ,
+    fingerprint1: '',
+    fingerprint2: ''
   };
 
   showAddUserForm() {
@@ -50,6 +54,7 @@ export class AddUserFormComponent {
   hideAddUserForm() {
     this.addUserForm = false;
     this.resetForm();
+    this.added = false;
   }
 
   resetForm() {
@@ -61,7 +66,9 @@ export class AddUserFormComponent {
       phone: '',
       role: '',
       rfidtag: '',
-      profileImage: '' 
+      profileImage: '',
+      fingerprint1: '', 
+      fingerprint2: ''
     };
     this.photoSrc = null;
     this.selectedImage = null!;
@@ -137,21 +144,21 @@ export class AddUserFormComponent {
     this.dialogService.openAlertDialog('An error occurred while processing your request. Please try again.');
   }
 
-  enableEdit(): void {
-    this.editMode = true;
-  }
-
   startRFIDScan(): void {
-    if (this.editMode) {
+    if (this.added) {
       this.rfidInput.nativeElement.removeAttribute('disabled');
       this.rfidInput.nativeElement.focus();
     }
   }
 
-  startFingerprintScan(): void {
-    if (this.editMode) {
-      this.fingerprintInput.nativeElement.removeAttribute('disabled');
-      this.fingerprintInput.nativeElement.focus();
+  toggleFingerprint() {
+    if(this.userForm.get('fingerprint1')?.value){
+      this.added = !this.added;
+      this.userForm.get('fingerprint2')?.setValue('');
     }
-  }
+    else{
+      this.dialogService.openAlertDialog('Please put value in Fingerprint ID 1 first');
+      return;
+    }
+}
 }

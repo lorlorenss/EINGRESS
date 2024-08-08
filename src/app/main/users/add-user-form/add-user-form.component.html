@@ -34,7 +34,7 @@
                         <div class="icon-holder">
                             <img src="/assets/images/rfid-icon.png" class="rfid-icon" alt="fingerprint icon">
                         </div>
-                        <div class="begin-scan pointer r" [class.disabled]="!editMode" (click)="startRFIDScan()">
+                        <div class="begin-scan pointer r" (click)="startRFIDScan()">
                             Begin scan
                         </div>
                         <div class="details-holder">
@@ -106,19 +106,18 @@
                 </div>
     
                 <div class="fingerprint-container">
-                    <span>Fingerprint</span>
-                    <div class="fingerprint-content">
-                        <div class="icon-holder">
-                            <img src="/assets/images/fingerprint-blue.png" class="fingerprint-icon" alt="fingerprint icon">
-                        </div>
-                        <div class="begin-scan pointer f" [class.disabled]="!editMode" (click)="startFingerprintScan()">
-                            Begin scan
-                        </div>
-                        <div class="details-holder">
-                            <span>Fingerprint ID</span>
-                            <input formControlName="fingerprint" #fingerprintInput type="text" placeholder="135135115161">
-                        </div>
-                    </div>
+                    <span>Fingerprint ID 1</span>
+                    <input formControlName="fingerprint1" #fingerprintInput1 type="text" placeholder="135135115161" class="textbox">
+                    <span class="fingerprintspan" *ngIf="added">Fingerprint ID 2</span>
+                    <input formControlName="fingerprint2" #fingerprintInput2 type="text" placeholder="135135115161" class="textbox fingerprint2" *ngIf="added">
+                    <div class="addfingerprint">
+                        <button class="addfingerprintbtn" [ngClass]="{ 'error': added }" (click)="toggleFingerprint()">
+                          <img [src]="added ? '/assets/images/delete-red.png' : '/assets/images/add-blue.png'">
+                          <span class="fingerprint-span">
+                            {{ added ? 'Delete Fingerprint ID 2' : 'Add Fingerprint' }}
+                        </span>
+                        </button>
+                      </div>
                 </div>
                 <div class="submit-user pointer" (click)="submitUser()">Submit</div>
             </div>
