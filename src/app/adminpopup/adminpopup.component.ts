@@ -18,7 +18,5 @@ export class AdminpopupComponent {
     });
   }
 
-  clearInput(): void {
-    this.manageAccountForm.reset();
-  }
+  
 }
