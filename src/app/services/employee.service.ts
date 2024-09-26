@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../environments/environment.prod';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
   apiUrl = `${environment.baseURL}api/employee`;
@@ -28,7 +28,7 @@ export class EmployeeService {
 
   setToggle: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getEmployee(): Observable<Employee[]> {
     const getEmployeeInfoUrl = `${this.apiUrl}`;
@@ -55,8 +55,6 @@ export class EmployeeService {
     return this.http.put(updateEmployeeUrl, formData); // Send PUT request with FormData
   }
 
-
-
   addEmployee(employee: Employee, file: File): Observable<any> {
     const formData: FormData = new FormData();
     console.log(employee);
@@ -64,8 +62,6 @@ export class EmployeeService {
     formData.append('employee', JSON.stringify(employee)); // Convert employee object to JSON string
     return this.http.post<any>(`${this.apiUrl}`, formData);
   }
-
-  
 
   addEmployeeWithoutImage(employee: Employee): Observable<any> {
     const formData: FormData = new FormData();
@@ -94,22 +90,31 @@ export class EmployeeService {
 
   searchEmployee(searchInputValue: string): Observable<Employee[]> {
     return this.getEmployee().pipe(
-      map(employees => {
+      map((employees) => {
         const selectedFilter = this.selectedFilterSource.getValue();
-        const filteredEmployees = employees.filter(employee => {
+        const filteredEmployees = employees.filter((employee) => {
           const searchValueLower = searchInputValue.toLowerCase();
 
           switch (selectedFilter) {
             case 'name':
-              return employee.fullname.toLowerCase().startsWith(searchValueLower);
+              return employee.fullname
+                .toLowerCase()
+                .startsWith(searchValueLower);
             // return employee.fullname.toLowerCase().includes(searchValueLower); use this if they want keyword letters
             case 'role':
               return employee.role.toLowerCase().includes(searchValueLower);
             case 'rfid':
-              return employee.rfidtag?.toLowerCase().includes(searchValueLower) || false;
+              return (
+                employee.rfidtag?.toLowerCase().includes(searchValueLower) ||
+                false
+              );
             case 'fingerprint':
-              return employee.fingerprint1?.toLowerCase().includes(searchValueLower) ||
-                employee.fingerprint2?.toLowerCase().includes(searchValueLower);
+              return (
+                employee.fingerprint1
+                  ?.toLowerCase()
+                  .includes(searchValueLower) ||
+                employee.fingerprint2?.toLowerCase().includes(searchValueLower)
+              );
             default:
               return false;
           }
@@ -119,15 +124,20 @@ export class EmployeeService {
     );
   }
 
-  countBiometricRegistrations(): Observable<{ BioRegistered: number; noBioRegistered: number }> {
+  countBiometricRegistrations(): Observable<{
+    BioRegistered: number;
+    noBioRegistered: number;
+  }> {
     return this.getEmployee().pipe(
-      map(employees => {
+      map((employees) => {
         let BioRegistered = 0;
         let noBioRegistered = 0;
 
-        employees.forEach(employee => {
-          const hasFingerprint1 = employee.fingerprint1 && employee.fingerprint1.trim() !== '';
-          const hasFingerprint2 = employee.fingerprint2 && employee.fingerprint2.trim() !== '';
+        employees.forEach((employee) => {
+          const hasFingerprint1 =
+            employee.fingerprint1 && employee.fingerprint1.trim() !== '';
+          const hasFingerprint2 =
+            employee.fingerprint2 && employee.fingerprint2.trim() !== '';
 
           if (hasFingerprint1 || hasFingerprint2) {
             BioRegistered++;
@@ -223,7 +233,7 @@ export class EmployeeService {
   private updateModalVisibleSubject = new BehaviorSubject<boolean>(false);
   updateModalVisible$ = this.updateModalVisibleSubject.asObservable();
   openUpdateModal() {
-    console.log("update modal opened")
+    console.log('update modal opened');
     this.updateModalVisibleSubject.next(true);
   }
   closeUpdateModal() {
@@ -241,7 +251,7 @@ export class EmployeeService {
   //for clicking yes in discard popup
   private editModeSource = new BehaviorSubject<boolean>(false);
   editMode$ = this.editModeSource.asObservable();
-  
+
   closeEditModeAndReload() {
     this.setEditMode(false); // Close edit mode
     this.triggerReload(); // Trigger reload for other components that need to refresh
@@ -255,6 +265,10 @@ export class EmployeeService {
   filterClick$ = this.filterClickSource.asObservable();
 
   setFilterClick(value: boolean): void {
-    this.filterClickSource.next(value); // Emit the new value
+    // Emit only if the value is different from the current value
+    if (this.filterClickSource.value !== value) {
+      console.log('Setting filter click to:', value);
+      this.filterClickSource.next(value);
+    }
   }
 }
