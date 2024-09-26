@@ -15,6 +15,7 @@ export class HeaderSearchComponent {
   @Input() showFilterButton: boolean = false;
   @Output() searchEvent = new EventEmitter<string>();
   @Output() filterToggleEvent = new EventEmitter<boolean>();
+  @Output() buttonClicked: EventEmitter<void> = new EventEmitter<void>();
 
   showDropdown = false;
   options: string[] = [];
@@ -26,7 +27,7 @@ export class HeaderSearchComponent {
   isDashboardState: boolean = false;
   isReportsState!: boolean;
   isUsersState!: boolean;
-
+  activeFilterState: string = 'name';
   private searchSubscription: Subscription = new Subscription(); // Subscription to handle search
   private filterClickSubscription: Subscription = new Subscription(); // Subscription for filter click
 
@@ -85,10 +86,11 @@ export class HeaderSearchComponent {
 
   // Toggle the visibility of filter options
   toggleFilterOptions(): void {
-    // Toggle the value of filterClick using the current filter state
     this.employeeService.setFilterClick(!this.filterToggle);
+    this.buttonClicked.emit();
+    this.activeFilterState = this.filterToggle ? 'filter' : ''; // Reset state if not active
+    this.filtersService.setFilter('filter');
   }
-
 
   // Update this method to emit the search value when in reports state
   filterOptions(event: Event): void {
@@ -136,7 +138,7 @@ export class HeaderSearchComponent {
     this.showDropdown = false;          // Hide the dropdown once an option is selected
     this.searchEvent.emit(option.fullname); // Emit the selected fullname, or you can emit the entire option if needed
   }
-  
+
   // Hide dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent): void {
@@ -152,6 +154,8 @@ export class HeaderSearchComponent {
       this.showDropdown = this.inputValue.length > 0 && (this.filteredOptions.length > 0 || this.noResultsFound);
     }
   }
+
+
 
   ngOnDestroy() {
     // Unsubscribe to avoid memory leaks
