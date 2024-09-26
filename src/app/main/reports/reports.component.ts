@@ -95,7 +95,7 @@ export class ReportsComponent implements OnInit {
 
     // Update the header title to "Dashboard"
     this.headerLabelService.updateTitle('Reports');
-    this.headerLabelService.updateHeaderTitle('Employees Login Session')
+    this.headerLabelService.updateHeaderTitle('Employees Login Session');
   }
 
     getEmployeeById(userId: string) {
