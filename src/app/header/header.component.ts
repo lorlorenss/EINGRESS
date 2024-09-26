@@ -11,6 +11,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { AdminpopupComponent } from '../adminpopup/adminpopup.component';
 import { HeaderLabelService } from '../services/header-label.service';
 import { EmployeeService } from '../services/employee.service';
+import { FiltersService } from '../services/filters.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -25,13 +26,23 @@ export class HeaderComponent implements OnInit {
   descriptionTitle: string = '';
   username: string = '';
   filterClick: boolean = false;
+  activeFilter: string = 'name';
+  sortOption: string = 'nameAsc';
+
   constructor(
+    
     private elRef: ElementRef,
+    
     public dialog: MatDialog,
+    
     private headerLabelService: HeaderLabelService,
+    
     private router: Router,
+    
     private employeeService: EmployeeService
-  ) {}
+  ,
+    private filtersService: FiltersService
+   ) {}
 
   ngOnInit(): void {
     // Retrieve the username from localStorage
@@ -114,6 +125,39 @@ export class HeaderComponent implements OnInit {
 
   toggleFilterOptions(): void {
     // Emit true when the filter is toggled
-    this.employeeService.setFilterClick(true);
+    // this.filterService.setFilterClick(true);
   }
+
+// Update the filter functions to set the active filter
+setNameFilter() {
+  this.activeFilter = 'name';
+  this.filtersService.setFilter('name');
+}
+
+setRoleFilter() {
+  this.activeFilter = 'role';
+  this.filtersService.setFilter('role');
+}
+
+setRFIDFilter() {
+  this.activeFilter = 'rfid';
+  this.filtersService.setFilter('rfid');
+}
+
+setBranchFilter() {
+  this.activeFilter = 'branch';
+  this.filtersService.setFilter('branch');
+}
+
+setFingerprintFilter() {
+  this.activeFilter = 'fingerprint';
+  this.filtersService.setFilter('fingerprint');
+}
+
+
+
+onSortChange() {
+  console.log('Sort option from header changes:', this.sortOption); // Debugging log
+  this.employeeService.setSortOption(this.sortOption);
+}
 }
