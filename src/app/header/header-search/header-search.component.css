@@ -88,6 +88,9 @@
   pointer-events: none;
 }
 
+.filter-button.active{
+  background: rgba(255, 255, 255, 0.6);
+}
 
 .filter-button {
   display: flex;
