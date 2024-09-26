@@ -75,6 +75,8 @@ export class HeaderSearchComponent {
     this.searchEvent.emit(option.fullname); // Emit the selected fullname, or you can emit the entire option if needed
   }
   
+
+
   // Hide dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent): void {

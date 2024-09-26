@@ -108,6 +108,22 @@
   cursor: pointer;
 }
 
+/* Change background color when the button is active or focused */
+.name-option:active,
+.role-option:active,
+.rfid-option:active,
+.branch-option:active,
+.fingerprint-option:active,
+.name-option:focus,
+.role-option:focus,
+.rfid-option:focus,
+.branch-option:focus,
+.fingerprint-option:focus {
+    background-color: #DAECFF; /* Light blue background */
+    cursor: pointer;            /* Change cursor to pointer */
+}
+
+
 
 .header-label h1 {
   font-size: 20px;

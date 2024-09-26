@@ -22,7 +22,10 @@
           </div>          
     </div>
 
-    <button *ngIf="showFilterButton" class="filter-button" (click)="toggleFilterOptions()">
+    <button *ngIf="showFilterButton" 
+            class="filter-button" 
+            (click)="toggleFilterOptions()"
+            [ngClass] = "{'active': active-filter === 'filter'}">
       <img src="/assets/images/search-filter-bar.svg" alt="Filter Search Bar Icon"> Filter Search Bar
     </button>
 </div>
