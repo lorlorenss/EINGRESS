@@ -119,7 +119,28 @@
 
                             <div class="fingerprint-1-container">
                                 <p><span class="notRequired">*</span> Fingerprint Template 1</p>
-                                <input type="file" (change)="onFingerPrintFileSelected($event,'fpFile1')" id="addFinger-1" name="fingerprint-1" placeholder="Fingerprint File">
+                                <div class="drag-drop-area" [ngClass]="{'dragover': isDraggingOver1, 'file-too-large': isFileTooLarge1 || isFileTypeInvalid1}" (drop)="onFingerPrintFileDropped($event, 'fpFile1')" (dragover)="onDragOver($event, 'fpFile1')" (dragleave)="onDragLeave($event)">
+                                    <div class="file-logo">
+                                        <svg width="39" height="40" viewBox="0 0 39 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14.6245 23.2495H30.8745L25.2683 15.937L21.5308 20.812L19.012 17.562L14.6245 23.2495ZM12.9995 29.7495C12.1058 29.7495 11.3407 29.4313 10.7042 28.7948C10.0677 28.1584 9.74951 27.3933 9.74951 26.4995V6.99951C9.74951 6.10576 10.0677 5.34066 10.7042 4.7042C11.3407 4.06774 12.1058 3.74951 12.9995 3.74951H32.4995C33.3933 3.74951 34.1584 4.06774 34.7948 4.7042C35.4313 5.34066 35.7495 6.10576 35.7495 6.99951V26.4995C35.7495 27.3933 35.4313 28.1584 34.7948 28.7948C34.1584 29.4313 33.3933 29.7495 32.4995 29.7495H12.9995ZM12.9995 26.4995H32.4995V6.99951H12.9995V26.4995ZM6.49951 36.2495C5.60576 36.2495 4.84066 35.9313 4.2042 35.2948C3.56774 34.6584 3.24951 33.8933 3.24951 32.9995V10.2495H6.49951V32.9995H29.2495V36.2495H6.49951Z" fill="#2165C9"/>
+                                        </svg>
+                                    </div>    
+                                    <div class="drag-drop-display">
+                                        <p class="drag-drop-title">Drag & Drop or <span (click)="fingerprintInput1.click()" class="browse">browse</span></p> 
+                                        <ng-container *ngIf="selectedFingerPrintFile1">
+                                            <p class="drag-drop-file">File: {{ selectedFingerPrintFile1.name }} attached</p>
+                                        </ng-container>                                                                                                              
+
+                                        <ng-container *ngIf="isFileTooLarge1">
+                                            <p class="error-message">File exceeds the 5MB size limit.</p>
+                                        </ng-container>
+                                    
+                                        <ng-container *ngIf="isFileTypeInvalid1">
+                                            <p class="error-message">Invalid file type. Only .dat files are allowed.</p>
+                                        </ng-container>
+                                    </div>
+                                    <input type="file" #fingerprintInput1 (change)="onFingerPrintFileSelected($event,'fpFile1')" id="addFinger-1" name="fingerprint-1" hidden>
+                                </div>              
                             </div>
 
                         </div>
@@ -153,8 +174,29 @@
 
 
                             <div class="fingerprint-2-container">
-                                <p><span class="notRequired">*</span>Fingerprint Template 2</p>
-                                <input type="file" (change)="onFingerPrintFileSelected($event,'fpFile2')" id="addFinger-2" name="fingerprint-2" placeholder="Fingerprint File">
+                                <p><span class="notRequired">*</span> Fingerprint Template 2</p>
+                                <div class="drag-drop-area" [ngClass]="{'dragover': isDraggingOver2, 'file-too-large': isFileTooLarge2 || isFileTypeInvalid2}" (drop)="onFingerPrintFileDropped($event,'fpFile2')" (dragover)="onDragOver($event, 'fpFile2')" (dragleave)="onDragLeave($event)">
+                                    <div class="file-logo">
+                                        <svg width="39" height="40" viewBox="0 0 39 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14.6245 23.2495H30.8745L25.2683 15.937L21.5308 20.812L19.012 17.562L14.6245 23.2495ZM12.9995 29.7495C12.1058 29.7495 11.3407 29.4313 10.7042 28.7948C10.0677 28.1584 9.74951 27.3933 9.74951 26.4995V6.99951C9.74951 6.10576 10.0677 5.34066 10.7042 4.7042C11.3407 4.06774 12.1058 3.74951 12.9995 3.74951H32.4995C33.3933 3.74951 34.1584 4.06774 34.7948 4.7042C35.4313 5.34066 35.7495 6.10576 35.7495 6.99951V26.4995C35.7495 27.3933 35.4313 28.1584 34.7948 28.7948C34.1584 29.4313 33.3933 29.7495 32.4995 29.7495H12.9995ZM12.9995 26.4995H32.4995V6.99951H12.9995V26.4995ZM6.49951 36.2495C5.60576 36.2495 4.84066 35.9313 4.2042 35.2948C3.56774 34.6584 3.24951 33.8933 3.24951 32.9995V10.2495H6.49951V32.9995H29.2495V36.2495H6.49951Z" fill="#2165C9"/>
+                                        </svg>
+                                    </div> 
+                                    <div class="drag-drop-display">
+                                        <p class="drag-drop-title">Drag & Drop or <span (click)="fingerprintInput2.click()" class="browse">browse</span></p>                                  
+                                        <ng-container *ngIf="selectedFingerPrintFile2">
+                                            <p class="drag-drop-file">File: {{ selectedFingerPrintFile2.name }} attached</p>
+                                        </ng-container>                                                                                                              
+
+                                        <ng-container *ngIf="isFileTooLarge2">
+                                            <p class="error-message">File exceeds the 5MB size limit.</p>
+                                        </ng-container>
+                                    
+                                        <ng-container *ngIf="isFileTypeInvalid2">
+                                            <p class="error-message">Invalid file type. Only .dat files are allowed.</p>
+                                        </ng-container>
+                                    </div>
+                                    <input type="file" #fingerprintInput2 (change)="onFingerPrintFileSelected($event,'fpFile2')" id="addFinger-2" name="fingerprint-2" hidden>
+                                </div>  
                             </div>  
                         </div>
                     </div>
