@@ -3,6 +3,7 @@ import { Employee } from 'src/app/interface/employee.interface';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-employee-details-revamp',
@@ -28,8 +29,14 @@ export class EmployeeDetailsRevampComponent {
   selectedRole: string | null = null;
   roledropdownOpen: boolean = false;
 
-  selectedFingePrintFile1!: File;
-  selectedFingePrintFile2!: File;
+  selectedFingerPrintFile1: File | null = null;
+  selectedFingerPrintFile2: File | null = null;
+  isDraggingOver1 = false; 
+  isDraggingOver2 = false;
+  isFileTooLarge1 = false;
+  isFileTooLarge2 = false;
+  isFileTypeInvalid1 = false;
+  isFileTypeInvalid2 = false;
 
   @ViewChild('roleDropdown') roleDropdown!: ElementRef<HTMLDivElement>;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
@@ -37,7 +44,8 @@ export class EmployeeDetailsRevampComponent {
   constructor(
     private employeeService: EmployeeService,
     private formBuilder: FormBuilder,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.updateEmployeeForm = this.formBuilder.group({
       fullname: ['', Validators.required],
@@ -151,21 +159,101 @@ export class EmployeeDetailsRevampComponent {
     if(file){
       console.log(`File selected: ${file.name}`);
       const isDatFile = file.name.endsWith('dat');
+      const isFileSizeValid = file.size <= 5 * 1024 * 1024;
 
-      if(!isDatFile){
-        this.dialogService.openAlertDialog('Invalid file type');
-        return;
+      if (fileType === 'fpFile1') {
+        this.isFileTooLarge1 = !isFileSizeValid;
+        this.isFileTypeInvalid1 = !isDatFile;
+
+        if(!isFileSizeValid || !isDatFile){
+          this.selectedFingerPrintFile1 = null;
+        }
+        else{
+          this.selectedFingerPrintFile1 = file;
+        }
+
+      } 
+      else if (fileType === 'fpFile2') {
+        this.isFileTooLarge2 = !isFileSizeValid;
+        this.isFileTypeInvalid2 = !isDatFile;
+
+        if(!isFileSizeValid || !isDatFile){
+          this.selectedFingerPrintFile2 = null;
+        }
+        else{
+          this.selectedFingerPrintFile2 = file;
+        }
       }
 
-      if(fileType === 'fpFile1'){
-        this.selectedFingePrintFile1 = file;
-      }
-      else if(fileType === 'fpFile2'){
-        this.selectedFingePrintFile2 = file;
-      }
       this.updateEmployeeForm.markAsDirty();
 
     }
+  }
+
+  onFingerPrintFileDropped(event: DragEvent, fileType: string) {
+    event.preventDefault();  
+    this.onDragLeave(event); 
+  
+    if (event.dataTransfer?.files.length) {
+      const file = event.dataTransfer.files[0];
+      const isDatFile = file.name.endsWith('.dat');
+      const isFileSizeValid = file.size <= 5 * 1024 * 1024; 
+  
+      console.log(`File dropped: ${file.name}`);
+  
+      if (fileType === 'fpFile1') {
+        this.isFileTooLarge1 = false;
+        this.isFileTypeInvalid1 = false;
+      } else if (fileType === 'fpFile2') {
+        this.isFileTooLarge2 = false;
+        this.isFileTypeInvalid2 = false;
+      }
+  
+
+      if (!isFileSizeValid || !isDatFile) {
+        if (fileType === 'fpFile1') {
+          this.isFileTooLarge1 = !isFileSizeValid;
+          this.isFileTypeInvalid1 = !isDatFile;
+          this.selectedFingerPrintFile1 = null; 
+        } else if (fileType === 'fpFile2') {
+          this.isFileTooLarge2 = !isFileSizeValid;
+          this.isFileTypeInvalid2 = !isDatFile;
+          this.selectedFingerPrintFile2 = null; 
+        }
+  
+        console.log(`Invalid file for ${fileType}: size too large or wrong type.`);
+      } else {
+        // Valid file selected
+        if (fileType === 'fpFile1') {
+          this.selectedFingerPrintFile1 = file; // Set valid file
+          console.log(`Valid file dropped for fpFile1: ${file.name}`);
+        } else if (fileType === 'fpFile2') {
+          this.selectedFingerPrintFile2 = file; // Set valid file
+          console.log(`Valid file dropped for fpFile2: ${file.name}`);
+        }
+      }
+  
+      // Update form state
+      this.updateEmployeeForm.markAsDirty();
+      this.cdRef.detectChanges(); 
+    } else {
+      console.log('No files were dropped.'); 
+    }
+  }
+  
+  onDragOver(event: DragEvent, fileType: string) {
+    event.preventDefault();
+
+    if (fileType === 'fpFile1') {
+      this.isDraggingOver1 = true; 
+    } else if (fileType === 'fpFile2') {
+      this.isDraggingOver2 = true; 
+    }
+  }
+
+  onDragLeave(event: DragEvent) {  
+    this.isDraggingOver1 = false; 
+    this.isDraggingOver2 = false; 
   }
 
   resetForm(): void {
@@ -215,8 +303,8 @@ export class EmployeeDetailsRevampComponent {
 
       const fingerprint1 = this.updateEmployeeForm.get('fingerprint1')?.value;  //this is for fingerprint id not related of fingerprint file
       const fingerprint2 = this.updateEmployeeForm.get('fingerprint2')?.value; //this is for fingerprint id not related of fingerprint file
-      const fingerprintfile1 = this.selectedFingePrintFile1; //this is for fingerprint file
-      const fingerprintfile2 = this.selectedFingePrintFile2; //this is for fingerprint file
+      const fingerprintfile1 = this.selectedFingerPrintFile1; //this is for fingerprint file
+      const fingerprintfile2 = this.selectedFingerPrintFile2; //this is for fingerprint file
 
       if (fingerprint1 && fingerprint2 && fingerprint1 === fingerprint2) {
         // this.dialogService.openAlertDialog('Fingerprint1 and Fingerprint2 cannot be the same.');
