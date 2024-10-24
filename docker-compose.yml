@@ -1,27 +1,12 @@
-version: '3.8'
-services:
-  nestjs:
-    build:
-        context: ./api
-        dockerfile: Dockerfile
-    image: eingressnest
-    container_name: nestjs
-    ports:
-      - "3000:3000"
+version: '3'
 
-  angular:
+services:
+  frontend:
     build:
       context: .
       dockerfile: Dockerfile
-    image: eingressangular
-    container_name: angular
+    image: eingress-fe:latest
+    container_name: angular_app
     ports:
-      - "4200:80"  # Map container port 80 to host port 4200
-    depends_on:
-      - nestjs
-    networks:
-      - my-network
-
-networks:
-  my-network:
-    driver: bridge
+      - "4200:80"
+    restart: always
