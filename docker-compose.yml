@@ -1,27 +1,12 @@
-version: '3.8'
-services:
-  nestjs:
-    build:
-        context: ./api
-        dockerfile: Dockerfile
-    image: eingressnest
-    container_name: nestjs
-    ports:
-      - "3000:3000"
+version: '3'
 
-  angular:
+services:
+  angular-app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: eingressangular
-    container_name: angular
     ports:
-      - "4200:80"  # Map container port 80 to host port 4200
-    depends_on:
-      - nestjs
-    networks:
-      - my-network
-
-networks:
-  my-network:
-    driver: bridge
+      - "80:80"    # Map port 80 of the host to port 80 of the container
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf    # Mount custom NGINX config if needed
+    restart: always    # Restart container automatically if it crashes
